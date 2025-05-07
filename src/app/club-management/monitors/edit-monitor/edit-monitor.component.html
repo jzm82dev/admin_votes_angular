@@ -1,0 +1,313 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.monitorList">{{'monitors.monitors' | translate }}</a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'monitors.edit_monitor' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="settings-menu-links" >
+            <ul class="nav nav-tabs menu-tabs">
+                <li class="nav-item" [ngClass]="{'active': tab_selected == 1}" >
+                    <a href="#" onclick="return false;" class="nav-link" (click)="tabSeleted(1)">{{'monitors.data' | translate }}</a>
+                </li>
+                <li class="nav-item" [ngClass]="{'active': tab_selected == 2}">
+                    <a *ngIf="monitor_id != ''" href="#" onclick="return false;" class="nav-link" (click)="tabSeleted(2)">{{'monitors.lesson_days' | translate }}</a>
+                    <a *ngIf="monitor_id == ''" class="nav-link">{{'monitors.lesson_days' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /Page Header -->
+
+         <!-- Begin Monitor Data -->
+        <div class="row" *ngIf="tab_selected == 1">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row mt-3">
+                                <div class="col-12 col-md-6 col-xl-4">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'monitors.name' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="name" name="name" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'monitors.lastname' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="surname" name="surname" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'monitors.mobile' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="mobile" name="mobile" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'monitors.email' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="email" name="email" type="email"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'club_translations.sport' | translate }} <span class="login-danger">*</span></label>
+                                        <mat-select [(ngModel)]="type_sport" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'club_translations.select_sport_type' | translate }}">
+                                            <mat-option *ngFor="let data of kind_sport" [value]="data.id">
+                                                {{data.name}}
+                                                </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'monitors.rol' | translate }} <span class="login-danger">*</span></label>
+                                        
+                                            <mat-select [(ngModel)]="rol" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select  Rol">
+                                                <mat-option *ngFor="let data of rolsAdded" [value]="data.id">
+                                                {{data.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-12 col-md-6 col-xl-6">
+                                    <div class="form-group local-forms">
+                                        <label >{{'monitors.password' | translate }} </label>
+                                        <input class="form-control" [(ngModel)]="password" name="password" type="password" autocomplete="password" >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'monitors.confirm_password' | translate }} </label>
+                                        <input class="form-control" [(ngModel)]="confirm_password" name="confirm_password" type="password" autocomplete="confirm_password" >
+                                    </div>
+                                </div> -->
+                            
+                                <div class="col-12 col-md-6 col-xl-6 " >
+                                    <div class="form-group local-top-form">
+                                        <label class="local-top">{{'leagues.logo' | translate }} </label>
+                                        <div class="settings-btn upload-files-avator">
+                                            <input type="file" accept="image/*" name="image" id="file"  (change)="loadFile($event)" class="hide-input">
+                                            <label for="file" class="upload">{{'leagues.form_select_img' | translate }}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="" *ngIf="image_preview">
+                                    <img [src]="image_preview" alt="" width="150px" height="150px">
+                                </div>
+                               
+                                <div class="col-12">
+                                    <div class="doctor-submit text-end">
+                                        <button type="submit" class="btn btn-primary cancel-form" [routerLink]="routes.monitorList">{{'commun_translations.come_back' | translate }}</button>&nbsp;
+                                        <button type="button" class="btn btn-primary submit-form me-2" *ngIf="hasPermission('edit_monitor')" (click)="save()">{{'commun_translations.save' | translate }}</button>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                        <strong>{{'commun_translations.error' | translate }} </strong> {{ error_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                        <ul *ngIf="message_errors.length > 0">
+                                            <li *ngFor="let error of message_errors">{{ error }}</li>
+                                        </ul>
+                                      </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="success_message_monitor != ''">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>{{'commun_translations.success' | translate }} </strong> {{ success_message_monitor }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                           
+
+                          
+
+                        </form>
+                    </div>
+                </div>							
+            </div>					
+        </div>
+        <!-- End Monitor Data -->
+
+
+        <!-- Begin Lessons -->
+            <div class="row"  *ngIf="tab_selected == 2">
+                <div class="col-md-8" *ngIf="isLoaded">
+                     <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title">
+                                <div class="form-group local-forms" *ngIf="modifySchedule == false">
+                                    <label >{{'monitors.date_end_lesson' | translate }} </label>
+                                    <input class="form-control test" disabled [(ngModel)]="date_end_reservation_format" name="date_end_reservation_format" type="text" placeholder="" >
+                                </div>
+                                <div class="form-group local-forms" *ngIf="modifySchedule">
+                                    <label >{{'monitors.date_end_lesson' | translate }} <span class="login-danger">*</span></label>
+                                    <input class="form-control datetimepicker" [(ngModel)]="date_end_reservation" name="date_end_reservation" type="text"  placeholder="" matInput [matDatepicker]="picker">
+                                    <mat-datepicker #picker></mat-datepicker>
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                </div>
+                            </h5>
+                            <div class="status-toggle d-flex justify-content-between align-items-center " *ngIf="can_edit == true && hasPermission('edit_monitor')">
+                                <a href="javascript:void(0);" (click)="activateModifySchedule()"><i class="icon-edit-schedule fa-solid fa-pen"></i> </a>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0 ">
+                            <form>
+                                <!-- DAYS -->
+                                <div class="row" *ngFor="let day of schedule_hour_days; let i = index;">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-12 text-start">
+                                                <h5 class="card-title week-days">{{ day.day_name }}</h5>
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="modifySchedule">
+                                            <div class="col-md-4">
+                                                <div class="settings-form">
+                                                    <div class="form-group">
+                                                        <div class="form-group local-forms">
+                                                            <label >{{'monitors.court' | translate }} <span class="login-danger">*</span></label>
+                                                            <mat-select [(ngModel)]="lesson_court_selected" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'monitors.court...' | translate }}">
+                                                                <mat-option *ngFor="let data of courts_class" [value]="data" >
+                                                                    {{data.name}}
+                                                                    </mat-option>
+                                                            </mat-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="settings-form">
+                                                    <div class="form-group">
+                                                        <div class="form-group local-forms">
+                                                            <label >{{'monitors.start_at' | translate }} <span class="login-danger">*</span></label>
+                                                            <mat-select [(ngModel)]="opening_time" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'club_translations.schedule.hour' | translate }}">
+                                                                <mat-option *ngFor="let data of hours" [value]="data.id" >
+                                                                    {{data.format_hour}}
+                                                                    </mat-option>
+                                                            </mat-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="settings-form">
+                                                    <div class="form-group links-info">
+                                                        <div class=" links-cont">
+                                                            <div class="form-group local-forms form-placeholder d-flex">
+                                                                <label >{{'monitors.end_at' | translate }} <span class="login-danger">*</span></label>
+                                                                <mat-select [(ngModel)]="closing_time" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'club_translations.schedule.hour' | translate }}">
+                                                                    <mat-option *ngFor="let data of hours" [value]="data.id">
+                                                                        {{data.format_hour}}
+                                                                        </mat-option>
+                                                                </mat-select>
+                                                                <a (click)="addHourSchedule(day.day_name)" href="javascript:void(0);" class="btn trash">
+                                                                    <i class="fa fa-plus me-1"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row" >
+                                            <div class="table-responsive">
+                                                <table class="table table-striped mb-0">
+                                                    <thead>
+                                                        <tr class="text-center">
+                                                            <th>{{'monitors.court' | translate }} </th>
+                                                            <th>{{'monitors.start_at' | translate }} </th>
+                                                            <th>{{'monitors.end_at' | translate }} </th>
+                                                            <th *ngIf="modifySchedule" class="text-start">Borrar </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of day.hours; let i = index">
+                                                            <td class="text-center">{{ item.court_name }}</td>
+                                                            <td class="text-center">{{ item.opening_time }} h</td>
+                                                            <td class="text-center">{{ item.closing_time }} h</td>
+                                                            <td class="settings-form text-center" *ngIf="modifySchedule">
+                                                                <a (click)="deleteHourSchedule(i, day.day_id)" href="javascript:void(0);" class="btn trash trash-style">
+                                                                    <i class="feather icon-trash-2 service"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr *ngIf="day.hours.length == 0">
+                                                            <td colspan="4" class="text-center"> {{'monitors.no_lessons_day' | translate }} {{ day.day_name }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="my-4 week-days"><hr></div>
+                                    
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="success_message_lesson != ''">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>{{'commun_translations.success' | translate }}</strong> {{ success_message_lesson }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button><br>
+                                        <span *ngIf="court_day_change.length > 0" class="change-court my-3"><br>{{'monitors.change_court_lesson' | translate }}</span>
+                                        <ul *ngIf="court_day_change.length > 0">
+                                            <li *ngFor="let day of court_day_change" class="change-court">{{ day| date: 'dd/MM/yyyy' }}</li>
+                                        </ul>
+                                        <span *ngIf="court_day_no_exist_aviable.length > 0" class="no-court-available my-3"><br>{{'monitors.no_available_court_lesson' | translate }}</span>
+                                        <ul *ngIf="court_day_no_exist_aviable.length > 0">
+                                            <li *ngFor="let day of court_day_no_exist_aviable" class="no-court-available">{{ day| date: 'dd/MM/yyyy' }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 my-4" *ngIf="error_message_lesson != ''">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                        <strong>{{'commun_translations.error' | translate }}</strong> {{ error_message_lesson }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                        <ul *ngIf="message_lesson_errors.length > 0">
+                                            <li *ngFor="let error of message_lesson_errors">{{ error }}</li>
+                                        </ul>
+                                      </div>
+                                </div>
+
+                              
+                                <div class="form-group mb-0 text-end" *ngIf="modifySchedule">
+                                    <div class="settings-btns" *ngIf="hasPermission('edit_monitor')">
+                                        <button type="submit" class="border-0 btn btn-primary btn-gradient-primary btn-rounded" (click)="saveScheduleHours()">{{'commun_translations.save' | translate }}</button>
+                                    </div>
+                                </div>
+                                <!-- END DAYS -->
+    
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        <!-- End Lessons -->
+    </div>
+</div>
+ 
+
+

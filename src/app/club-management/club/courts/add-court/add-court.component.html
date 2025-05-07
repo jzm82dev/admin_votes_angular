@@ -1,0 +1,154 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{'club_translations.dashboard' | translate }}</li>
+                        <li class="breadcrumb-item "><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'club_translations.club' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="settings-menu-links">
+            <ul class="nav nav-tabs menu-tabs">
+                <li class="nav-item ">
+                    <a class="nav-link" [routerLink]="routes.club">{{'club_translations.tabs.general_data' | translate }}</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" [routerLink]="routes.description">{{'club_translations.tabs.description' | translate }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.clubSchedule">{{'club_translations.tabs.schedule' | translate }}</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" [routerLink]="routes.clubCourts">{{'club_translations.tabs.courts' | translate }}</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.clubServices">{{'club_translations.tabs.services' | translate }}</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.clubSocialLinks">{{'club_translations.tabs.social_links' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>{{'club_translations.court.detail' | translate }}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'club_translations.court.name' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="name" name="name" type="text" maxlength="6" >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'club_translations.court_type' | translate }} <span class="login-danger">*</span></label>
+                                        <mat-select [(ngModel)]="type_sport" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'club_translations.select_court_type' | translate }}">
+                                            <mat-option *ngFor="let data of kind_sport" [value]="data.id">
+                                                {{data.name}}
+                                                </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'club_translations.court.description' | translate }} </label>
+                                        <input class="form-control" [(ngModel)]="description" name="description" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>{{'club_translations.court.price_per_segment' | translate }}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-3">
+                                    <div class="form-group local-forms">
+                                        <label >{{'club_translations.court.price_without_light' | translate }} </label>
+                                        <input class="form-control" [(ngModel)]="amount_without_light" name="amount_without_light" type="number"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-3">
+                                    <div class="form-group local-forms">
+                                        <label >{{'club_translations.court.price_with_light' | translate }} </label>
+                                        <input class="form-control" [(ngModel)]="amount_with_light" name="amount_with_light" type="number"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-3">
+                                    <div class="form-group local-forms">
+                                        <label >{{'club_translations.court.price_without_light_member' | translate }}</label>
+                                        <input class="form-control" [(ngModel)]="amount_member_without_light" name="amount_member_without_light" type="number"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-3">
+                                    <div class="form-group local-forms">
+                                        <label >{{'club_translations.court.price_with_light_member' | translate }}</label>
+                                        <input class="form-control" [(ngModel)]="amount_member_with_light" name="amount_member_with_light" type="number"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">
+                                    <div class="form-group local-top-form">
+                                        <label class="local-top">Imagen </label>
+                                        <div class="settings-btn upload-files-avator">
+                                            <input type="file" accept="image/*" name="image" id="file"  (change)="loadFile($event)" class="hide-input">
+                                            <label for="file" class="upload">{{'club_translations.club_information.form_select_img' | translate }}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="" *ngIf="image_preview">
+                                    <img [src]="image_preview" alt="" width="150px" height="150px">
+                                </div>
+                               
+                               
+
+
+                                <div class="col-12 my-4" >
+                                    <div class="doctor-submit text-end">
+                                        <button type="button" class="btn btn-primary submit-form me-2" (click)="save()">{{'commun_translations.save' | translate }}</button>
+                                        <button type="submit" class="btn btn-primary cancel-form" [routerLink]="routes.clubCourts">{{'commun_translations.come_back' | translate }}</button>
+                                    </div>
+                                </div>
+                              
+                                <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                        <strong>{{'commun_translations.error' | translate }}</strong> {{ error_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                      </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="success_message != ''">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>{{'commun_translations.success' | translate }} </strong>{{ success_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>							
+            </div>					
+        </div>
+    </div>
+</div>
+ 
+
+

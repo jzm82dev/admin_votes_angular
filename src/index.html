@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+
+
+<head>
+  <meta charset="utf-8">
+  <title>WE &#10084; RACKET - La herramienta para tu club</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="alternate" hreflang="es" href="https://weloveracket.com" />
+  <link rel="alternate" hreflang="en" href="https://weloveracket.com/en" />
+  <!-- <link rel="preconnect" href="https://fonts.gstatic.com"> -->
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+  
+
+</head>
+<body>
+  
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+      const stripe = Stripe('pk_test_51O2st5FDKkCSgyXtv3RLWol4oSYj0l8TiMXtLBD1y1RYxETy2Ch6UsgvGrE90FDKTjBxUI89XnOpLh5tLkN0Pc2i00gk1TjUdL');
+      const elements = stripe.elements({locale: 'es'});
+  </script>
+ 
+  <script src="https://www.paypal.com/sdk/js?client-id=AX9F46pR_5HQs8g4QyVMvT4lmX6YuAsAOW4cz6T6xUD__mrS0-kDPOXU5dSzC2Jnd-PuplXwdwlUzsyV&components=buttons&vault=true&intent=subscription&disable-funding=credit,card"></script>
+  <app-root></app-root>
+ </body>
+</html>

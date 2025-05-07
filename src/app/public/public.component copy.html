@@ -1,0 +1,218 @@
+<div >
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="good-morning-blk">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="morning-user">
+                        <h2>SÚPER LIGA <span> DE PÁDEL</span></h2>
+                        <p>COSTA TROPICAL</p>
+                    </div>
+                </div>
+                <div class="col-md-6 position-blk">
+                    <div class="morning-img">
+                        <img src="assets/img/morning-img-03.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Header -->
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-xl-6" *ngFor="let category of categories">
+                <div class="blog grid-blog">
+                    <h4 class="card-title">{{ category.category_name }}</h4>
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Equipo</th>
+                                        <th class="text-center">Puntos</th>
+                                        <th class="text-center">Ganados</th>
+                                        <th class="text-center">Perdidos</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let team of category.teams">
+                                        <td>{{team.team_name}}</td>
+                                        <td class="text-center">{{team.total_points}}</td>
+                                        <td class="text-center">{{team.match_won}}</td>
+                                        <td class="text-center">{{team.match_lost}}</td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    <div class="blog-content my-4  text-end">
+                        <a [routerLink]="['/details', category.category_id]" class="read-more"> Ver más <i class="fa fa-long-arrow-right ms-2"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+          
+          <!-- Footer -->
+          <footer class="bg-dark text-center text-white">
+              <!-- Grid container -->
+              <div class="container p-4">
+                <!-- Section: Social media -->
+                <section class="mb-4">
+                  <!-- Facebook -->
+                  <a mdbRipple class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-facebook-f"></i
+                  ></a>
+            
+                  <!-- Twitter -->
+                  <a mdbRipple class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-twitter"></i
+                  ></a>
+            
+                  <!-- Google -->
+                  <a mdbRipple class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-google"></i
+                  ></a>
+            
+                  <!-- Instagram -->
+                  <a mdbRipple class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-instagram"></i
+                  ></a>
+            
+                  <!-- Linkedin -->
+                  <a mdbRipple class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-linkedin-in"></i
+                  ></a>
+            
+                  <!-- Github -->
+                  <a mdbRipple class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-github"></i
+                  ></a>
+                </section>
+                <!-- Section: Social media -->
+            
+                <!-- Section: Form -->
+                <section class="">
+                  <form action="">
+                    <!--Grid row-->
+                    <div class="row d-flex justify-content-center">
+                      <!--Grid column-->
+                      <div class="col-auto">
+                        <p class="pt-2">
+                          <strong>Sign up for our newsletter</strong>
+                        </p>
+                      </div>
+                      <!--Grid column-->
+            
+                      <!--Grid column-->
+                      <div class="col-md-5 col-12">
+                        <!-- Email input -->
+                        <form class="form-white mb-4"> 
+                              <input  type="email" id="form5Example24" class="form-control text-center" placeholder="contact.padeltoos@net"/>
+                              <label mdbLabel class="form-label" for="form5Example24">Email address</label>
+                      
+                          </form>
+                      </div>
+                      <!--Grid column-->
+            
+                      <!--Grid column-->
+                      <div class="col-auto">
+                        <!-- Submit button -->
+                        <button mdbRipple type="submit" class="btn btn-outline-light mb-4">
+                          Subscribe
+                        </button>
+                      </div>
+                      <!--Grid column-->
+                    </div>
+                    <!--Grid row-->
+                  </form>
+                </section>
+                <!-- Section: Form -->
+            
+                <!-- Section: Text -->
+                <section class="mb-4">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt distinctio earum
+                    repellat quaerat voluptatibus placeat nam, commodi optio pariatur est quia magnam
+                    eum harum corrupti dicta, aliquam sequi voluptate quas.
+                  </p>
+                </section>
+                <!-- Section: Text -->
+            
+                <!-- Section: Links -->
+                <section class="">
+                  <!--Grid row-->
+                  <div class="row">
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                      <h5 class="text-uppercase">Links</h5>
+            
+                      <ul class="list-unstyled mb-0">
+                        <li>
+                          <a href="#!" class="text-white">Link 1</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <!--Grid column-->
+            
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                      <h5 class="text-uppercase">Links</h5>
+            
+                      <ul class="list-unstyled mb-0">
+                        <li>
+                          <a href="#!" class="text-white">Link 1</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <!--Grid column-->
+            
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                      <h5 class="text-uppercase">Links</h5>
+            
+                      <ul class="list-unstyled mb-0">
+                        <li>
+                          <a href="#!" class="text-white">Link 1</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <!--Grid column-->
+            
+                    <!--Grid column-->
+                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                      <h5 class="text-uppercase">Links</h5>
+            
+                      <ul class="list-unstyled mb-0">
+                        <li>
+                          <a href="#!" class="text-white">Link 1</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <!--Grid column-->
+                  </div>
+                  <!--Grid row-->
+                </section>
+                <!-- Section: Links -->
+              </div>
+              <!-- Grid container -->
+            
+              <!-- Copyright -->
+              <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                © 2024 Copyright:
+                <a class="text-white" href="https://padeltools.net/">padeltools.net</a>
+              </div>
+              <!-- Copyright -->
+            </footer>
+            <!-- Footer -->
+                  <!-- End Header -->
+              </div>
+          </div>
+          <!-- 
+          <div class="main-wrapper error-wrapper">
+              <div class="error-box">
+                  <img class="img-fluid" src="assets/img/error-01.png" alt="Logo" >
+                  <h3><img class="img-fluid mb-0" src="assets/img/icons/danger.svg" alt="Logo">  Service Unavailables!</h3>
+                  <p>You may have mistyped the address or the page may have moved.</p>
+                  <a [routerLink]="routes.adminDashboard" class="btn btn-primary go-home">Back to Home</a>
+              </div>
+          </div>
+          -->

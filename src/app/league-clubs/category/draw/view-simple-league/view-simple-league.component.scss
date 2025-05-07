@@ -1,0 +1,111 @@
+.player{
+    cursor: pointer;
+    font-size: 14px;
+    --rootFontFamily: Open Sans, Roboto, sans-serif;
+    color: #2e37a4; 
+}
+
+.background{
+    background-color: rgba(46, 55, 164, 0.05);
+    border:1px solid #cdcbcb;
+}
+
+.player:hover {
+    color: #0066ff;
+}
+
+
+
+.border{
+    border:1px solid #333448;
+}
+
+hr{
+    border:1px solid #333448;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.center {
+    margin: auto;
+}
+
+p{
+    margin-top: 10px;;
+    margin-bottom: 5px;
+    font-size: 15px;
+    --rootFontFamily: Open Sans, Roboto, sans-serif;
+    color: gray;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.legs{
+    margin-top: 10px;;
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    --rootFontFamily: Open Sans, Roboto, sans-serif;
+    color: #0066ff;
+    text-transform: uppercase;
+}
+
+span{
+    color: gray;
+    font-size: 14px;
+    --rootFontFamily: Open Sans, Roboto, sans-serif;
+    text-decoration-line: underline;
+}
+
+.looser{
+    color: gray;
+    opacity: 0.7;
+    
+}
+
+.winner{
+    color: blue;
+    
+}
+
+.color_1{
+    background-color: #d8dde2;
+}
+
+.color_2{
+    background-color: #efefef;
+}
+
+
+.div-square{
+    border-style: solid;
+    border-color: white;
+}
+
+.bold{
+    font-weight: bold;
+    color: black;
+}
+
+.border{
+    border:1px solid #cdcbcb;
+}
+
+.couple-selected{
+    font-weight: bold;
+    color: green;
+    font-style: italic;
+    animation: parpadeo 1s infinite;
+}
+
+@keyframes parpadeo {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+.couple-selected:hover{
+    font-weight: bold;
+    color: rgb(63, 199, 63);
+    font-style: italic;
+}

@@ -1,0 +1,137 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.invoices">Accounts </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">Invoice View</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        
+        <div class="row" *ngIf="loaded">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="invoice-head-clinic">
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="invoice-counts">
+                                        <h4>Invoice <span>{{ payment_selected.payment_number }}</span></h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="invoice-counts float-end">
+                                        <h4>Status: <a href="javascript:;" class="status-green">Paid</a></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row custom-invoice">
+                            <div class="col-12 col-md-6 m-b-20">
+                                <img src="assets/img/logo.png" width="35" height="35" alt=""> <span>&nbsp; We Love Racket</span>
+                                <ul class="list-unstyled invoice-clinic mt-2">
+                                    <li>Rector José Vida Soria,
+                                    <li>Nº8 A2 4ºA</li>
+                                    <li>18613, Motril, Granada</li>
+                                    <li>Tlf: 626 804 645</li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-6 m-b-20">
+                                <div class="invoice-details">
+                                    <h3 >Bill To:</h3>
+                                    <h3 >{{ club.name }}</h3>
+                                    <ul class="list-unstyled invoice-clinic">
+                                        <li>{{ club.address }}</li>
+                                        <li>{{ club.city }}, {{ club.state }}</li>
+                                        <li>{{ club.country }}</li>
+                                        <li>{{ club.mobile }}</li>
+                                        <li>{{ club.email }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-12 m-b-20">
+                                <div class="invoice-details">
+                                    <h4>Invoice Date : <i class="feather icon-calendar me-2"></i><span>{{ payment_selected.created_at | date: 'dd MMM yyyy' }} </span></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover border-0 custom-table invoice-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Item</th>
+                                        <th>Description</th>
+                                        <th>Quantity</th>
+                                        <th>Period</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>{{ payment_selected.item }}</td>
+                                        <td>{{ payment_selected.description }}</td>
+                                        <td>1 </td>
+                                        <td>{{ payment_selected.valid_from | date: 'dd MMM yyyy' }} - {{ payment_selected.valid_until | date: 'dd MMM yyyy' }}</td>
+                                        <td>{{ payment_selected.total_amount }}</td>
+                                    </tr>
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <div class="row invoice-payment">
+                                <div class="col-sm-7">
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="m-b-20">
+                                        <div class="table-responsive no-border">
+                                            <table class="table mb-0 border-0 custom-table invoices-table total-fonts">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="float-end">Subtotal : {{ payment_selected.subtotal }}</td>
+                                                    </tr>
+                                                    <!-- <tr>
+                                                        <td class="float-end">Discount : 0</td>
+                                                    </tr> -->
+                                                    <tr>
+                                                        <td class="float-end">IVA (21%) : {{ payment_selected.tax }}</td>
+                                                    </tr>
+                                                    <tr class="bold-total-invoice">
+                                                        <td class="float-end">
+                                                            <h5>Total :{{ payment_selected.total_amount }}</h5>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="invoice-info">
+                                <h5>Términos y condiciones</h5>
+                                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed dictum ligula, cursus blandit risus. Maecenas eget metus non tellus dignissim aliquam ut a ex. Maecenas sed vehicula dui, ac suscipit lacus.</p>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="doctor-submit float-end">
+                                <a href="javascript:;" class="btn btn-primary submit-form me-2">Send Invoice</a>
+                                <a [href]="URL_SERVICES + '/public/payments/get-invoice-pdf/' + payment_id" target="_blank" class="btn btn-primary cancel-form"><i class="feather icon-printer me-2"></i>Download</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>					
+        </div>
+    </div>
+</div>

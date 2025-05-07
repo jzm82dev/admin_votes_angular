@@ -1,0 +1,884 @@
+
+
+<div class="main-wrapper" id="home">
+
+<app-home-header></app-home-header>
+
+    <!-- Start Banner -->
+    <div class="hero-section auto-height text-center">
+        <div class="container">
+            <div class="hero-wrap">
+                <!-- Profile -->
+                <div class="card-box profile-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="profile-view">
+                                <div class="profile-img-wrap">
+                                    <div class="profile-img">
+                                        <a href="javascript:void(0);"><img class="avatar" [src]="image_preview" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="profile-basic">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="profile-info-left">
+                                                <h3 class="user-name m-t-0 mb-0">{{ name }}</h3>
+                                                <small class="text-muted">Padel club</small>
+                                                <div class="staff-id">Manager : {{ club_manager }}</div>
+                                                <div class="staff-msg"><a [routerLink]="routes.chat" class="btn btn-primary">Send Message</a></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <ul class="personal-info">
+                                                <li>
+                                                    <span class="title">Phone:</span>
+                                                    <span class="text link-profile"><a href="" class="link-profile">{{ mobile }}</a></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Email:</span>
+                                                    <span class="text"><a class="link-profile" href="">{{ email }}</a></span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">Address:</span>
+                                                    <span class="text">{{ address }} ({{ additional_address }})</span>
+                                                </li>
+                                               
+                                                <li>
+                                                    <span class="title">City:</span>
+                                                    <span class="text">{{ city }} </span>
+                                                </li>
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-tabs my-3">
+                    <ul class="nav nav-tabs nav-tabs-bottom">
+                        <li class="nav-item"><a class="nav-link active" href="#schedule" data-bs-toggle="tab">Horario</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#services" data-bs-toggle="tab">Servicios</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#monitors" data-bs-toggle="tab">Monitores</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#bottom-tab3" data-bs-toggle="tab">Booking</a></li>
+                    </ul>
+        
+                    <div class="tab-content">
+                        <div class="tab-pane show active" id="schedule">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card-box">
+                                        
+                                        <div class="experience-box">
+                                            <div class="row center-elements" *ngFor="let day of schedule_hour_days; let i = index;">
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <h5 class="card-title">{{ day.day_name }}</h5>
+                                                    </div>
+                                                
+                                                </div>
+                                                <div class="col-md-6" *ngIf="day.closed">
+                                                    <label class="margin-closed">{{'club_translations.schedule.closed' | translate }} </label>
+                                                </div>
+                                                <div class="col-md-6" *ngIf="!day.closed">
+                                                
+                                                    
+                                                    <div class="row" >
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover mb-0">
+                                                                <thead>
+                                                                    <tr class="text-center">
+                                                                        <th>{{'club_translations.schedule.opens_at' | translate }} </th>
+                                                                        <th>{{'club_translations.schedule.closes_at' | translate }} </th>  
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngFor="let item of day.hours; let i = index">
+                                                                        <td class="text-center">{{ item.opening_time }} h</td>
+                                                                        <td class="text-center">{{ item.closing_time }} h</td>
+                                                                        
+                                                                    </tr>
+                                                                    <tr *ngIf="day.hours.length == 0">
+                                                                        <td colspan="3" class="text-center"> {{'club_translations.schedule.no_schedule_for' | translate }} {{ day.day_name }}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    
+                                                </div>
+                                                <div><hr></div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-box ">
+                                        <h3 class="card-title">Experience</h3>
+                                        <div class="experience-box">
+                                            <ul class="experience-list">
+                                                <li>
+                                                    <div class="experience-user">
+                                                        <div class="before-circle"></div>
+                                                    </div>
+                                                    <div class="experience-content">
+                                                        <div class="timeline-content">
+                                                            <a href="#/" class="name">Consultant Gynecologist</a>
+                                                            <span class="time">Jan 2014 - Present (4 years 8 months)</span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="experience-user">
+                                                        <div class="before-circle"></div>
+                                                    </div>
+                                                    <div class="experience-content">
+                                                        <div class="timeline-content">
+                                                            <a href="#/" class="name">Consultant Gynecologist</a>
+                                                            <span class="time">Jan 2009 - Present (6 years 1 month)</span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="experience-user">
+                                                        <div class="before-circle"></div>
+                                                    </div>
+                                                    <div class="experience-content">
+                                                        <div class="timeline-content">
+                                                            <a href="#/" class="name">Consultant Gynecologist</a>
+                                                            <span class="time">Jan 2004 - Present (5 years 2 months)</span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="services">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card-box">                                        
+                                        <form>
+                                            <div class="settings-form" >
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                                            <h5 class="card-title">{{'club_translations.services.pool' | translate }}</h5>
+                                                            <div class="status-toggle d-flex justify-content-between align-items-center">
+                                                                <input type="checkbox" id="pool" class="check" [(ngModel)]="pool" name="pool">
+                                                                <label for="pool" class="checktoggle">checkbox</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">   
+                                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                                            <h5 class="card-title">{{'club_translations.services.gym' | translate }}</h5>
+                                                            <div class="status-toggle d-flex justify-content-between align-items-center">
+                                                                <input type="checkbox" id="gym" class="check" [(ngModel)]="gym" name="gym">
+                                                                <label for="gym" class="checktoggle">checkbox</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                                            <h5 class="card-title">{{'club_translations.services.playroon' | translate }}</h5>
+                                                            <div class="status-toggle d-flex justify-content-between align-items-center">
+                                                                <input type="checkbox" id="playroom" class="check" [(ngModel)]="playroom" name="playroom">
+                                                                <label for="playroom" class="checktoggle">checkbox</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                                            <h5 class="card-title">{{'club_translations.services.cafe' | translate }}</h5>
+                                                            <div class="status-toggle d-flex justify-content-between align-items-center">
+                                                                <input type="checkbox" id="cafe" class="check" [(ngModel)]="cafe" name="cafe">
+                                                                <label for="cafe" class="checktoggle">checkbox</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                                            <h5 class="card-title">{{'club_translations.services.restaurant' | translate }}</h5>
+                                                            <div class="status-toggle d-flex justify-content-between align-items-center">
+                                                                <input type="checkbox" id="restaurant" class="check" [(ngModel)]="restaurant" name="restaurant">
+                                                                <label for="restaurant" class="checktoggle">checkbox</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                                            <h5 class="card-title">{{'club_translations.services.shop' | translate }}</h5>
+                                                            <div class="status-toggle d-flex justify-content-between align-items-center">
+                                                                <input type="checkbox" id="shop" class="check" [(ngModel)]="shop" name="shop">
+                                                                <label for="shop" class="checktoggle">checkbox</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6" *ngFor="let service of show_sercices">
+                                                        <div class="card-header d-flex justify-content-between align-items-center" 
+                                                            >
+                                                            <h5 class="card-title">{{ service }}</h5>
+                                                            <div class="status-toggle d-flex justify-content-between align-items-center">
+                                                                <input type="checkbox" class="check" checked>
+                                                                <label  class="checktoggle">checkbox</label>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                           
+                
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="tab-pane" id="monitors">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card-box">
+                                        <div class="experience-box">
+                                            <div class="table-responsive">
+                                                <table class="table border-0 custom-table comman-table datatable mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{'monitors.name' | translate }}</th>
+                                                            <th>{{'monitors.email' | translate }}</th>
+                                                            <th >{{'monitors.mobile' | translate }}</th>
+                                                            <th>{{'monitors.sport' | translate }}</th>
+                                                            <th >{{'monitors.created' | translate }}</th>
+                                                            <th ></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let data of monitor_list">
+                                                            <td>{{data.name}} {{data.surname}}</td>
+                                                            <td>{{data.email }}</td>
+                                                            <td>{{data.mobile }}</td>
+                                                            <td>{{ kind_sport[data.sport_type].name }}</td>
+                                                            <td>{{data.created_at}}</td>
+                                                            <td class="text-end" >
+                                                                <div class="dropdown dropdown-action">
+                                                                    <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                                        <a class="dropdown-item"  [routerLink]="[ 'edit', data.id ]" href="#"><i class="fa-solid fa-eye m-r-5"></i> {{'commun_translations.view' | translate }}</a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Prfo-->
+
+
+                    </div>
+                </div>
+                <div class="container-sm" data-aos="fade-up">
+                    <div class="banner">
+                        <!-- <img class="movebounce" src="assets/home/assets/img/1.jpg" alt=""> -->
+                    </div>
+                </div>
+            
+    </div>
+    <!-- End Banner -->
+
+    <!-- Start Profile-->
+    <!-- End Profile -->
+    <div id="features" class="features-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 equal-height">
+
+                    <div class="card-box profile-header">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="profile-view">
+                                    <div class="profile-img-wrap">
+                                        <div class="profile-img">
+                                            <a href="javascript:void(0);"><img class="avatar" src="assets/img/doctor-03.jpg" alt=""></a>
+                                        </div>
+                                    </div>
+                                    <div class="profile-basic">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="profile-info-left">
+                                                    <h3 class="user-name m-t-0 mb-0">Cristina Groves</h3>
+                                                    <small class="text-muted">Gynecologist</small>
+                                                    <div class="staff-id">Employee ID : DR-0001</div>
+                                                    <div class="staff-msg"><a [routerLink]="routes.chat" class="btn btn-primary">Send Message</a></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <ul class="personal-info">
+                                                    <li>
+                                                        <span class="title">Phone:</span>
+                                                        <span class="text"><a href="">770-889-6484</a></span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="title">Email:</span>
+                                                        <span class="text"><a href="">cristinagroves@example.com</a></span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="title">Birthday:</span>
+                                                        <span class="text">3rd March</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="title">Address:</span>
+                                                        <span class="text">714 Burwell Heights Road, Bridge City, TX, 77611</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="title">Gender:</span>
+                                                        <span class="text">Female</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                        
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-tabs">
+                        <ul class="nav nav-tabs nav-tabs-bottom">
+                            <li class="nav-item"><a class="nav-link active" href="#about-cont" data-bs-toggle="tab">About</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#bottom-tab2" data-bs-toggle="tab">Profile</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#bottom-tab3" data-bs-toggle="tab">Messages</a></li>
+                        </ul>
+            
+                        <div class="tab-content">
+                            <div class="tab-pane show active" id="about-cont">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h3 class="card-title">Education Informations</h3>
+                                <div class="experience-box">
+                                    <ul class="experience-list">
+                                        <li>
+                                            <div class="experience-user">
+                                                <div class="before-circle"></div>
+                                            </div>
+                                            <div class="experience-content">
+                                                <div class="timeline-content">
+                                                    <a href="#/" class="name">International College of Medical Science (UG)</a>
+                                                    <div>MBBS</div>
+                                                    <span class="time">2001 - 2003</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="experience-user">
+                                                <div class="before-circle"></div>
+                                            </div>
+                                            <div class="experience-content">
+                                                <div class="timeline-content">
+                                                    <a href="#/" class="name">International College of Medical Science (PG)</a>
+                                                    <div>MD - Obstetrics & Gynaecology</div>
+                                                    <span class="time">1997 - 2001</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-box ">
+                                <h3 class="card-title">Experience</h3>
+                                <div class="experience-box">
+                                    <ul class="experience-list">
+                                        <li>
+                                            <div class="experience-user">
+                                                <div class="before-circle"></div>
+                                            </div>
+                                            <div class="experience-content">
+                                                <div class="timeline-content">
+                                                    <a href="#/" class="name">Consultant Gynecologist</a>
+                                                    <span class="time">Jan 2014 - Present (4 years 8 months)</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="experience-user">
+                                                <div class="before-circle"></div>
+                                            </div>
+                                            <div class="experience-content">
+                                                <div class="timeline-content">
+                                                    <a href="#/" class="name">Consultant Gynecologist</a>
+                                                    <span class="time">Jan 2009 - Present (6 years 1 month)</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="experience-user">
+                                                <div class="before-circle"></div>
+                                            </div>
+                                            <div class="experience-content">
+                                                <div class="timeline-content">
+                                                    <a href="#/" class="name">Consultant Gynecologist</a>
+                                                    <span class="time">Jan 2004 - Present (5 years 2 months)</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+                            <div class="tab-pane" id="bottom-tab2">
+                                Tab content 2
+                            </div>
+                            <div class="tab-pane" id="bottom-tab3">
+                                Tab content 3
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Features -->
+    <div id="features" class="features-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 equal-height">
+                    <div class="feature-list" >
+                        <div class="feature-icon">
+                            <i class="la la-laptop"></i>
+                        </div>
+                        <div class="feature-info">
+                            <h4>Responsive Design</h4>
+                            <p>
+                                Completely responsive, fully functional on ipads, iphones, tablets, and other mobile
+                                phones.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 equal-height"  data-aos-delay="100">
+                    <div class="feature-list">
+                        <div class="feature-icon">
+                            <i class="la la-cube"></i>
+                        </div>
+                        <div class="feature-info">
+                            <h4>Advanced Features</h4>
+                            <p>
+                                Advanced features tools like graphs, charts, invoices, video & audio call's,
+                                projects, etc.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 equal-height"  data-aos-delay="200">
+                    <div class="feature-list">
+                        <div class="feature-icon">
+                            <i class="la la-code"></i>
+                        </div>
+                        <div class="feature-info">
+                            <h4>Clean Codes</h4>
+                            <p>
+                                Well tested, well documented and W3 validated code. Developers can take advantage
+                                immediately.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Features -->
+
+    <!-- Start Demo -->
+    <div id="viewdemos" class="demo-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="container-xs">
+                        <div class="section-heading text-center">
+                            <h2>Multiple Template Options</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row demo-row">
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="demo-wrap aos-init aos-animate" data-aos="fade-up">
+                        <div class="demo-tabs">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a target="_blank" href="https://preclinic.dreamstechnologies.com/html/template/index.html" title="Html Preview">Html5</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a target="_blank" href="https://preclinic.dreamstechnologies.com/laravel/template/public/index" title="Laravel Preview">Laravel</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a target="_blank" href="https://preclinic.dreamstechnologies.com/react/template" title="React Preview">React</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a target="_blank" href="https://preclinic.dreamstechnologies.com/vuejs/template" title="Vuejs Preview">Vuejs</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a target="_blank" href="https://preclinic.dreamstechnologies.com/angular/template" title="Angular Preview">Angular</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a target="_blank" href="https://nodejs.dreamstechnologies.com/preclinic/login" title="Nodejs Preview">NODEJS</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="demo-box">
+                            <a href="template/index.html" target="_blank">
+                            <img class="img-fluid" src="assets/home/assets/img/screen1.jpg" width="735" height="418" alt="Default">
+                            <h3 class="demo-title">Default</h3>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-12">
+                    <div class="demo-wrap aos-init aos-animate" data-aos="fade-up">
+                        <div class="demo-tabs">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a target="_blank" href="https://preclinic.dreamstechnologies.com/html/template-rtl/index.html" title="Html Preview">Html5</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a target="_blank" href="https://preclinic.dreamstechnologies.com/laravel/template-rtl/public/index" title="Laravel Preview">Laravel</a>
+                                </li>
+                                 <li class="nav-item">
+                                    <a target="_blank" href="https://preclinic.dreamstechnologies.com/react/template-rtl" title="React Preview">React</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a target="_blank" href="https://preclinic.dreamstechnologies.com/vuejs/template-rtl" title="Vuejs Preview">Vuejs</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a target="_blank" href="https://preclinic.dreamstechnologies.com/angular/template-rtl" title="Angular Preview">Angular</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a target="_blank" href="https://nodejs.dreamstechnologies.com/preclinic/login" title="Nodejs Preview">NODEJS</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="demo-box">
+                            <a href="template-rtl/index.html" target="_blank">
+                            <img class="img-fluid" src="assets/home/assets/img/screen2.jpg" width="735" height="418" alt="RTL">
+                            <h3 class="demo-title">RTL</h3>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Demo  assets/home/assets/img/-->
+
+    <div id="about" class="about-section">
+        <div class="section-right">
+            <div class="content-table">
+                <div class="table-col" data-aos="fade-left">
+                    <div class="showcase-img"><img src="assets/home/assets/img/screen8.jpg" alt=""></div>
+                </div>
+                <div class="table-col" data-aos="fade-right">
+                    <div class="showcase">
+                        <h3 class="title">Advanced Feature, Chat!</h3>
+                        <p class="desc">Advanced chat option similar to Slack, messaging is much more simpler and
+                            all options available rightaway</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-left">
+            <div class="content-table">
+                <div class="table-col" data-aos="fade-right">
+                    <div class="showcase-img"><img src="assets/home/assets/img/screen9.jpg" alt=""></div>
+                </div>
+                <div class="table-col">
+                    <div class="showcase" data-aos="fade-left" data-aos-duration="2500">
+                        <h3 class="title">Advanced Feature, Video!</h3>
+                        <p class="desc">Video is now a requirement for all business, we are the first to introduce
+                            for backend business</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-right">
+            <div class="content-table">
+                <div class="table-col" data-aos="fade-left">
+                    <div class="showcase-img"><img src="assets/home/assets/img/screen11.jpg" alt=""></div>
+                </div>
+                <div class="table-col" data-aos="fade-right" data-aos-duration="2500">
+                    <div class="showcase">
+                        <h3 class="title">Advanced Feature, Doctors!</h3>
+                        <p class="desc">Doctors are a must have feature in any backend and frontend business with
+                            appointment, and we designed the way you need it.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-left">
+            <div class="content-table">
+                <div class="table-col" data-aos="fade-right">
+                    <div class="showcase-img"><img src="assets/home/assets/img/screen10.jpg" alt=""></div>
+                </div>
+                <div class="table-col" data-aos="fade-left" data-aos-duration="2500">
+                    <div class="showcase">
+                        <h3 class="title">Advanced Feature, Invoice!</h3>
+                        <p class="desc">Invoice is everywhere and all business needs it, we designed the latest and
+                            advanced invoice here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Subscribe -->
+    <div id="customize" class="custom-section">
+        <div class="container">
+            <div class="container-xs">
+                <div class="section-heading text-center" data-aos="zoom-in" data-aos-duration="2000">
+                    <h2>Looking for a custom design?</h2>
+                    <p>We (Dreams Technologies) are happy to customise your products based on your needs, send us
+                        a note!!!</p>
+                </div>
+                <div class="subscribe" data-aos="fade-up" data-aos-duration="2500">
+                    <form id="contact-form" method="post" action="contact.php">
+                        <div class="messages"></div>
+                        <div class="input-group">
+                            <input id="form_email" type="email" placeholder="Enter your e-mail here"
+                                class="form-control" name="email" required="required">
+                            <span class="input-group-addon">
+                                <button type="submit">
+                                    <i class="la la-send"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- End Subscribe -->
+
+    <!-- Start Overview -->
+    <div id="overview" class="overview-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="container-xs" data-aos="fade-up" data-aos-delay="100">
+                        <div class="section-heading text-center">
+                            <h2>Options</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <!-- End Overview -->
+    <!-- Contact Form -->
+    <section class="contact-form-sec">
+        <div class="container">
+            <div class="section-heading text-center">
+                <h2>Request Demo</h2>
+                <p class="sub-title">For Complete Customization and Details on the Full Product</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6 m-auto">
+                    <form method="post" id="contact_form">
+                        <div class="messages"></div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-4">
+                                    <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Full Name" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mb-4">
+                                    <input type="email" id="email" name="email" class="form-control" placeholder="Email" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mb-4">
+                                    <input type="text" id="company_name" name="company_name" class="form-control" placeholder="Company Name" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mb-4">
+                                    <input type="text" id="phone-num" name="phone_num" class="form-control" placeholder="Phone Number" minlength="7" maxlength="15" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group mb-4">
+                                    <textarea type="text" class="form-control" rows="4" name="comments" placeholder="Your Comments here" id="comments" required></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" onclick="emailcreate()" class="button m-auto">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Contact Form -->
+
+    <!-- Start Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="row">
+                    <div class="col-md-4 col-sm-12">
+                        <div class="footer-widget" data-aos="fade-up" data-aos-duration="2500">
+                            <h4>Social Links</h4>
+                            <div class="footer-list">
+                                <ul>
+                                    <li>
+                                        <div class="info-list">
+                                            <a href="https://themeforest.net/user/dreamstechnologies/portfolio" target="_blank"><img src="assets/home/assets/img/themeforest.png" alt="Theme Forest"></a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="info-list">
+                                            <a href="https://codecanyon.net/user/dreamstechnologies/portfolio" target="_blank"><img src="assets/home/assets/img/codecanyon.png" alt="Codecanyon"></a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="info-list social-list">
+                                            <a href="https://www.facebook.com/dreamstechnologies" class="social-icon" target="_blank">
+                                                <i class="la la-facebook"></i>
+                                            </a>
+                                            <a href="https://twitter.com/dreamstechnologies" class="social-icon" target="_blank">
+                                                <i class="la la-twitter"></i>
+                                            </a>
+                                            <a href="https://www.youtube.com/channel/UCNi1cF0PYvQIg3uvxLrd3yA" class="social-icon" target="_blank">
+                                                <i class="la la-youtube"></i>
+                                            </a>
+                                            <a href="https://www.linkedin.com/company/dreamstechnologies" class="social-icon" target="_blank">
+                                                <i class="la la-linkedin"></i>
+                                            </a>
+                                            <a href="https://www.instagram.com/dreamstechnologies" class="social-icon" target="_blank">
+                                                <i class="la la-instagram"></i>
+                                            </a>
+                                            <a href="https://www.behance.net/dreamstechnologies" class="social-icon" target="_blank">
+                                                <i class="la la-behance"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="footer-widget" data-aos="fade-up" data-aos-duration="2500">
+                            <h4>Other Templates</h4>
+                            <div class="footer-list">
+                                <ul>
+                                    <li>
+                                        <div class="info-list">
+                                            <a href="https://themeforest.net/item/preadmin-bootstrap-admin-template/21457074"
+                                                target="_blank">
+                                                <img src="assets/home/assets/img/preadmin.png" alt="Preadmin">
+                                                <span>Preadmin <span class="category">Admin Template</span></span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="info-list">
+                                            <a href="https://themeforest.net/item/medifab-health-medical-html-template/22301706"
+                                                target="_blank">
+                                                <img src="assets/home/assets/img/medifab.png" alt="Medifab">
+                                                <span>Medifab <span class="category">Medical Template</span></span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="info-list">
+                                            <a href="https://themeforest.net/item/dhr-html-mobile-template/22227174"
+                                                target="_blank">
+                                                <img src="assets/home/assets/img/dhr.png" alt="SmartHR">
+                                                <span>SmartHR <span class="category">Mobile Template</span></span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="footer-widget twitter-widget" data-aos="fade-up" data-aos-duration="2500">
+                            <h4>Contact Info</h4>
+                            <div class="footer-list">
+                                <ul>
+                                    <li>
+                                        <div class="info-list">
+                                            <a href="https://dreamstechnologies.com" target="_blank">
+                                                <i class="la la-globe"></i>
+                                                <span>www.dreamstechnologies.com</span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="info-list">
+                                            <a href="mailto:admin@dreamstechnologies.co.in" target="_blank">
+                                                <i class="la la-envelope"></i>
+                                                <span>business@dreamstechnologies.com</span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="info-list">
+                                            <a href="tel:+91 9942576886">
+                                                <i class="la la-whatsapp"></i>
+                                                <span>+91 9942576886</span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Start Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>&copy; Copyright 2023. All Rights Reserved by <a href="#">dreamstechnologies</a></p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="powered-by">
+                            <p>A Product Of <a target="_blank" href="https://dreamstechnologies.com"><img width="187" height="54" alt="dreamstechnologies" src="assets/home/assets/img/footer-logo.svg"></a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Footer Bottom -->
+
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+

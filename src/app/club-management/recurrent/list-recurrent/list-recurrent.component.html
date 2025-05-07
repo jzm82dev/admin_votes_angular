@@ -1,0 +1,216 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">{{'reservations.recurrent.recurrent_booking' | translate }}</a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'reservations.recurrent.list' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        
+        <div class="row">
+            <div class="col-sm-12">
+            
+                <div class="card card-table show-entire">
+                    <div class="card-body">
+                    
+                         <!-- Table Header -->
+                         <div class="page-table-header mb-2">
+                          <div class="row align-items-center">
+                              <div class="col">
+                                  <div class="doctor-table-blk">
+                                      <h3>{{'reservations.recurrent.list_booking' | translate }}</h3>
+                                      <div class="doctor-search-blk">
+                                          <div class="top-nav-search table-search-blk">
+                                                  <input  class="form-control" placeholder="Search here" [(ngModel)]="searchDataValue"
+                                                  (ngModelChange)="searchData(searchDataValue)">
+                                                  <a class="btn"><img src="assets/img/icons/search-normal.svg" alt=""></a>
+                                          </div>
+                                          <div class="add-group">
+                                              
+                                              <a href="javascript:;" (click)="refresh()" class="btn btn-primary doctor-refresh ms-2"><img src="assets/img/icons/re-fresh.svg" alt=""></a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-auto text-end float-end ms-auto download-grp add-group">
+                                <a [routerLink]="routes.addRecurrent" routerLinkActive="router-link-active"  class="btn btn-primary add-pluss ms-2"><img src="assets/img/icons/plus.svg" alt=""></a>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- /Table Header -->
+                        
+                        <div class="table-responsive">
+                            <table matSort (matSortChange)="sortData($event)" class="table border-0 custom-table comman-table datatable mb-0">
+                                <thead>
+                                    <tr>
+                                        <th mat-sort-header="name">{{'reservations.name' | translate }}</th>
+                                        <th mat-sort-header="mobile">{{'reservations.telephone' | translate }}</th>
+                                        <th mat-sort-header="sport">{{'club_translations.sport' | translate }}</th>
+                                        <th mat-sort-header="surname">{{'reservations.court' | translate }}</th>
+                                        <th mat-sort-header="reservation_date">{{'reservations.recurrent.days' | translate }}</th>
+                                        <th mat-sort-header="status">{{'reservations.time' | translate }}</th>
+                                        <th mat-sort-header="joining_date">{{'reservations.recurrent.created' | translate }}</th>
+                                        <th ></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of reservationsList">
+                                        <td>{{data.reservation_owner_name}} </td>
+                                        <td>{{data.reservation_owner_mobile}}</td>
+                                        <td>{{kind_sport[data.sport_type].name}}</td>
+                                        <td>{{data.court_name}}</td>
+                                        <td>{{data.day_name}}</td>
+                                        <td>{{data.start_time}} - {{data.end_time}} h</td>
+                                        <td>{{data.created_at}}</td>
+                                        <td class="text-end" >
+                                            <div class="dropdown dropdown-action">
+                                                <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" *ngIf="hasPermission('edit_reservation')"  [routerLink]="[ 'edit', data.id ]" href="#"><i class="fa-solid fa-pen-to-square m-r-5"></i> {{'commun_translations.edit' | translate }}</a>
+                                                    <a class="dropdown-item" *ngIf="hasPermission('edit_reservation')"  [routerLink]="[ 'view', data.id ]" href="#"><i class="fa-solid fa-eye m-r-5"></i> {{'commun_translations.view' | translate }}</a>
+                                                    <a class="dropdown-item" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#delete_reservation_modal" (click)="selectReservation(data)"><i class="fa fa-trash-alt m-r-5"></i>  {{'commun_translations.remove' | translate }}</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="table_footer">
+                                <div class="col-sm-12 col-md-5">
+                                  <div class="dataTables_info">
+                                    Showing {{ serialNumberArray[0] }} to
+                                    {{ serialNumberArray[serialNumberArray.length - 1] }} of
+                                    {{ totalData }} entries
+                                  </div>
+                                </div>
+                
+                                <div class="col-sm-12 col-md-7">
+                                  <div class="pagination_section">
+                                    <ul class="pagination">
+                                      <li
+                                        class="page-item"
+                                        [ngClass]="{
+                                          disabled: currentPage === 1
+                                        }"
+                                      >
+                                        <a
+                                          (click)="getMoreData('previous')"
+                                          class="page-link"
+                                          href="javascript:void(0);"
+                                          tabindex="-1"
+                                          >Previous</a
+                                        >
+                                      </li>
+                
+                                      <ng-container
+                                        *ngFor="let item of pageNumberArray; let i = index"
+                                      >
+                                        <li
+                                          class="page-item"
+                                          [class.active]="item === currentPage"
+                                          [ngClass]="
+                                            (pageNumberArray[currentPage - 2] > item &&
+                                              item !== 1 &&
+                                              pageNumberArray.length > 6) ||
+                                            (pageNumberArray[currentPage] < item &&
+                                              item !== 1 &&
+                                              pageNumberArray.length > 6 &&
+                                              pageNumberArray.length !== item)
+                                              ? 'hide-page-no'
+                                              : 'show-page-no'
+                                          "
+                                        >
+                                          <a
+                                            (click)="moveToPage(item)"
+                                            class="page-link"
+                                            href="javascript:void(0);"
+                                          >
+                                            {{ item }}
+                                          </a>
+                                        </li>
+                                        <li
+                                          class="page-item"
+                                          *ngIf="
+                                            i === 0 &&
+                                            pageNumberArray.length > 6 &&
+                                            currentPage > 2
+                                          "
+                                          [hidden]="currentPage === 1"
+                                          (click)="moveToPage(currentPage - 2)"
+                                        >
+                                          <a class="page-link" href="javascript:void(0);">
+                                            ...
+                                          </a>
+                                        </li>
+                                        <li
+                                          *ngIf="
+                                            i === pageNumberArray.length - 2 &&
+                                            pageNumberArray.length > 6
+                                          "
+                                          [hidden]="
+                                            currentPage >=
+                                              pageNumberArray[pageNumberArray.length - 2] ||
+                                            totalData <
+                                              serialNumberArray[serialNumberArray.length - 1]
+                                          "
+                                          class="page-item"
+                                          (click)="moveToPage(currentPage + 2)"
+                                        >
+                                          <a class="page-link" href="javascript:void(0);">
+                                            ...
+                                          </a>
+                                        </li>
+                                      </ng-container>
+                
+                                      <li
+                                        class="page-item"
+                                        [ngClass]="{
+                                          disabled:
+                                            currentPage ===
+                                              pageNumberArray[pageNumberArray.length - 1] ||
+                                              reservationsList.length === 0
+                                        }"
+                                      >
+                                        <a
+                                          (click)="getMoreData('next')"
+                                          class="page-link"
+                                          href="javascript:void(0);"
+                                          >Next
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>							
+            </div>					
+        </div>
+    </div>
+</div>
+
+<div id="delete_reservation_modal" class="modal fade delete-modal" role="dialog" >
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-body text-center">
+              <img src="assets/img/sent.png" alt="" width="50" height="46">
+              <h3 *ngIf="reservation_selected" >{{'reservations.recurrent.sure_remove' | translate }} {{ reservation_selected.reservation_owner_name }} de {{ reservation_selected.start_time }} a {{ reservation_selected.end_time }}?</h3>
+              <div class="m-t-20"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebutton>{{'commun_translations.close' | translate }}</a>
+                  <button type="submit" class="btn btn-danger" (click)="removeReservation()">{{'commun_translations.remove' | translate }}</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+ 

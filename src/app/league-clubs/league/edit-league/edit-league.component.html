@@ -1,0 +1,290 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.leagueList">{{'leagues.leagues' | translate }} </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'commun_translations.edit' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="settings-menu-links" >
+            <ul class="nav nav-tabs menu-tabs">
+                <li class="nav-item" [ngClass]="{'active': tab_selected == 1}" >
+                    <a href="#" onclick="return false;" class="nav-link" (click)="tabSeleted(1)">{{'leagues.tabs.general_data' | translate }}</a>
+                </li>
+                <li class="nav-item" [ngClass]="{'active': tab_selected == 2}">
+                    <a *ngIf="id_league != 0" href="#" onclick="return false;" class="nav-link" (click)="tabSeleted(2)">{{'leagues.categories' | translate }}</a>
+                    <a *ngIf="id_league == 0" class="nav-link">{{'leagues.categories' | translate }}</a>
+                </li>
+                <li class="nav-item" [ngClass]="{'active': tab_selected == 3}">
+                    <a *ngIf="id_league != 0" class="nav-link" [routerLink]="[ '/leagues/all-players', id_league ]">{{'tournaments.payments' | translate }}</a>
+                    <a *ngIf="id_league == 0" class="nav-link">{{'tournaments.payments' | translate }}</a>
+                </li>
+                
+            </ul>
+        </div>
+        <!-- /Page Header -->
+        <div class="row" *ngIf="tab_selected == 1">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>{{'leagues.data' | translate }}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'leagues.league_name' | translate }}<span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="name" name="name" type="text" >
+                                    </div>
+                                </div>
+                               
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'leagues.day_start' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control datetimepicker" [(ngModel)]="date_start" name="date_start" type="text"  placeholder="" matInput [matDatepicker]="picker">
+                                        <mat-datepicker #picker></mat-datepicker>
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-3 col-xl-3">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'tournaments.price' | translate }}<span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="price" name="price" type="number"  >
+                                    </div>
+                                </div>    
+
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'club_translations.sport' | translate }} <span class="login-danger">*</span></label>
+                                        <mat-select [(ngModel)]="type_sport" [ngModelOptions]="{standalone: true}"  class="form-control select"  placeholder="{{'club_translations.select_sport_type' | translate }}">
+                                            <mat-option *ngFor="let data of kind_sport" [value]="data.id">
+                                                {{data.name}}
+                                                </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-4 col-xl-4" *ngIf="type_sport == '2'">
+                                    <div class="form-group local-forms">
+                                        <label >{{'club_translations.type_match' | translate }} <span class="login-danger">*</span></label>
+                                        <mat-select [(ngModel)]="match_type_id" [ngModelOptions]="{standalone: true}"  class="form-control select"  placeholder="{{'club_translations.select_type' | translate }}">
+                                            <mat-option *ngFor="let data of match_types" [value]="data.id">
+                                                {{data.name}}
+                                                </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>{{'club_translations.points' | translate }}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'leagues.points_for_winning' | translate }} 2-0<span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="points_per_win_2_0" name="points_per_win_2_0" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'leagues.points_set_winning_loser' | translate }} 0-2<span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="points_per_lost_0_2" name="points_per_lost_0_2" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'leagues.points_for_winning' | translate }} 2-1<span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="points_per_win_2_1" name="points_per_win_2_1" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'leagues.points_set_winning_loser' | translate }} 1-2<span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="points_per_lost_1_2" name="points_per_lost_1_2" type="text"  >
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="col-12 col-md-6 col-xl-6 " >
+                                    <div class="form-group local-top-form">
+                                        <label class="local-top">{{'leagues.logo' | translate }} </label>
+                                        <div class="settings-btn upload-files-avator">
+                                            <input type="file" accept="image/*" name="image" id="file"  (change)="loadFile($event)" class="hide-input">
+                                            <label for="file" class="upload">{{'leagues.form_select_img' | translate }}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="" *ngIf="image_preview">
+                                    <img [src]="image_preview" alt="" width="150px" height="150px">
+                                </div>
+                               
+                                <div class="col-12">
+                                    <div class="doctor-submit text-end">
+                                        <button type="submit" class="btn btn-primary cancel-form" [routerLink]="routes.leagueList">{{'commun_translations.come_back' | translate }}</button>&nbsp;
+                                        <button type="button" class="btn btn-primary submit-form me-2" *ngIf="hasPermission('edit_league') && matchs_finished == 0" (click)="save()">{{'commun_translations.save' | translate }}</button>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                        <strong>{{'commun_translations.error' | translate }} </strong> {{ error_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                        <ul *ngIf="message_errors.length > 0">
+                                            <li *ngFor="let error of message_errors">{{ error }}</li>
+                                        </ul>
+                                      </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="success_message != ''">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>{{'commun_translations.success' | translate }} </strong> {{ success_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="tab_selected == 2">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <!-- Categories -->
+                            <ng-container>
+
+                                <div class="row my-4">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title">{{'leagues.categories' | translate }}</h5>
+                                    </div>
+                                    <form>
+
+                                        <div class="row">
+                                            <div class="col-12 col-md-4 col-xl-4" *ngIf="hasPermission('edit_league')">
+
+                                                <div class="row settings-form">
+                                                    <div class="col-9 ">  
+                                                            <div class="form-group local-forms">
+                                                                <label >{{'leagues.name' | translate }}  <span class="login-danger">*</span></label>
+                                                                <input  class="form-control" [(ngModel)]="name_category" name="name_category" type="text" placeholder="" >
+                                                            </div>
+                                                    </div>
+                                                    <div class="form-group local-forms">
+                                                        <div class="doctor-submit ">
+                                                            <button type="button" class="btn btn-primary submit-form me-2" (click)="addCategory()">{{'leagues.add' | translate }} </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col-12 col-md-8 col-xl-8 settings-form">
+
+                                                <div class="table-responsive">
+                                                    <table class="table mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>{{'leagues.categories' | translate }} ({{'leagues.couples' | translate }})</th>
+                                                                <th *ngIf="can_edit == true">{{'commun_translations.remove' | translate }}</th>
+                                                                <th *ngIf="can_edit == true">{{'leagues.setting' | translate }}</th>
+                                                                <th *ngIf="can_edit == false">{{'commun_translations.view' | translate }}</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <ng-container *ngFor="let item of categories_list; let i = index;">
+                                                                <tr class="align-items-center table-primary">
+                                                                    <td>
+                                                                        {{item.name}} ({{ item.total_couple }})
+                                                                    </td>
+                                                                    <td *ngIf="can_edit == true">
+                                                                        <a  data-bs-toggle="modal" data-bs-target="#delete_category" href="#" onclick="return false;" (click)="selectCategory( item, i)" class="btn trash trash-style">
+                                                                            <i class="feather icon-trash-2 service"></i></a>
+                                                                    </td>
+                                                                    <td *ngIf="can_edit == true">
+                                                                        <a [routerLink]="[ '/category/data', item.id, 1 ]" href="#" class="btn trash trash-style">
+                                                                            <img src='assets/img/icons/menu-icon-16.svg' alt="" /></a>
+                                                                    </td>
+                                                                    <td *ngIf="can_edit == false">
+                                                                        <a [routerLink]="[ '/category/data', item.id, 1 ]" href="#" class="btn trash trash-style">
+                                                                            <img src='assets/img/icons/menu-icon-16.svg' alt="" /></a>
+                                                                    </td>
+                                                                </tr>
+                                                            </ng-container>
+                                                            
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 my-4" *ngIf="error_message_category != ''">
+                                        <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                            <strong>{{'commun_translations.error' | translate }}</strong> {{ error_message_category }}
+                                            <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                                <span aria-hidden="true"> </span>
+                                            </button>
+                                            <ul *ngIf="message_errors_category.length > 0">
+                                                <li *ngFor="let error of message_errors_category">{{ error }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 my-4" *ngIf="success_message_category != ''">
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <strong>{{'commun_translations.success' | translate }}</strong> {{ success_message_category }}
+                                            <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                                <span aria-hidden="true"> </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                        </form>
+                    </div>
+                </div>							
+            </div>					
+        </div>
+    </div>
+</div>
+
+<div id="delete_category" class="modal fade delete-modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="assets/img/sent.png" alt="" width="50" height="46">
+                <h3 *ngIf="league_selected" >{{'tournaments.sure_delete_category' | translate }} {{ category_selected_name }}?</h3>
+                <div class="m-t-20"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebutton>Cerrar</a>
+                    <button type="submit" class="btn btn-danger" (click)="deleteCategory()">Borrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+ 
+
+

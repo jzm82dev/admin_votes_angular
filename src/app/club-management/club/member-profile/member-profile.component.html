@@ -1,0 +1,83 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <div class="row">
+            <div class="col-sm-7 col-6">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a [routerLink]="routes.memberList">{{'members.members' | translate }} </a></li>
+                    <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                    <li class="breadcrumb-item active">{{'members.new_member' | translate }}</li>
+                </ul>
+            </div>
+            <!--
+            <div class="col-sm-5 col-6 text-end m-b-30">
+                <a [routerLink]="routes.editProfile" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Edit Profile</a>
+            </div>
+            -->
+        </div>
+        <div class="card-box profile-header">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-view">
+                        <div class="profile-img-wrap">
+                            <div class="profile-img">
+                                <a href="javascript:void(0);"><img class="avatar" [src]="image_preview" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="profile-basic">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="profile-info-left">
+                                        <h3 class="user-name m-t-0 mb-0">{{ name }} {{ surname }}</h3>
+                                        <!-- <small class="text-muted">Gynecologist</small> -->
+                                        <div class="staff-id">{{'leagues.category' | translate }} : 4ª</div>
+                                        <div class="staff-msg" *ngIf="status_member == 'PENDING'">
+                                            <a (click)="accept(club_user_id)" class="btn btn-success">{{'commun_translations.accept' | translate }}</a>&nbsp;&nbsp;
+                                            <a (click)="cancel(club_user_id)" class="btn btn-warning">{{'commun_translations.refuse' | translate }}</a>
+                                        </div>
+                                        <div class="staff-msg" *ngIf="status_member == 'ACCEPT'">
+                                            <p class="custom-badge status-green" href="javascript:void(0);" >
+                                                {{status_member}}
+                                            </p>
+                                        </div>
+                                        <div class="staff-msg" *ngIf="status_member == 'CANCELED'">
+                                            <p class="custom-badge status-orange" href="javascript:void(0);" >
+                                                {{status_member}}
+                                            </p>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <ul class="personal-info">
+                                        <li>
+                                            <span class="title">{{'club_translations.club_information.form_mobile' | translate }}:</span>
+                                            <span class="text"><a href="">{{ mobile }}</a></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">{{'club_translations.club_information.form_email' | translate }}:</span>
+                                            <span class="text"><a href="">{{ email }}</a></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">{{'members.birthday' | translate }}:</span>
+                                            <span class="text">{{ birthday | date: 'dd/MM/yyyy' }}</span>
+                                        </li>
+                                        <li>
+                                            <span class="title">{{'members.gender' | translate }}:</span>
+                                            <span class="text">{{ gender_name }}&nbsp;</span>
+                                        </li>
+                                        <li>
+                                            <span class="title">{{'members.points' | translate }}:</span>
+                                            <span class="text">714</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                        
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</div>

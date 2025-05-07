@@ -1,0 +1,85 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+     
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-heading">
+                                    <h4>{{'members.your_clubs' | translate }}</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table matSort  class="table border-0 custom-table comman-table datatable mb-0">
+                                <thead>
+                                    <tr>
+                                        
+                                        <th mat-sort-header="clubName">{{'members.name' | translate }}</th>
+                                        <th mat-sort-header="clubMobile">{{'members.mobile' | translate }}</th>
+                                        <th mat-sort-header="email">{{'members.email' | translate }}</th>
+                                        <th mat-sort-header="city">{{'members.city' | translate }}</th>
+                                        <th mat-sort-header="joiningDate">{{'members.joining_date' | translate }}</th>
+                                        <th mat-sort-header="status">{{'members.status' | translate }}</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let club of my_clubs">
+                                        
+                                        <td>{{club.name}}</td>
+                                        <td>{{club.mobile}}	</td>
+                                        <td>{{club.email}}	</td>
+                                        <td>{{club.city}}	</td>
+                                        <td>{{club.date_joined | date: 'dd/MM/yyyy'}}</td>
+                                        <td>
+                                            <p class="custom-badge status-green" href="javascript:void(0);" >
+                                                {{'commun_translations.accept' | translate }}
+                                            </p>
+                                        </td>
+                                        <td class="text-end">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#delete_club_member" (click)="selectClubMember(club.club_user_id, club.name)"><i class="fa fa-trash-alt m-r-5"></i> Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="my_clubs.length == 0">
+                                        <td colspan="7" class="text-center"> {{'members.no_member_currently' | translate }}. </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                        
+               
+            </div>
+        </div>
+       
+
+    </div>
+</div>
+
+<div id="delete_club_member" class="modal fade delete-modal" role="dialog" >
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="assets/img/sent.png" alt="" width="50" height="46">
+                <h3 *ngIf="club_member_selected" >Estás seguro de borrarte de&nbsp; {{ club_remove }}?</h3>
+                <div class="m-t-20"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebutton>Close</a>
+                    <button type="submit" class="btn btn-danger" (click)="removeClubMember()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

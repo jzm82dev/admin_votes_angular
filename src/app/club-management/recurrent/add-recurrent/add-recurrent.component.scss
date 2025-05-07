@@ -1,0 +1,33 @@
+th{
+    font-weight: normal;
+}
+
+
+.table-th{
+    color: #ffd3b6;
+}
+
+.table-td{
+    color: gray;
+    border: none;
+}
+
+
+dl{
+    text-align: left;
+    color: #213d90;
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+li{
+    cursor: pointer;
+    color: #333448;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.transparent {
+    opacity: 0;
+    cursor: none;
+}

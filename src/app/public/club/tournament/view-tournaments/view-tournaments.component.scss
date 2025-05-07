@@ -1,0 +1,180 @@
+.time{
+    color: gray;
+    font-size: 14px;
+    --rootFontFamily: Open Sans, Roboto, sans-serif;
+    text-decoration-line: underline;
+}
+
+.test{
+    z-index: 100000;
+}
+
+.no-upper {
+    text-transform: none !important;
+    margin-right: 25px !important;
+    font-weight: normal;
+}
+
+.no-upper a{
+    font-weight: bold;
+}
+
+p{
+    margin: 0px 0 -10px !important
+}
+
+
+.display-none {
+    display: none;
+}
+
+.display-inline {
+    display: inline;
+}
+
+table, th, td {
+    border: 1px solid black;
+     vertical-align: middle;
+  }
+
+
+.dif{
+  color: green;
+}
+
+
+.subtitle {
+  font-size: 23px ;
+  color: #9ab2d6 ;
+}
+
+.points {
+  font-weight: bold;
+  color: black;
+}
+
+
+
+.player{
+    cursor: pointer;
+    font-size: 14px;
+    --rootFontFamily: Open Sans, Roboto, sans-serif;
+    color: #2e37a4; 
+}
+
+.background{
+    background-color: rgba(46, 55, 164, 0.05);
+    border:1px solid #cdcbcb;
+}
+
+.player:hover {
+    color: #0066ff;
+}
+
+
+
+.border{
+    border:1px solid #333448;
+}
+
+hr{
+    border:1px solid #333448;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.center {
+    margin: auto;
+}
+
+p{
+    margin-top: 10px;;
+    margin-bottom: 5px;
+    font-size: 15px;
+    --rootFontFamily: Open Sans, Roboto, sans-serif;
+    color: gray;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.uppecase {
+  text-transform: uppercase !important;
+}
+
+.legs{
+    margin-top: 10px !important;;;
+    margin-bottom: 5px !important;;
+    font-size: 20px !important;;
+    font-weight: bold !important;;
+    --rootFontFamily: Open Sans, Roboto, sans-serif !important;;
+    color: #0066ff !important;
+    text-transform: uppercase !important;
+}
+
+span{
+    color: gray;
+    font-size: 14px;
+    --rootFontFamily: Open Sans, Roboto, sans-serif;
+  //  text-decoration-line: underline;
+}
+
+.looser{
+    opacity: 0.54;
+}
+
+.color_1{
+    background-color: #d8dde2 !important
+}
+
+.color_2{
+    background-color: #efefef !important;
+}
+
+
+.div-square{
+    border-style: solid;
+    border-color: white;
+}
+
+.bold{
+    font-weight: bold;
+    color: black;
+}
+
+.border{
+    border:1px solid #cdcbcb;
+}
+
+.couple-selected{
+    font-weight: bold;
+    color: green;
+    font-style: italic;
+}
+
+.couple-selected:hover{
+    font-weight: bold;
+    color: rgb(63, 199, 63);
+    font-style: italic;
+}
+
+
+@media screen and (max-width: 480px) { 
+    .hide-mobile { 
+      display: none !important; 
+    } 
+    th{
+      font-size: 14px !important;
+    }
+    td{
+      font-size: 14px !important;
+    }
+    li{
+      font-size: 14px !important;
+    }
+  }
+
+  @media screen and (min-width: 481px) { 
+    .hide-desktop { 
+      display: none !important; 
+    } 
+  }

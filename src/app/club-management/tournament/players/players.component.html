@@ -1,0 +1,292 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.staffList">{{'leagues.category' | translate }} </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'leagues.update' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="settings-menu-links" >
+            <ul class="nav nav-tabs menu-tabs">
+                <li class="nav-item" >
+                    <a class="nav-link" [routerLink]="[ '/tournament/data', tournament_id, 1 ]">{{'leagues.tabs.general_data' | translate }}</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" [routerLink]="[ '/tournament/data', tournament_id, 2 ]">{{'tournaments.schedule' | translate }}</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" [routerLink]="[ '/tournament/data', tournament_id, 3 ]">{{'leagues.categories' | translate }}</a>
+                </li>
+                <li class="nav-item " >
+                    <a class="nav-link" [routerLink]="[ '/category/draw/all-matchs', tournament_id ]">{{'tournaments.match_schedule' | translate }}</a>
+                </li> 
+                <li class="nav-item active" >
+                  <a class="nav-link" [routerLink]="[ '/category/draw/all-players', tournament_id ]">{{'tournaments.payments' | translate }}</a>
+              </li>
+            </ul>
+        </div>
+        <!-- End Page Header -->
+
+        <div class="row" *ngIf="isLoaded == true">
+            <div class="col-sm-12">
+            
+                <div class="card card-table show-entire">
+                    <div class="card-body">
+                    
+                        <!-- Table Header -->
+                        <div class="page-table-header mb-2">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="doctor-table-blk">
+                                        <h3>{{'tournaments.players' | translate }}</h3>
+                                        <div class="doctor-search-blk">
+                                            
+                                            <div class="add-group">
+                                                <a class="btn btn-primary doctor-refresh ms-2" (click)="refresh()"><img src="assets/img/icons/re-fresh.svg" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto text-end float-end ms-auto download-grp">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="staff-search-table">
+                            <form>
+                                <div class="row">
+                                    <div class="col-12 col-md-6 col-xl-4">  
+                                        <div class="form-group local-forms">
+                                            <label >{{'tournaments.player_name' | translate }} </label>
+                                            <input class="form-control" [(ngModel)]="searchDataPlayer" name="name_patient" id="name_patient" type="text"  >
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-xl-4">  
+                                        <div class="form-group local-forms">
+                                            <label >{{'tournaments.payment_status' | translate }} </label>
+                                            <mat-select [(ngModel)]="payment_status" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'tournaments.select_status' | translate }}">
+                                              <mat-option value="0">...</mat-option>
+                                              <mat-option value="PENDING">{{'tournaments.payment_pending' | translate }}</mat-option>
+                                              <mat-option value="PAID">{{'tournaments.payment_paid' | translate }}</mat-option>
+                                          </mat-select>
+                                        </div>
+                                    </div>                                
+                                    <div class="col-12 col-md-6 col-xl-4">  
+                                        <div class="form-group local-forms">
+                                            <label >{{'tournaments.category' | translate }} </label>
+                                            <mat-select [(ngModel)]="category_id" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'tournaments.select_category' | translate }}">                                              
+                                                <mat-option *ngFor="let category of categories_list" [value]="category.id">
+                                                    {{category.name}}
+                                                    </mat-option>                                              
+                                          </mat-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-xl-4">
+                                        <div class="doctor-submit">
+                                            <button type="submit" class="btn btn-primary submit-list-form me-2" (click)="filter()">{{'tournaments.search' | translate }}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /Table Header -->
+                         <br>
+                        
+                        <div class="table-responsive staff-search-table">
+                            <table matSort (matSortChange)="sortData($event)" class="table mb-0 table-striped my-4">
+                                <thead>
+                                    <tr>
+                                        <th class="color_2">{{'tournaments.name' | translate }}</th>
+                                        <th class="color_2">{{'tournaments.category' | translate }}</th>
+                                        <th class="color_2">{{'tournaments.status' | translate }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let player of playersList">
+                                        <td>{{ player.player_name }} {{ player.player_surname }}</td>
+                                        <td> {{ player.name }} </td>
+                                        <td *ngIf="player.paid_status == 'PAID'">
+                                            <div class="dropdown action-label">
+                                                <a class="btn btn-sm btn-success custom-badge dropdown-toggle" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">
+                                                  {{'tournaments.payment_paid' | translate }}
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end status-staff">
+                                                    <a class="dropdown-item cursor-pointer" (click)="unpaidTournament(player.id)">{{'commun_translations.cancel' | translate }}</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td *ngIf="player.paid_status == 'PENDING'">
+                                            <div class="dropdown action-label">
+                                                <a class="status-red custom-badge  dropdown-toggle" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    {{'members.pending' | translate }}
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end status-staff">
+                                                    <a class="dropdown-item cursor-pointer" (click)="paidTournament(player.id)">{{'tournaments.payment_paid' | translate }}</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="table_footer">
+                                <div class="col-sm-12 col-md-5">
+                                  <div class="dataTables_info">
+                                    Showing {{ serialNumberArray[0] }} to
+                                    {{ serialNumberArray[serialNumberArray.length - 1] }} of
+                                    {{ totalData }} entries
+                                  </div>
+                                </div>
+                
+                                <div class="col-sm-12 col-md-7">
+                                  <div class="pagination_section">
+                                    <ul class="pagination">
+                                      <li
+                                        class="page-item"
+                                        [ngClass]="{
+                                          disabled: currentPage === 1
+                                        }"
+                                      >
+                                        <a
+                                          (click)="getMoreData('previous')"
+                                          class="page-link"
+                                          href="javascript:void(0);"
+                                          tabindex="-1"
+                                          >Previous</a
+                                        >
+                                      </li>
+                
+                                      <ng-container
+                                        *ngFor="let item of pageNumberArray; let i = index"
+                                      >
+                                        <li
+                                          class="page-item"
+                                          [class.active]="item === currentPage"
+                                          [ngClass]="
+                                            (pageNumberArray[currentPage - 2] > item &&
+                                              item !== 1 &&
+                                              pageNumberArray.length > 6) ||
+                                            (pageNumberArray[currentPage] < item &&
+                                              item !== 1 &&
+                                              pageNumberArray.length > 6 &&
+                                              pageNumberArray.length !== item)
+                                              ? 'hide-page-no'
+                                              : 'show-page-no'
+                                          "
+                                        >
+                                          <a
+                                            (click)="moveToPage(item)"
+                                            class="page-link"
+                                            href="javascript:void(0);"
+                                          >
+                                            {{ item }}
+                                          </a>
+                                        </li>
+                                        <li
+                                          class="page-item"
+                                          *ngIf="
+                                            i === 0 &&
+                                            pageNumberArray.length > 6 &&
+                                            currentPage > 2
+                                          "
+                                          [hidden]="currentPage === 1"
+                                          (click)="moveToPage(currentPage - 2)"
+                                        >
+                                          <a class="page-link" href="javascript:void(0);">
+                                            ...
+                                          </a>
+                                        </li>
+                                        <li
+                                          *ngIf="
+                                            i === pageNumberArray.length - 2 &&
+                                            pageNumberArray.length > 6
+                                          "
+                                          [hidden]="
+                                            currentPage >=
+                                              pageNumberArray[pageNumberArray.length - 2] ||
+                                            totalData <
+                                              serialNumberArray[serialNumberArray.length - 1]
+                                          "
+                                          class="page-item"
+                                          (click)="moveToPage(currentPage + 2)"
+                                        >
+                                          <a class="page-link" href="javascript:void(0);">
+                                            ...
+                                          </a>
+                                        </li>
+                                      </ng-container>
+                
+                                      <li
+                                        class="page-item"
+                                        [ngClass]="{
+                                          disabled:
+                                            currentPage ===
+                                              pageNumberArray[pageNumberArray.length - 1] ||
+                                              playersList.length === 0
+                                        }"
+                                      >
+                                        <a
+                                          (click)="getMoreData('next')"
+                                          class="page-link"
+                                          href="javascript:void(0);"
+                                          >Next
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>							
+            </div>					
+        </div>
+
+
+    <!-- 
+        <div class="row">
+            <div class="col-12">
+                <div class="card-box">
+                    <div class="card-block">
+
+                        <h4 class="card-title">Partidos pendiente de jugar</h4>
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Pareja</th>
+                                        <th>Resultado</th>
+                                        <th>Categoría</th>
+                                        <th>Fecha</th>
+                                        <th>Pista</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let match of players">
+                                        <td> <span *ngFor="let player of match.local_players">{{player.title}} - </span> <br>
+                                             <span *ngFor="let player of match.visiting_players">{{player.title}} - </span>
+                                        </td>
+                                        <td>{{match.result}}</td>
+                                        <td>{{match.category_name}}</td>
+                                        <td>{{match.time}}</td>
+                                        <td>{{match.court_name}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    -->
+
+
+
+    </div>
+</div>

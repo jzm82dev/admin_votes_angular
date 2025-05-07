@@ -1,0 +1,253 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.teamList">Equipos </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">Editar Equipo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>Datos</h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">  
+                                    <div class="form-group local-forms">
+                                        <label >Nombre<span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="name" name="name" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">
+                                    <div class="form-group local-forms">
+                                        <label >Descripción</label>
+                                        <input class="form-control" [(ngModel)]="description" name="description" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >Club <span class="login-danger">*</span></label>
+                                            <mat-select [disabled]="player_team_list.length > 0" [(ngModel)]="club_id" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Selecciona club">
+                                                <mat-option *ngFor="let data of club_list" [value]="data.id">
+                                                {{ data.name }}
+                                                </mat-option>
+                                            </mat-select>
+                                    
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >Liga <span class="login-danger">*</span></label>
+                                            <mat-select [disabled]="player_team_list.length > 0" [(ngModel)]="league_id" [ngModelOptions]="{standalone: true}" class="form-control select" (selectionChange)="changeLeague($event.value)" placeholder="Selecciona liga">
+                                                <mat-option *ngFor="let data of league_list" [value]="data.id">
+                                                {{ data.name }}
+                                                </mat-option>
+                                            </mat-select>
+                                    
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >Categoría <span class="login-danger">*</span></label>
+                                            <mat-select [disabled]="player_team_list.length > 0" [(ngModel)]="category_id" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Selecciona categoría">
+                                                <mat-option *ngFor="let data of category_list" [value]="data.id">
+                                                {{ data.name }}
+                                                </mat-option>
+                                            </mat-select>
+                                    
+                                    </div>
+                                </div>
+                               
+                               
+                                <div class="col-12">
+                                    <div class="doctor-submit text-end">
+                                        <button type="button" class="btn btn-primary submit-form me-2" (click)="save()">GUARDAR</button>
+                                        <button type="submit" [routerLink]="routes.teamList" class="btn btn-primary cancel-form">Volver</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                        <strong>Error!</strong> {{ error_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                      </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="success_message != ''">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>Bien!</strong> {{ success_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </form>
+                    </div>
+                </div>	
+                
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row" *ngIf="id_team != '' ">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>Jugadores</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12 col-md-6 col-xl-6" *ngIf="player_team_list.length > 0">
+                                <table matSort  class="table border-0 custom-table comman-table datatable mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th mat-sort-header="name">Nombre</th>
+                                            <th mat-sort-header="surname">Apellidos</th>
+                                            <th mat-sort-header="mobile">Teléfono</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let player of player_team_list">
+                                            <td class="profile-image"><img width="28" height="28" [src]="player.avatar ? player.avatar : 'assets/img/profiles/avatar-01.jpg'" class="rounded-circle m-r-5" alt=""> {{player.name}}</td>
+                                            <td>{{player.surname}}</td>
+                                            <td>{{player.mobile}}</td>
+                                            <td class="text-end">
+                                                <div class="dropdown dropdown-action">
+                                                    <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <a class="dropdown-item"  href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#delete_player_modal" (click)="selectPLayer(player)"><i class="fa fa-trash-alt m-r-5"></i> Borrar</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12 my-4" *ngIf="text_modal_invalid != ''">
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                    <strong>Error!</strong> {{ text_modal_invalid }}
+                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                  </div>
+                            </div>
+                            <div class="col-md-12 my-4" *ngIf="text_modal_success != ''">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Bien!</strong> {{ text_modal_success }}
+                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-xl-6" *ngIf="player_team_list.length == 0">
+                                <p>(*) Equipo actualmente sin jugadores</p>
+                            </div>
+                            <div class="row my-4">
+                                <td>
+                                    <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#add_player_modal" >Añadir jugador</button>
+                                </td>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- POPUP -->
+                            
+                <div id="add_player_modal" class="modal fade delete-modal" role="dialog" >  
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body text-center">
+                              <div class="row">
+                                  <div class="col-12 col-md-12 col-xl-12" > 
+                                    <h3>Selecciona jugadores</h3>
+                                  </div>
+                                </div>
+                                </div>
+
+                                <div class="row my-4">
+                                  <!--<div class="col-12 col-md-12 col-xl-6 "> 
+                                      <div class="form-group local-forms">
+                                          <label >Prepayment <span class="login-danger">*</span></label>
+                                          <input class="form-control" [(ngModel)]="amount_prepayment" name="amount_prepayment" type="number" placeholder="" >
+                                      </div>
+                                  </div> -->
+                                  <div class="col-12 col-md-12 col-xl-12">
+                                      <div class="form-group local-forms">
+                                        <div class="table-responsive">
+                                            <table matSort class="table border-0 custom-table comman-table datatable mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th mat-sort-header="checkbox">
+                                                            <div class="form-check check-tables">
+                                                                <input class="form-check-input" type="checkbox"  value="something">
+                                                            </div>
+                                                        </th>
+                                                        <th mat-sort-header="department">Nombre</th>
+                                                        <th mat-sort-header="departmentHead">Apellidos</th>
+                                                        <th mat-sort-header="description">Teléfono</th>
+                                                        <th ></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let data of player_list">
+                                                        <td *ngIf="data.isAvailable == true">
+                                                            <div class="form-check check-tables">
+                                                                <input class="form-check-input" type="checkbox" value="{{data.id}}" (click)="selectPlayers(data)">
+                                                            </div>
+                                                        </td>
+                                                        <td *ngIf="data.isAvailable == false"></td>
+                                                        <td>{{data.name}}</td>
+                                                        <td>{{data.surname}}</td>
+                                                        <td>{{data.mobile}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                      </div>
+                                  </div>
+                                </div>
+
+                                <div class="m-t-20 text-center"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebuttonAddPLayer>Cerrar</a>
+                                    <button *ngIf="text_modal_success=='' " type="submit" style="width: auto;" class="btn btn-primary text-white" (click)="addPlayerTeam()">Añadir</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                <!-- END POPUP -->
+
+                <div id="delete_player_modal" class="modal fade delete-modal" role="dialog" >
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body text-center">
+                                <img src="assets/img/sent.png" alt="" width="50" height="46">
+                                <h3 *ngIf="team_selected" >Estás seguro de querer eliminar a {{ player_name_delected }} ?</h3>
+                                <div class="m-t-20"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebutton>Close</a>
+                                    <button type="submit" class="btn btn-danger" (click)="deletePlayerSelected()">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+
+            </div>					
+        </div>
+    </div>
+</div>
+ 
+
+

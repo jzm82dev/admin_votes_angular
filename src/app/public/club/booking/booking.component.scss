@@ -1,0 +1,300 @@
+
+
+
+table {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+  td {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    word-wrap: break-word;
+  }
+  
+  
+  th{
+      text-align: center;
+      border: none;
+  }
+    
+    .color-gray{
+      background-color: gray !important;
+      border: none;
+    }
+  
+    h3{
+      color: rgb(201, 189, 189);
+    }
+  
+    p{
+      text-align: left;
+      color: #3f4f84;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 0;
+      text-transform: uppercase;
+    }
+  
+    .color-red{
+      background-color: #ffd3b6 ;
+      border-top: none;
+      border-bottom: none;
+      cursor: pointer;
+    }
+  
+    .color-red-first{
+      background-color: #ffd3b6 ;
+      border-bottom: none;
+      cursor: pointer;
+    }
+  
+   
+  
+    .reservation_schedule{
+      text-align: left;
+      color: #213d90  !important;
+      font-size: 12px !important;
+      margin-left: 20px;
+    }
+  
+    .recurrent-booking{
+      border-left: 3px solid #f6f4f4 !important;
+      background-color: #FFD1D3 ;
+      border-bottom: none;
+      cursor: pointer;
+    }
+  
+    .recurrent-booking-first{
+      border-left: 3px solid #f6f4f4 !important;
+      border-top: 3px solid #f6f4f4 !important;
+      background-color: #FFD1D3 ;
+      border-bottom: none;
+      cursor: pointer;
+    }
+  
+    
+    .border-td {
+      padding: 10px;
+      border: 3px solid #f6f4f4 ;
+      border-collapse: collapse;
+      background-color: #FFFFFF ;
+      cursor: pointer;
+    }
+  
+    .one-time-booking{
+      background-color: #98affc ;
+      border-top: none;
+      border-bottom: none;
+      border-right: 3px solid #f6f4f4 !important;
+      border-left: 3px solid #f6f4f4 !important;
+      cursor: pointer;
+    }
+  
+    .one-time-booking-first{
+      border-left: 3px solid #f6f4f4 !important;
+      border-top: 3px solid #f6f4f4 !important;
+      background-color: #98affc ;
+      border-bottom: none;
+      cursor: pointer;
+    }
+  
+    .class-lesson-booking{
+      background-color: #f5e5c8 ;
+      border-top: none;
+      border-bottom: none;
+      border-right: 3px solid #f6f4f4 !important;
+      border-left: 3px solid #f6f4f4 !important;
+      cursor: pointer;
+    }
+  
+    .class-lesson-booking-first{
+      border-left: 3px solid #f6f4f4 !important;
+      border-right: 3px solid #f6f4f4 !important;
+      border-top: 3px solid #f6f4f4 !important;
+      background-color: #f5e5c8 ;
+      border-bottom: none;
+      cursor: pointer;
+    }
+  
+    .recurrent-booking{
+      background-color: #fbcfd2 ;
+      border-top: none;
+      border-bottom: none;
+      border-right: 3px solid #f6f4f4 !important;
+      border-left: 3px solid #f6f4f4 !important;
+      cursor: pointer;
+    }
+  
+    .recurrent-booking-first{
+      border-left: 3px solid #f6f4f4 !important;
+      border-top: 3px solid #f6f4f4 !important;
+      background-color: #fbcfd2 ;
+      border-bottom: none;
+      cursor: pointer;
+    }
+
+    .online-booking{
+      background-color: #b59afe ;
+      border-top: none;
+      border-bottom: none;
+      border-right: 3px solid #f6f4f4 !important;
+      border-left: 3px solid #f6f4f4 !important;
+      cursor: pointer;
+    }
+  
+    .online-booking-first{
+      border-left: 3px solid #f6f4f4 !important;
+      border-top: 3px solid #f6f4f4 !important;
+      background-color: #b59afe ;
+      border-bottom: none;
+      cursor: pointer;
+    }
+  
+    .color-red-first{
+      background-color: #ffd3b6 ;
+      border-bottom: none;
+      cursor: pointer;
+    }
+  
+  
+    .top-border {
+      border-top: 3px solid #f6f4f4 ;
+    }
+    
+    @media screen and (max-width: 800px) {
+      p{
+        font-size: 15px;
+      }
+  
+      .reservation_schedule{
+        margin-left: 2px;
+        font-size: 12px !important;
+        display: block;
+      }
+    }
+  
+    @media screen and (max-width: 480px) { 
+      .hide-mobile { 
+        display: none !important; 
+      } 
+    }
+  
+    @media screen and (min-width: 481px) { 
+      .hide-desktop { 
+        display: none !important; 
+      } 
+    }
+  
+    h2{
+      color: gray;
+    }
+  
+  .morning-user {
+      padding: 20px 0px 20px 35px;
+  }
+  
+  .morning-user span{
+    color: rgb(201, 189, 189);
+    font-size: 20px;
+    font-weight: 400;
+  }
+  
+  .card-block span{
+    color: rgb(201, 189, 189);
+    font-size: 20px;
+    font-weight: 400;
+  }
+  
+  .card-title {
+    margin-bottom: 0.125rem
+  }
+  
+  input{
+    color: rgb(201, 189, 189);
+    font-size: 17px;
+    font-weight: 400;
+  }
+  
+  
+  .icon{
+    align-items: center;
+    height: 42px;
+    width: 46px;
+    display: flex;
+    justify-content: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    background-color: #eee;
+    color: #333548;
+    position: relative;
+    font-size: 16px;
+    margin-left: 6px;
+  
+  }
+  
+  
+  .background_yellow{
+    background-color: #ffed00 !important;
+    color: #424242 !important;
+    font-weight: bold !important;
+  }
+  
+  .background_yellow_light {
+    background-color: #efe88e !important;
+    color: #424242 !important;
+    font-weight: bold !important;
+  }
+  
+  .background_yellow_light:hover {
+    background-color: #ffed00 !important;
+    color: #424242 !important;
+    font-weight: bold !important;
+  }
+  
+  li{
+    cursor: pointer;
+  }
+  
+  .fabs {
+    --_viewport-margin: 2.5vmin;
+  
+    position: fixed;
+    z-index: 100;
+  
+    inset-block: auto var(--_viewport-margin);
+    inset-inline: auto var(--_viewport-margin);
+  }
+  
+  .disabled-button-color {
+    background-color: #5DA3FB;
+  }
+
+  .occupied-court{
+    background-color: #f4c1c4;
+  }
+
+  .booking-name{
+    text-align: left;
+    color: #3f4f84 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    margin-bottom: 0 !important;
+  }
+
+
+  @media (max-width:482px)  {
+    #home p{
+      font-size: 10px !important;
+      line-height: normal;
+      font-weight:lighter !important;
+    }
+  }
+
+
+  .message-text{
+    text-align: justify !important;
+    text-justify: inter-word !important;
+  }

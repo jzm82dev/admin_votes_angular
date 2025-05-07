@@ -1,0 +1,96 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+     
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-12 col-md-6 col-xl-6">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-heading">
+                                    <h4>{{'members.your_virtual_wallet' | translate }}</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive" *ngIf="loaded">
+                                    <table matSort  class="table border-0 custom-table comman-table datatable mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th mat-sort-header="clubName">{{'members.club' | translate }}</th>
+                                                <th mat-sort-header="amount">{{'members.amount' | translate }}</th>
+                                                <th>{{'members.detail' | translate }}</th>
+                                            </tr>
+                                        </thead>
+        
+                                        <tbody>
+                                            <tr *ngFor="let data of virtual_wallets">
+                                                <td>{{ data.club_name }}</td>
+                                                <td>{{ data.amount }}€</td>
+                                                <td (click)="viewHistory(data.history)" class="cursor"><img src="assets/img/icons/search-normal.svg" alt=""></td>
+                                            </tr>
+                                            <tr *ngIf="virtual_wallets.length == 0">
+                                                <td colspan="2" class="text-center"> {{'members.no_current_wallet' | translate }} </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-6" *ngIf="spents_wallet.length > 0">
+            
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title">{{ 'members.history' | translate }}</h5>
+                        <div class="status-toggle d-flex justify-content-between align-items-center">
+                            <button (click)="closeHistoric()" type="button" class="btn-close" aria-label="Close">
+                                <span aria-hidden="true"> </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                       
+                        <div class="table-responsive">
+                            <table class="table table-hover border-0 custom-table invoice-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>{{'wallet.information' | translate }}</th>
+                                        <th>{{'wallet.amount' | translate }}</th>
+                                        <th>{{'wallet.date' | translate }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of spents_wallet; let i = index;">
+                                        <td>{{ i + 1 }}</td>
+                                        <td>{{ data.info }} </td>
+                                        <td >
+                                            <button [ngClass]="{'status-pink' : data.is_recharge == '0' , 'status-green' : data.is_recharge == '1'  }" class="custom-badge">{{ data.amount }} €</button>
+                                        </td>
+                                        <td>
+                                            {{ data.created_at | date: 'dd/MM/yyyy'}}
+                                        </td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                  
+    </div>
+</div>
+                        
+          

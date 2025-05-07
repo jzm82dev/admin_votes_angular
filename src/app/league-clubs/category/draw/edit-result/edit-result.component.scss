@@ -1,0 +1,42 @@
+tr{
+    vertical-align:middle;
+}
+
+
+.player-name{
+    font-size: 14px;;
+}
+
+.font-weight{
+  font-weight: bold;
+}
+
+.center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+td, th {
+  text-align: center !important;
+  vertical-align: middle !important;
+  font-weight: bold;
+}
+
+.mat-sort-header-container {
+  justify-content: center !important;
+}
+
+::placeholder {
+  color: gray;
+  opacity: 0.3; /* Firefox */
+}
+
+.color-red{
+  background-color: #fbe9eb;
+}
+
+.color-blue{
+  background-color: #e6f0ff;
+}
+

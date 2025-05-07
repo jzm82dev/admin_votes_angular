@@ -1,0 +1,87 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{'club_translations.dashboard' | translate }}</li>
+                        <li class="breadcrumb-item "><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'club_translations.club' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <div class="settings-menu-links">
+            <ul class="nav nav-tabs menu-tabs">
+                <li class="nav-item ">
+                    <a class="nav-link" [routerLink]="routes.club">{{'club_translations.tabs.general_data' | translate }}</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" [routerLink]="routes.description">{{'club_translations.tabs.description' | translate }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.clubSchedule">{{'club_translations.tabs.schedule' | translate }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.clubCourts">{{'club_translations.tabs.courts' | translate }}</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.clubServices">{{'club_translations.tabs.services' | translate }}</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.clubSocialLinks">{{'club_translations.tabs.social_links' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="row" >
+
+            <!-- DATA -->
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">{{'club_translations.club_information.title' | translate }}</h5>
+                    </div>
+                    <div class="card-body pt-0">
+                        <form [formGroup]="form">
+                            <div class="editor">
+                                <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+                                </ngx-editor-menu>
+                                <ngx-editor [editor]="editor" formControlName="description">
+                                </ngx-editor>
+                            </div>
+                            <div class="form-group mb-0 text-end my-3" *ngIf="can_edit == true">
+                                <div class="settings-btns">
+                                    <button type="submit" class="border-0 btn btn-primary btn-gradient-primary btn-rounded" (click)="saveDescription()">{{'commun_translations.save' | translate }}</button>&nbsp;&nbsp;
+                                </div>
+                            </div>
+                            <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                    <strong>{{'commun_translations.error' | translate }}</strong> {{ error_message }}
+                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                  </div>
+                            </div>
+                            <div class="col-md-12 my-4" *ngIf="success_message != ''">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>{{'commun_translations.success' | translate }} </strong>{{ success_message }}
+                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

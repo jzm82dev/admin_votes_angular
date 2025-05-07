@@ -1,0 +1,218 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.listRecurrent">{{'reservations.recurrent.recurrent_booking' | translate }}</a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'reservations.recurrent.new' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>{{'reservations.recurrent.book_data' | translate }}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">  
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group local-forms">
+                                                <label >{{'reservations.name' | translate }} <span class="login-danger">*</span></label>
+                                                <input class="form-control" [(ngModel)]="name" name="name" type="text" placeholder="" (ngModelChange)="findMembersByName(name, 'name')">
+                                            </div>
+                                        </div>
+                                        <div class="col-12" *ngIf="potential_member_by_name_found.length > 0">
+                                            <div class="form-group local-forms">
+                                                <ul class="list-group list-group-flush space" *ngIf="potential_member_by_name_found.length > 0" [ngClass]="{'transparent' : potential_member_by_name_found[0].name == '' }">
+                                                    <dl class="players">{{'leagues.potential_players' | translate }}</dl>
+                                                    <li class="list-group-item text-start" *ngFor="let member of potential_member_by_name_found" (click)="selectMemberReservation(member)">
+                                                        {{member.name}} {{member.surname}}  {{member.mobile}}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">  
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group local-forms">
+                                                <label >{{'reservations.surname' | translate }} <span class="login-danger">*</span></label>
+                                                <input class="form-control" [(ngModel)]="surname" name="surname" type="text" placeholder="" (ngModelChange)="findMembersByName(surname, 'surname')">
+                                            </div>
+                                        </div>
+                                        <div class="col-12" *ngIf="potential_member_by_surname_found.length > 0">
+                                            <div class="form-group local-forms">
+                                                <ul class="list-group list-group-flush space" *ngIf="potential_member_by_surname_found.length > 0" [ngClass]="{'transparent' : potential_member_by_surname_found[0].name == '' }">
+                                                    <dl class="players">{{'leagues.potential_players' | translate }}</dl>
+                                                    <li class="list-group-item text-start" *ngFor="let member of potential_member_by_surname_found" (click)="selectMemberReservation(member)">
+                                                        {{member.name}} {{member.surname}}  {{member.mobile}}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">  
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group local-forms">
+                                                <label >{{'reservations.telephone' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="mobile" name="mobile" type="text" placeholder="" (ngModelChange)="findMembersByName(mobile, 'mobile')">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 test" *ngIf="potential_member_by_mobile_found.length > 0" [ngClass]="{'transparent' : potential_member_by_mobile_found[0].name == '' }">
+                                            <div class="form-group local-forms">
+                                                <ul class="list-group list-group-flush space" *ngIf="potential_member_by_mobile_found.length > 0">
+                                                    <dl class="players">{{'leagues.potential_players' | translate }}</dl>
+                                                    <li class="list-group-item text-start" *ngFor="let member of potential_member_by_mobile_found" (click)="selectMemberReservation(member)">
+                                                        {{member.name}} {{member.surname}}  {{member.mobile}}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'club_translations.sport' | translate }} <span class="login-danger">*</span></label>
+                                        <mat-select [(ngModel)]="type_sport" [ngModelOptions]="{standalone: true}" (selectionChange)="sportSelected($event.value)" class="form-control select"  placeholder="{{'club_translations.select_sport_type' | translate }}">
+                                            <mat-option *ngFor="let data of kind_sport" [value]="data.id">
+                                                {{data.name}}
+                                                </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'reservations.court' | translate }}<span class="login-danger">*</span></label>
+                                            <mat-select [(ngModel)]="court_selected" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'reservations.recurrent.select_court' | translate }}">
+                                                <mat-option *ngFor="let court of courts" [value]="court.id">
+                                                {{court.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'reservations.recurrent.until' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control datetimepicker" [(ngModel)]="date_end_reservation" name="date_end_reservation" type="text"  placeholder="" matInput [matDatepicker]="picker">
+                                        <mat-datepicker #picker></mat-datepicker>
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-3">
+                                    <div class="form-group local-forms">
+                                        <label >{{'reservations.recurrent.day' | translate }} <span class="login-danger">*</span></label>
+                                            <mat-select [(ngModel)]="day_number" [ngModelOptions]="{standalone: true}" (selectionChange)="daySelected($event.value)" class="form-control select"  placeholder="{{'reservations.recurrent.select_day' | translate }}">
+                                                <mat-option *ngFor="let day of schedule_hour_days" [value]="day.day_id">
+                                                {{day.day_name}}
+                                                </mat-option>
+                                            </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-2 col-xl-2">
+                                    <div class="form-group local-forms">
+
+                                        <div class="table-responsive">
+                                            <table class="table mb-0 ">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center table-th">{{'reservations.recurrent.schedule' | translate }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container *ngIf="day_schedule.length > 0">
+                                                        <tr *ngFor="let schedule of day_schedule" class="text-center ">
+                                                            <td class="table-td">{{schedule.opening_time}} - {{schedule.closing_time}}</td>
+                                                        </tr> 
+                                                    </ng-container>
+                                                    <ng-container *ngIf="day_schedule.length == 0 && day_number">
+                                                        <td class="table-td text-center">{{'reservations.recurrent.closed' | translate }}</td>
+                                                    </ng-container>
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 col-md-3 col-xl-3">
+                                    <div class="form-group local-forms">
+                                        <label >{{'reservations.recurrent.start_hour' | translate }}<span class="login-danger">*</span></label>
+                                            <mat-select [(ngModel)]="hour_start" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'reservations.recurrent.select_time' | translate }}">
+                                                <mat-option *ngFor="let data of selectable_hours" [value]="data.id">
+                                                {{data.format_hour_start}}
+                                                </mat-option>
+                                            </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">
+                                    <div class="form-group local-forms">
+                                        <label >{{'reservations.recurrent.end_hour' | translate }}<span class="login-danger">*</span></label>
+                                            <mat-select [(ngModel)]="hour_end" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'reservations.recurrent.select_time' | translate }}">
+                                                <mat-option *ngFor="let data of selectable_hours" [value]="data.id">
+                                                {{data.format_hour_end}}
+                                                </mat-option>
+                                            </mat-select>
+                                    </div>
+                                </div>
+                
+                            </div>
+            
+                            <div class="row align-items-center">
+                                <div class="col-12" >
+                                    <div class="doctor-submit text-end">
+                                        <button type="submit" class="btn btn-primary cancel-form" [routerLink]="routes.listRecurrent">{{'commun_translations.come_back' | translate }}</button>&nbsp;
+                                        <button *ngIf="booking_saved == false" type="button" (click)="save()" class="btn btn-primary submit-form me-2">{{'commun_translations.save' | translate }}</button>
+                                    </div>
+                                </div>
+
+                             
+                                <div class="col-md-12 my-4" *ngIf="success_message != ''">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>{{'commun_translations.success' | translate }}</strong> {{ success_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                        <ul *ngIf="court_day_occupied.length > 0">
+                                            <li *ngFor="let day of court_day_occupied">{{ day.date}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                        <strong>{{'commun_translations.error' | translate }}</strong> {{ error_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                        <ul *ngIf="message_errors.length > 0">
+                                            <li *ngFor="let error of message_errors">{{ error }}</li>
+                                        </ul>
+                                      </div>
+                                </div>
+                             
+                            </div>
+                    </div>
+                </div>
+                
+                
+               
+            </div>					
+        </div>
+    </div>
+</div>
+ 

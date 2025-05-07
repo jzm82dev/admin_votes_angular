@@ -1,0 +1,336 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.courtCalendar">{{'reservations.court' | translate }} </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'reservations.manage_court' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        
+        
+        <div class="good-morning-blk">
+            <div class="row ">
+                <div class="col-12">
+                    <div class="morning-user text-center">
+                        <h2>{{'reservations.reservation' | translate }} {{day_name}}</h2>
+                        
+                        <!-- MOBILE -->
+                        <div class="row hide-desktop test">
+                            <div class="col-3 text-start">
+                                <a href="javascript:void(0);" class="btn trash" (click)="lessDay()"><i class="icon fa fa-long-arrow-left ms-2"></i></a>
+                            </div>
+                            <div class="col-6 center">
+                                <div class="form-group local-forms">
+                                    <input class="form-control datetimepicker" type="text" matInput [matDatepicker]="picker_mobile" 
+                                            [(ngModel)]="date_reservation" name="date_reservation" (dateChange)="changeDateReservations($event)">
+                                    <mat-datepicker #picker_mobile></mat-datepicker>
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker_mobile"></mat-datepicker-toggle>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <a href="javascript:void(0);" class="btn trash" (click)="moreDay()"><i class="icon fa fa-long-arrow-right ms-2"></i></a>
+                            </div>
+                            
+                        </div>
+                        
+                        <!-- DESKTOP -->
+                        <div class="row hide-mobile">
+                            <div class="col-5 text-end ">
+                                <a href="javascript:void(0);" class="btn trash" (click)="lessDay()"><i class="icon fa fa-long-arrow-left ms-2"></i></a>
+                            </div>
+                            <div class="col-2  center">
+                                <div class="form-group local-forms">
+                                    <input class="form-control datetimepicker" type="text" matInput [matDatepicker]="picker" 
+                                            [(ngModel)]="date_reservation" name="date_reservation" (dateChange)="changeDateReservations($event)">
+                                    <mat-datepicker #picker></mat-datepicker>
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                </div>
+                            </div>
+                            <div class="col-5 text-start ">
+                                <a href="javascript:void(0);" class="btn trash" (click)="moreDay()"><i class="icon fa fa-long-arrow-right ms-2"></i></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="card-box" *ngIf="loaded == true  && courts.length > 0">
+            <div class="row" *ngIf="schedule.length == 0">
+                <div class="col-12">
+                    <div class="morning-user text-center">
+                        <h2>{{'reservations.phrase_club_closed' | translate }} {{ day_name }}</h2>
+                        <h3>{{'commun_translations.sorry_inconvenience' | translate }}</h3>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="row" *ngIf="schedule.length > 0">
+                <div class="col-12" *ngIf="total_sport_clubs > 1">
+                    <div class="settings-menu-links">
+                        <ul class="nav nav-tabs menu-tabs">
+                            <li *ngIf="hasPadelCourts == true" class="nav-item " [ngClass]="{'active': sport_selected == 1}">
+                                <a class="nav-link" [routerLink]="[ '/reservations/new', date, 1 ]" (click)="loadFalse()">{{'club_translations.sport_1' | translate }}</a>
+                            </li>
+                            <li *ngIf="hasTennisCourts == true" class="nav-item " [ngClass]="{'active': sport_selected == 2}">
+                                <a class="nav-link" [routerLink]="[ '/reservations/new', date, 2 ]" (click)="loadFalse()">{{'club_translations.sport_2' | translate }}</a>
+                            </li>
+                            <li *ngIf="hasPickleballCourts == true" class="nav-item" [ngClass]="{'active': sport_selected == 3}">
+                                <a class="nav-link" [routerLink]="[ '/reservations/new', date, 3 ]" (click)="loadFalse()">{{'club_translations.sport_3' | translate }}</a>
+                            </li> 
+                            <li *ngIf="hasSquashCourts == true" class="nav-item" [ngClass]="{'active': sport_selected == 4}">
+                                <a class="nav-link " [routerLink]="[ '/reservations/new', date, 4 ]" (click)="loadFalse()">{{'club_translations.sport_4' | translate }}</a>
+                            </li> 
+                            <li *ngIf="hasBadmintonCourts == true" class="nav-item" [ngClass]="{'active': sport_selected == 5}">
+                                <a  [routerLink]="[ '/reservations/new', date, 4 ]" (click)="loadFalse()">{{'club_translations.sport_5' | translate }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card-block">
+                        <div class="fabs " role="group" aria-label="Floating action buttons" *ngIf="can_edit == true">
+                            <button *ngIf="disableButtonReserve == false" class="btn btn-sm btn-primary"  data-bs-toggle="modal" data-bs-target="#add_schedule" [disabled]="disableButtonReserve" (click)="openPopup()">{{'reservations.reserve_court' | translate }}</button>
+                            <button *ngIf="disableButtonReserve == true" class="btn btn-sm btn-primary disabled-button-color" (click)="scrollToBottom()">{{'reservations.reserve_court' | translate }}</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table mb-0" >
+                                <thead>
+                                    <tr>
+                                        <th class="table-secondary" style="width: 70px !important">{{'reservations.court' | translate }}</th>
+                                        <th class="table-secondary" *ngFor="let court of courts">{{ (court.name.length > 5)? (court.name | slice:0:5)+'.':(court.name) }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let hours of schedule; let i = index;">
+                                        <td  class="table-primary">{{ hours.format_hour_start }}h</td>
+                                        <ng-container *ngFor="let court of hours.courts">
+                                            <td *ngIf="!court.reservation_id && hours.hour_open"  class=" border-td" (click)="selectHour(hours, court.id)" id='{{hours.id}}_{{ court.id }}' ></td>
+                                            <td *ngIf="!hours.hour_open" class="color-gray border-td" ></td>
+                                            <td *ngIf="court.reservation_id && hours.hour_open" 
+                                                [ngClass]="{'recurrent-booking-first border-td' : court.type == 'recurrent' && court.reservation_name != '', 
+                                                            'recurrent-booking border-td': court.reservation_name == '' && court.type == 'recurrent',
+                                                            'class-lesson-booking-first border-td' : court.type == 'class-lessons' && court.reservation_name != '', 
+                                                            'class-lesson-booking border-td': court.reservation_name == '' && court.type == 'class-lessons',
+                                                            'one-time-booking-first border-td' : court.type == 'one-time' && court.reservation_name != '' && court.is_online == '0', 
+                                                            'one-time-booking border-td': court.reservation_name == '' && court.type == 'one-time' && court.is_online == '0',
+                                                            'online-booking-first border-td' : court.type == 'one-time' && court.reservation_name != '' && court.is_online == '1', 
+                                                            'online-booking border-td': court.reservation_name == '' && court.type == 'one-time' && court.is_online == '1',
+                                                        }"
+                                                 (click)="showReserve( court.reservation_id )" data-bs-toggle="modal"
+                                                 data-bs-target="#show_reservation"><p>{{court.reservation_name}}<span class="reservation_schedule">{{court.reservation_schedule}} </span></p>
+                                            </td>
+                                        </ng-container> 
+                                    </tr>
+                                </tbody> 
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="col-md-12 my-4" *ngIf="error_message != ''">
+            <div *ngIf="schedule.length > 0" class="alert alert-warning alert-dismissible fade show text-center" role="alert" >
+                 {{ error_message }}
+              </div>
+        </div>
+        <!--
+        <div class="row my-4" *ngIf="schedule.length > 0">
+            <td class="col-12 text-center" *ngIf="can_edit == true">
+                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#add_schedule" [disabled]="disableButtonReserve" (click)="openPopup()">{{'reservations.reserve_court' | translate }}</button>
+            </td>
+        </div>
+        -->
+    </div>
+    <div class="col-md-12 my-4" *ngIf="error_message != '' && courts.length == 0">
+        <div *ngIf="schedule.length > 0" class="alert alert-warning alert-dismissible fade show text-center" role="alert" >
+            {{'reservations.no_courts_created' | translate }}
+          </div>
+    </div>
+    <!-- BEGIN POPUP CREATE RESERVATION-->
+    <div id="add_schedule_old" class="modal fade delete-modal" role="dialog" >  
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-xl-12" > 
+                        <h3>{{'reservations.create' | translate }}</h3>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6 col-xl-12 my-4 text-center" > 
+                        <div class="form-group local-forms">
+                            <label >{{'reservations.name' | translate }} <span class="login-danger">*</span></label>
+                            <input class="form-control" [(ngModel)]="name_reservation" name="name_schedule" type="text"  >
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6 col-xl-12 my-4 text-center" > 
+                        <div class="form-group local-forms">
+                            <label >{{'reservations.telephone' | translate }} <span class="login-danger">*</span></label>
+                            <input class="form-control" [(ngModel)]="telephone_reservation" name="telephone_reservation" type="text"  >
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 my-4" *ngIf="error_message_popup != ''">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                            <strong>Error!</strong> {{ error_message_popup }}
+                            <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                <span aria-hidden="true"> </span>
+                            </button>
+                            <ul *ngIf="message_errors.length > 0">
+                                <li *ngFor="let error of message_errors">{{ error }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-12 my-4" *ngIf="susccess_message_popup != ''">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Bien!</strong> {{ susccess_message_popup }}
+                            </div>
+                    </div>
+                </div>
+                <div class="row my-2 center" >  
+                    <div class="m-t-20 text-center"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebuttonAddShedule (click)="closPopupCreateRervation()">{{'commun_translations.close' | translate }}</a>
+                        <button type="submit" style="width: auto;" class="btn btn-primary text-white" *ngIf="susccess_message_popup == ''" (click)="addReservation()">{{'commun_translations.save' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END POPUP CREATE RESERVATION -->
+
+
+    <!-- BEGIN POPUP CREATE RESERVATION SEARCH PLAYER -->
+    <div id="add_schedule" class="modal fade delete-modal" role="dialog" >  
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-xl-12" > 
+                        <h3>{{'reservations.create' | translate }}</h3>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-xl-12 my-4 text-center" > 
+                        <div class="form-group local-forms">
+                            <label >{{'reservations.name' | translate }} <span class="login-danger">*</span></label>
+                            <input class="form-control" [(ngModel)]="name_reservation" name="name_schedule" (ngModelChange)="findMembersByName(name_reservation)" type="text"  >
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-xl-12 my-4 text-center" > 
+                        <div class="form-group local-forms">
+                            <label >{{'reservations.telephone' | translate }} <span class="login-danger">*</span></label>
+                            <input class="form-control" [(ngModel)]="telephone_reservation" name="telephone_reservation" (ngModelChange)="findMembersByMobile(telephone_reservation)" type="text"  >
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-xl-12 my-4" >
+                        <ul class="list-group list-group-flush space" *ngIf="potential_member_found.length > 0">
+                            <p class="players">{{'leagues.potential_players' | translate }}</p>
+                            <li class="list-group-item text-start" *ngFor="let member of potential_member_found" (click)="selectMemberReservation(member)">
+                               <b>{{member.mobile}}</b> - {{member.name}} {{member.surname}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 my-4" *ngIf="error_message_popup != ''">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                            <strong>Error!</strong> {{ error_message_popup }}
+                            <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                <span aria-hidden="true"> </span>
+                            </button>
+                            <ul *ngIf="message_errors.length > 0">
+                                <li *ngFor="let error of message_errors">{{ error }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-12 my-4" *ngIf="susccess_message_popup != ''">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Bien!</strong> {{ susccess_message_popup }}
+                            </div>
+                    </div>
+                </div>
+                <div class="row my-2 center" >  
+                    <div class="m-t-20 text-center"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebuttonAddShedule (click)="closPopupCreateRervation()">{{'commun_translations.close' | translate }}</a>
+                        <button type="submit" style="width: auto;" class="btn btn-primary text-white" *ngIf="susccess_message_popup == ''" (click)="addReservation()">{{'commun_translations.save' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END POPUP CREATE RESERVATION SEARCH PLAYER -->
+
+
+    <!-- BEGIN POPUP SHOW RESERVATION-->
+    <div id="show_reservation" class="modal fade delete-modal" role="dialog" *ngIf="reservation">  
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-xl-12" > 
+                        <h3>{{'reservations.booking_data' | translate }}</h3>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6 col-xl-12 my-4 text-center" > 
+                        <div class="form-group local-forms">
+                            <label >{{'reservations.name' | translate }}</label>
+                            <input class="form-control" value="{{reservation.name}} {{reservation.surname}}" type="text"  >
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6 col-xl-12 my-4 text-center" > 
+                        <div class="form-group local-forms">
+                            <label >{{'reservations.telephone' | translate }}</label>
+                            <input class="form-control" value="{{reservation.mobile}}" type="text"  >
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6 col-xl-12 my-4 text-center" > 
+                        <div class="form-group local-forms">
+                            <label >{{'reservations.type' | translate }}</label>
+                            <input class="form-control" value="{{reservation.type_name}}" type="text"  >
+                        </div>
+                    </div>
+                    <div class="col-3 col-md-3 col-xl-6 my-6 text-center" > 
+                        <div class="form-group local-forms">
+                            <label >{{'reservations.booking_time' | translate }}</label>
+                            <input class="form-control" value="{{reservation.start_time}} - {{reservation.end_time}}" type="text"  >
+                        </div>
+                    </div>
+                    <div class="col-3 col-md-3 col-xl-6 my-6 text-center" > 
+                        <div class="form-group local-forms">
+                            <label >{{'reservations.booking_created' | translate }}</label>
+                            <input class="form-control" value="{{ reservation.created_at | date: 'd/MM/yyyy, HH:mm' }}" type="text"  >
+                        </div>
+                    </div>
+                </div>
+                <div class="row my-2 center" >  
+                    <div class="m-t-20 text-center"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebuttonShowhedule>{{'commun_translations.close' | translate }}</a>
+                        <button type="submit" style="width: auto;" class="btn btn-danger text-white" *ngIf="susccess_message_popup == ''" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#delete_reservation" (click)="closePopupShowReservation()">{{'reservations.cancel' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END POPUP SHOW RESERVATION -->
+    <div id="delete_reservation" class="modal fade delete-modal" role="dialog" >
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <img src="assets/img/sent.png" alt="" width="50" height="46">
+                    <h3 *ngIf="reservation" >{{'reservations.sure_to_cancel' | translate }} {{reservation.name}}?</h3>
+                    <div class="m-t-20"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebuttonDeleteReservation>Cerrar</a>
+                        <button type="submit" class="btn btn-danger" (click)="removeReservation()">Borrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+</div>

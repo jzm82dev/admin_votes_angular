@@ -1,0 +1,138 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="[ '/meeting/edit', this.meeting_id ]">Junta </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">Pregunta</li>
+                    
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-auto text-start float-end ms-auto download-grp">
+                    <a href="javascript:;" class=" me-2" (click)="generatePdf()"><img src="assets/img/icons/pdf-icon-01.svg" alt=""></a>
+                </div>
+            </div>
+        </div>
+
+        <div id="question_result">
+            <div class="row ">
+                <div class="col-sm-12">
+                
+                    <div class="card">
+                        <div class="card-body">
+                           
+                            <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-heading">
+                                            <h3 class="text-question text-center">{{ question }}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-heading">
+                                            <h4 class="total-votes text-center">Total de votos: {{total_votes}} 
+                                            </h4>
+                                        </div>
+                                    </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                
+                    <div class="card">
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-heading">
+                                            <h4>Resumen </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div  class="row">
+                                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3 votes" *ngFor="let item of result">
+                                        <div class="dash-widget" >
+                                            
+                                            <div class="dash-content dash-count text-center">
+                                                <span class="vote_name">{{ item.name }}</span>
+                                                <h2><span class="counter-up" [countUp]="item.percent" [options]="{duration: 10}">{{item.percent}}</span>%</h2>
+                                                <h3>{{ item.total_coefficient }}%</h3>
+                                                <p>Votos: <span class="passive-view">{{item.votes}}</span>  </p>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                
+                    <div class="card">
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-heading">
+                                            <h4>Detalle </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div  class="row">
+                                    <div class="col-md-12" *ngFor="let detail of result_datails;">
+                                        <span class="vote_name">{{detail.vote}}<br></span>
+                                        <table class="table table-hover mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Piso</th>
+                                                    <th>Propietario</th>
+                                                    <th>Coeficiente</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let owner of detail.owners">
+                                                    <td>{{ owner.building }}-{{ owner.floor}}{{ owner.letter}}</td>
+                                                    <td>{{ owner.name}}</td>
+                                                    <td>{{ owner.total_coefficient }}%</td>
+                                                    </tr>
+                                                
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td></td>
+                                                    <td class="text-end"></td>
+                                                    <td class="vote_name"> {{ detail.total }}%</td>
+                                                </tr>
+                                            </tfoot>
+                                        </table><br><br>
+                                    </div>
+                                </div>
+                              
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 my-4" id="back_button">
+            <div class="doctor-submit text-end">
+                <button [routerLink]="[ '/meeting/edit', this.meeting_id ]" type="submit" class="btn btn-primary cancel-form">Volver</button>&nbsp;
+            </div>
+        </div>
+       <br><br><br>
+    </div>
+</div>
+                        

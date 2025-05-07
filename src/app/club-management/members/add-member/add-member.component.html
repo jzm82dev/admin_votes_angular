@@ -1,0 +1,117 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.memberList">{{'members.members' | translate }} </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">>{{'members.add_member' | translate }}</li>
+                    
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <!-- Begin Data -->
+        <div class="row">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>{{'members.data' | translate }}</h4>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-12 col-md-6 col-xl-4">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'members.name' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="name" name="name" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'members.lastname' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="surname" name="surname" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'members.mobile' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="mobile" name="mobile" type="text"  >
+                                    </div>
+                                </div>
+                                <!--
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'members.email' | translate }} </label>
+                                        <input class="form-control" [(ngModel)]="email" name="email" type="email"  >
+                                    </div>
+                                </div>
+                                -->
+
+                                <div class="col-12 col-md-6 col-xl-6">
+                                    <div class="form-group local-top-form">
+                                        <label class="local-top">{{'members.avatar' | translate }} </label>
+                                        <div class="settings-btn upload-files-avator">
+                                            <input type="file" accept="image/*" name="image" id="file"  (change)="loadFile($event)" class="hide-input">
+                                            <label for="file" class="upload">Choose File</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="" *ngIf="image_preview">
+                                    <img [src]="image_preview" alt="" width="150px" height="150px">
+                                </div>
+                               
+                               
+
+
+                                <div class="col-12 my-4">
+                                    <div class="doctor-submit text-end">
+                                        <button [routerLink]="routes.memberList" type="submit" class="btn btn-primary cancel-form">{{'commun_translations.come_back' | translate }}</button>&nbsp;
+                                        <button *ngIf="member_id == '' && hasPermission('register_member')" type="button" class="btn btn-primary submit-form me-2" (click)="save()">{{'commun_translations.save' | translate }}</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 my-4" *ngIf="error_message_member != ''">
+                                        <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                            <strong>{{'commun_translations.error' | translate }}</strong> {{ error_message_member }}
+                                            <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                                <span aria-hidden="true"> </span>
+                                            </button>
+                                            <ul *ngIf="message_errors_member.length > 0">
+                                                <li *ngFor="let error of message_errors_member">{{ error }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 my-4" *ngIf="success_message_member != ''">
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <strong>{{'commun_translations.success' | translate }}</strong> {{ success_message_member }}
+                                            <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                                <span aria-hidden="true"> </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>							
+            </div>					
+        </div>
+        <!-- End Data -->
+
+        
+
+    </div>
+</div>
+ 
+
+

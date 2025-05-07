@@ -1,0 +1,151 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">{{'wallet.virtual_wallet' | translate }} </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'wallet.new' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <!-- Begin Data -->
+        <div class="row">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>{{'wallet.wallet_data' | translate }}</h4>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-12 col-md-6 col-xl-4">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'members.name' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="name" name="name" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'members.lastname' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="surname" name="surname" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'members.mobile' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="mobile" name="mobile" type="text"  >
+                                    </div>
+                                </div>
+                                
+
+                                <div class="col-12 my-4">
+                                    <div class="doctor-submit text-end">
+                                        <button [routerLink]="routes.walletList" type="submit" class="btn btn-primary cancel-form">{{'commun_translations.come_back' | translate }}</button>&nbsp;
+                                        <button *ngIf="wallet_id == '' && hasPermission('register_wallet')" type="button" class="btn btn-primary submit-form me-2" (click)="save()">{{'commun_translations.save' | translate }}</button>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 my-4 text-center">
+                                    <div class="doctor-submit text-center">
+                                        <button *ngIf="wallet_id != '' && hasPermission('register_wallet')" type="button" class="btn btn-success submit-form me-2" 
+                                              data-bs-toggle="modal" data-bs-target="#add_recharge" (click)="openPopup()">{{'wallet.add_recharge' | translate }}</button>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 my-4" *ngIf="error_message_member != ''">
+                                        <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                            <strong>{{'commun_translations.error' | translate }}</strong> {{ error_message_member }}
+                                            <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                                <span aria-hidden="true"> </span>
+                                            </button>
+                                            <ul *ngIf="message_errors_member.length > 0">
+                                                <li *ngFor="let error of message_errors_member">{{ error }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 my-4" *ngIf="success_message_member != ''">
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <strong>{{'commun_translations.success' | translate }}</strong> {{ success_message_member }}
+                                            <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                                <span aria-hidden="true"> </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>	
+
+                <!-- BEGIN CREATE RECHARGE-->
+                <div id="add_recharge" class="modal fade delete-modal" role="dialog" >  
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body text-center">
+                                <div class="row">
+                                    <div class="col-12 col-md-12 col-xl-12" > 
+                                    <h3>{{'wallet.recharge_credit' | translate }}</h3>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-6 col-md-6 col-xl-12 my-4 text-center" > 
+                                    <div class="form-group local-forms">
+                                        <label >{{'wallet.amount' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="amount_new_spent" name="amount_new_spent" type="number"  >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 my-4" *ngIf="error_message_popup != ''">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                        <strong>Error!</strong> {{ error_message_popup }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                        <ul *ngIf="message_errors.length > 0">
+                                            <li *ngFor="let error of message_errors">{{ error }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="susccess_message_popup != ''">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>Bien!</strong> {{ susccess_message_popup }}
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="row my-2 center" >  
+                                <div class="m-t-20 text-center"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebutton (click)="closPopup()">{{'commun_translations.close' | translate }}</a>
+                                    <button type="submit" style="width: auto;" class="btn btn-primary text-white" *ngIf="susccess_message_popup == ''" (click)="addRecharge()">{{'commun_translations.save' | translate }}</button>
+                                </div>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
+                <!-- END POPUP CREATE RECHARGE -->
+						
+
+            </div>					
+        </div>
+        <!-- End Data -->
+
+        
+
+    </div>
+</div>
+ 
+
+

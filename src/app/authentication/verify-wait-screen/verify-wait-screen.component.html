@@ -1,0 +1,108 @@
+<!-- Main Wrapper -->
+<div class="main-wrapper login-body">
+    <div class="container-fluid px-0">
+        <div class="row">
+        
+            <!-- Login logo -->
+            <div class="col-lg-6 login-wrap">
+                <div class="login-sec image-center">
+                    <div class="log-img">
+                        <img class="img-fluid" src="assets/img/login-02.png" alt="Logo">
+                    </div>
+                </div>
+            </div>
+            <!-- /Login logo -->
+            
+            <!-- Login Content -->
+            <div class="col-lg-6 login-wrap-bg">
+                <div class="login-wrapper">
+                  <div class="loginbox">
+                    <div class="login-right">
+                      <div class="login-right-wrap" >
+                        <div class="account-logo text-center">
+                          <a href="https://weloveracket.com/"
+                            ><h2>WE <span class="heart"> &#10084;</span> RACKET</h2></a>
+                            <div class="account-logo text-center" *ngIf="show_spinner == true">
+                                <mat-spinner></mat-spinner>
+                              </div>
+                        </div>
+                                <div class="user-lock-screen" *ngIf="loaded">
+                                    <h3>{{ club_name }}, {{'register.email_verified' | translate }}</h3>
+                                    <p class="my-3">{{'register.enter_password' | translate }}</p>
+                                </div>
+                                <!-- Form -->
+                                <div *ngIf="loaded">
+                                    <form [formGroup]="form" (ngSubmit)="loginFormSubmit()">
+                                        <div class="form-group">
+                                            <label>{{'register.password' | translate }} <span class="login-danger">*</span></label>
+                                            <input
+                                              class="form-control pass-input"
+                                              [type]="passwordClass ? 'text' : 'password'"
+                                              formControlName="password"
+                                              [ngClass]="{
+                                                'is-invalid':
+                                                  f['password'].touched && f['password'].invalid
+                                              }"
+                                            />
+                                            <div
+                                              *ngIf="f['password'].touched && f['password'].invalid"
+                                              class="invalid-feedback"
+                                            >
+                                              <div
+                                                *ngIf="
+                                                  f['password'].errors &&
+                                                  f['password'].errors['required']
+                                                "
+                                              >
+                                              {{'register.password' | translate }} {{'register.is_required' | translate }}.
+                                              </div>
+                                            </div>
+                                            <span (click)="togglePassword()" [ngClass] = "passwordClass ? 'feather icon-eye' : 'feather icon-eye-off'"
+                                              class="profile-views toggle-password"
+                                            ></span>
+                                          </div>
+                                          <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="error == true">
+                                            <strong>Error!</strong> {{'register.password_no_correct' | translate }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true"> </span>
+                                            </button>
+                                          </div>
+                                        <div class="form-group login-btn">
+                                            <button
+                                            [disabled]="form.invalid"
+                                            class="btn btn-primary btn-block"
+                                            type="submit"
+                                            >
+                                            Login
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /Form -->
+                                  
+                                <div class="next-sign">
+                                    <p class="account-subtitle">
+                                        {{'register.forgot_password' | translate }} 
+                                        <a [routerLink]="routes.forgotPassword">{{'register.remember' | translate }}</a>
+                                      </p>
+                                    <!-- Social Login -->
+                                    <div class="social-login">
+                                        <a href="javascript:;" ><img src="assets/img/icons/login-icon-01.svg" alt=""></a>
+                                        <a href="javascript:;" ><img src="assets/img/icons/login-icon-02.svg" alt=""></a>
+                                        <a href="javascript:;" ><img src="assets/img/icons/login-icon-03.svg" alt=""></a>
+                                    </div>
+                                    <!-- /Social Login -->
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <!-- /Login Content -->
+            
+        </div>
+    </div>
+</div>
+<!-- /Main Wrapper -->

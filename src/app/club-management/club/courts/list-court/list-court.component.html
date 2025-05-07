@@ -1,0 +1,250 @@
+<div class="page-wrapper">
+  <div class="content">
+  
+      <!-- Page Header -->
+      <div class="page-header">
+          <div class="row">
+              <div class="col-sm-12">
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item active">{{'club_translations.dashboard' | translate }}</li>
+                  <li class="breadcrumb-item "><i class="feather icon-chevron-right"></i></li>
+                  <li class="breadcrumb-item active">{{'club_translations.club' | translate }}</li>
+                </ul>
+              </div>
+          </div>
+      </div>
+      <!-- /Page Header -->
+
+        <div class="settings-menu-links">
+          <ul class="nav nav-tabs menu-tabs">
+              <li class="nav-item ">
+                  <a class="nav-link" [routerLink]="routes.club">{{'club_translations.tabs.general_data' | translate }}</a>
+              </li>
+              <li class="nav-item ">
+                  <a class="nav-link" [routerLink]="routes.description">{{'club_translations.tabs.description' | translate }}</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" [routerLink]="routes.clubSchedule">{{'club_translations.tabs.schedule' | translate }}</a>
+              </li>
+              <li class="nav-item active">
+                  <a class="nav-link" [routerLink]="routes.clubCourts">{{'club_translations.tabs.courts' | translate }}</a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" [routerLink]="routes.clubServices">{{'club_translations.tabs.services' | translate }}</a>
+              </li> 
+              <li class="nav-item ">
+                <a class="nav-link" [routerLink]="routes.clubSocialLinks">{{'club_translations.tabs.social_links' | translate }}</a>
+            </li>
+          </ul>
+      </div>
+
+        
+        <div class="row">
+            <div class="col-sm-12">
+            
+                <div class="card card-table show-entire">
+                    <div class="card-body">
+                    
+                        <!-- Table Header -->
+                        <div class="page-table-header mb-2">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="doctor-table-blk">
+                                        <h3>{{'club_translations.court.court_list' | translate }}</h3>
+                                        <div class="doctor-search-blk">
+                                            <div class="top-nav-search table-search-blk">
+                                                    <input  class="form-control" placeholder="Search here" [(ngModel)]="searchDataValue"
+                                                    (ngModelChange)="searchData(searchDataValue)">
+                                                    <a class="btn"><img src="assets/img/icons/search-normal.svg" alt=""></a>
+                                            </div>
+                                            <div class="add-group">
+                                                
+                                                <a href="javascript:;" (click)="refresh()" class="btn btn-primary doctor-refresh ms-2"><img src="assets/img/icons/re-fresh.svg" alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto text-end float-end ms-auto download-grp add-group" *ngIf="can_edit == true">
+                                  <a [routerLink]="routes.addCourt" routerLinkActive="router-link-active"  class="btn btn-primary add-pluss ms-2"><img src="assets/img/icons/plus.svg" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Table Header -->
+                        
+                        <div class="table-responsive">
+                            <table matSort (matSortChange)="sortData($event)" class="table border-0 custom-table comman-table datatable mb-0">
+                                <thead>
+                                    <tr>
+                                        <th mat-sort-header="enumerate">#</th>
+                                        <th mat-sort-header="name">{{'club_translations.court.name' | translate }}</th>
+                                        <th mat-sort-header="type_court">{{'club_translations.court_type' | translate }}</th>
+                                        <th mat-sort-header="amount_without_light">{{'club_translations.court.price_without_light' | translate }}</th>
+                                        <th mat-sort-header="amount_with_light">{{'club_translations.court.price_with_light' | translate }}</th>
+                                        <th mat-sort-header="description">{{'club_translations.court.description' | translate }}</th>
+                                        <th mat-sort-header="joining_date">{{'commun_translations.create_date' | translate }}</th>
+                                        <th ></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of courtsList; let i = index;">
+                                        <td>{{i + 1}}</td>
+                                        <td>{{data.name}}</td>
+                                        <td>{{kind_sport[data.sport_type].name}}</td>
+                                        <td>{{data.amount_without_light | currency:'EUR' }}</td>
+                                        <td>{{data.amount_with_light | currency:'EUR' }}</td>
+                                        <td>{{data.description}}</td>
+                                        <td>{{data.created_at}}</td>
+                                        <td class="text-end" >
+                                            <div class="dropdown dropdown-action">
+                                                <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a class="dropdown-item"  [routerLink]="[ 'edit', data.id ]" href="#"><i class="fa-solid fa-eye m-r-5"></i> {{'commun_translations.view' | translate }}/{{'commun_translations.edit' | translate }}</a>
+                                                    <a class="dropdown-item" *ngIf="can_edit == true" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#delete_staff_modal" (click)="selectCourt(data)"><i class="fa fa-trash-alt m-r-5"></i> {{'commun_translations.remove' | translate }}</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                              <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                  <strong>Error!</strong> {{ error_message }}
+                                  <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                      <span aria-hidden="true"> </span>
+                                  </button>
+                                  
+                                </div>
+                          </div>
+
+                            <div class="table_footer">
+                                <div class="col-sm-12 col-md-5">
+                                  <div class="dataTables_info">
+                                    Showing {{ serialNumberArray[0] }} to
+                                    {{ serialNumberArray[serialNumberArray.length - 1] }} of
+                                    {{ totalData }} entries
+                                  </div>
+                                </div>
+                
+                                <div class="col-sm-12 col-md-7">
+                                  <div class="pagination_section">
+                                    <ul class="pagination">
+                                      <li
+                                        class="page-item"
+                                        [ngClass]="{
+                                          disabled: currentPage === 1
+                                        }"
+                                      >
+                                        <a
+                                          (click)="getMoreData('previous')"
+                                          class="page-link"
+                                          href="javascript:void(0);"
+                                          tabindex="-1"
+                                          >Previous</a
+                                        >
+                                      </li>
+                
+                                      <ng-container
+                                        *ngFor="let item of pageNumberArray; let i = index"
+                                      >
+                                        <li
+                                          class="page-item"
+                                          [class.active]="item === currentPage"
+                                          [ngClass]="
+                                            (pageNumberArray[currentPage - 2] > item &&
+                                              item !== 1 &&
+                                              pageNumberArray.length > 6) ||
+                                            (pageNumberArray[currentPage] < item &&
+                                              item !== 1 &&
+                                              pageNumberArray.length > 6 &&
+                                              pageNumberArray.length !== item)
+                                              ? 'hide-page-no'
+                                              : 'show-page-no'
+                                          "
+                                        >
+                                          <a
+                                            (click)="moveToPage(item)"
+                                            class="page-link"
+                                            href="javascript:void(0);"
+                                          >
+                                            {{ item }}
+                                          </a>
+                                        </li>
+                                        <li
+                                          class="page-item"
+                                          *ngIf="
+                                            i === 0 &&
+                                            pageNumberArray.length > 6 &&
+                                            currentPage > 2
+                                          "
+                                          [hidden]="currentPage === 1"
+                                          (click)="moveToPage(currentPage - 2)"
+                                        >
+                                          <a class="page-link" href="javascript:void(0);">
+                                            ...
+                                          </a>
+                                        </li>
+                                        <li
+                                          *ngIf="
+                                            i === pageNumberArray.length - 2 &&
+                                            pageNumberArray.length > 6
+                                          "
+                                          [hidden]="
+                                            currentPage >=
+                                              pageNumberArray[pageNumberArray.length - 2] ||
+                                            totalData <
+                                              serialNumberArray[serialNumberArray.length - 1]
+                                          "
+                                          class="page-item"
+                                          (click)="moveToPage(currentPage + 2)"
+                                        >
+                                          <a class="page-link" href="javascript:void(0);">
+                                            ...
+                                          </a>
+                                        </li>
+                                      </ng-container>
+                
+                                      <li
+                                        class="page-item"
+                                        [ngClass]="{
+                                          disabled:
+                                            currentPage ===
+                                              pageNumberArray[pageNumberArray.length - 1] ||
+                                              courtsList.length === 0
+                                        }"
+                                      >
+                                        <a
+                                          (click)="getMoreData('next')"
+                                          class="page-link"
+                                          href="javascript:void(0);"
+                                          >Next
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>							
+            </div>					
+        </div>
+    </div>
+</div>
+
+<div id="delete_staff_modal" class="modal fade delete-modal" role="dialog" >
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-body text-center">
+              <img src="assets/img/sent.png" alt="" width="50" height="46">
+              <h3 *ngIf="court_selected" >{{'club_translations.court.sure_remove' | translate }} {{ court_selected.name }}?</h3>
+              <div class="m-t-20"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebutton>{{'commun_translations.close' | translate }}</a>
+                  <button type="submit" class="btn btn-danger" (click)="removeCourt()">{{'commun_translations.remove' | translate }}</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+ 

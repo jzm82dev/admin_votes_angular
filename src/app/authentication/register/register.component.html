@@ -1,0 +1,305 @@
+<!-- Main Wrapper -->
+<div class="main-wrapper login-body">
+  <div class="container-fluid px-0" >
+    <div class="row">
+      <!-- Login logo -->
+      <div class="col-lg-6 login-wrap " >
+        <div class="login-sec image-center" >
+          <div class="log-img ">
+            <img class="img-fluid text-center" src="assets/img/login-02.png" alt="Logo" />
+          </div>
+        </div>
+      </div>
+      <!-- /Login logo -->
+
+      <!-- Login Content -->
+      <div class="col-lg-6 login-wrap-bg">
+        <div class="login-wrapper">
+          <div class="loginbox">
+            <div class="login-right">
+              <div class="login-right-wrap">
+                <div class="account-logo text-center">
+                  <a href="https://weloveracket.com/"
+                    ><h2>WE <span class="heart"> &#10084;</span> RACKET</h2></a>
+                </div>
+                <h2 *ngIf="registered == false">{{'register.player_register' | translate }}</h2>
+                <p class="my-3"  *ngIf="registered == true"><b>{{ user_name }}</b> {{'register.welcome_message_1' | translate }} {{ user_email }} para verificar tu cuenta. 
+                  {{'register.welcome_message_2' | translate }} </p>
+                <!-- Form -->
+                <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="registered == false">
+                  <div class="form-group">
+                    <label> {{'register.name' | translate }} <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      formControlName="name"
+                      [ngClass]="{
+                        'is-invalid':
+                          f['name'].touched && f['name'].invalid
+                      }"
+                    />
+                    <div
+                      *ngIf="f['name'].touched && f['name'].invalid"
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="
+                          f['name'].errors &&
+                          f['name'].errors['required']
+                        "
+                      >
+                      {{'register.name' | translate }} {{'register.is_required' | translate }}.
+                      </div>
+                    </div>
+                    <div *ngIf="CustomControler !== 0" class="invalid-feedback">
+                      {{ CustomControler }}
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+                    <label> {{'register.surname' | translate }} <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      formControlName="surname"
+                      [ngClass]="{
+                        'is-invalid':
+                          f['surname'].touched && f['surname'].invalid
+                      }"
+                    />
+                    <div
+                      *ngIf="f['surname'].touched && f['surname'].invalid"
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="
+                          f['surname'].errors &&
+                          f['surname'].errors['required']
+                        "
+                      >
+                      {{'register.surname' | translate }} {{'register.is_required' | translate }}.
+                      </div>
+                    </div>
+                    <div *ngIf="CustomControler !== 0" class="invalid-feedback">
+                      {{ CustomControler }}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label> {{'register.mobile' | translate }} <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      formControlName="mobile"
+                      [ngClass]="{
+                        'is-invalid':
+                          f['mobile'].touched && f['mobile'].invalid
+                      }"
+                    />
+                    <div
+                      *ngIf="f['mobile'].touched && f['mobile'].invalid"
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="
+                          f['mobile'].errors &&
+                          f['mobile'].errors['required']
+                        "
+                      >
+                      {{'register.mobile' | translate }} {{'register.is_required' | translate }}.
+                      </div>
+                    </div>
+                    <div *ngIf="CustomControler !== 0" class="invalid-feedback">
+                      {{ CustomControler }}
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label>Email <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      formControlName="email"
+                      [ngClass]="{
+                        'is-invalid': f['email'].touched && f['email'].invalid
+                      }"
+                    />
+                    <div
+                      *ngIf="f['email'].touched && f['email'].invalid"
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="
+                          f['email'].errors && f['email'].errors['required']
+                        "
+                      >
+                        Email {{'register.is_required' | translate }}.
+                      </div>
+                      <div *ngIf="f['email'].errors && f['email'].errors['email']">
+                        {{'register.valid_email' | translate }}
+                      </div>
+                    </div>
+                    <div *ngIf="CustomControler !== 0" class="invalid-feedback">
+                      {{ CustomControler }}
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>{{'register.password' | translate }} <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control pass-input"
+                      [type]="passwordClass ? 'text' : 'password'"
+                      formControlName="password"
+                      [ngClass]="{
+                        'is-invalid':
+                          f['password'].touched && f['password'].invalid
+                      }"
+                    />
+                    <div
+                      *ngIf="f['password'].touched && f['password'].invalid"
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="
+                          f['password'].errors &&
+                          f['password'].errors['required']
+                        "
+                      >
+                      {{'register.password' | translate }} {{'register.is_required' | translate }}.
+                      </div>
+                    </div>
+                    <span (click)="passwordFunc()" [ngClass] = "passwordClass ? 'feather icon-eye' : 'feather icon-eye-off'"
+                      class="profile-views toggle-password"
+                    ></span>
+                  </div>
+                  <div class="form-group">
+                    <label
+                      >{{'register.confirm_password' | translate }}
+                      <span class="login-danger">*</span></label
+                    >
+                    <input
+                      class="form-control pass-input-confirm"
+                      [type]="passwordClass ? 'text' : 'password'"
+                      formControlName="confirmPassword"
+                      [ngClass]="{
+                        'is-invalid':
+                          f['confirmPassword'].touched &&
+                          f['confirmPassword'].invalid
+                      }"
+                    />
+                    <div
+                      *ngIf="
+                        f['confirmPassword'].touched &&
+                        f['confirmPassword'].invalid
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="
+                          f['confirmPassword'].errors &&
+                          f['confirmPassword'].errors['required']
+                        "
+                      >
+                      {{'register.confirm_password' | translate }} {{'register.is_required' | translate }}.
+                      </div>
+                    </div>
+                    <div
+                      *ngIf="isValidConfirmPassword"
+                      class="invalid-feedback"
+                    >
+                    {{'register.pass_not_match' | translate }}
+                    </div>
+                    <span (click)="confirmPasswordFunc()" [ngClass] = "confirmPasswordClass ? 'feather icon-eye' : 'feather icon-eye-off'"
+                      class="profile-views confirm-password"
+                    ></span>
+                  </div>
+                  <div class="forgotpass">
+                    <div class="remember-me">
+                      <label
+                        class="custom_check mr-2 mb-0 d-inline-flex remember-me "
+                      >
+                      {{'register.agree_to_the' | translate }}
+                        <a [routerLink]="[ '/terms-and-conditions' ]" target="_blank">&nbsp; {{'register.terms_and_conditions' | translate }}</a>  
+                        <input type="checkbox" name="agree_policy" formControlName="agree_policy" (change)="acceptTermsCond()"/>
+                        <input
+                          class="form-control"
+                          type="checkbox"
+                          formControlName="agree_policy"
+                          [ngClass]="{
+                            'is-invalid': f['agree_policy'].touched && f['agree_policy'].invalid
+                          }"
+                        />
+                        <div
+                      *ngIf="f['agree_policy'].touched && f['agree_policy'].invalid"
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="
+                          f['agree_policy'].errors &&
+                          f['agree_policy'].errors['required']
+                        "
+                      >
+                      {{'register.password' | translate }} {{'register.is_required' | translate }}.
+                      </div>
+                    </div>
+                        
+                        <span class="checkmark"></span>
+                      </label>
+                      <div
+                      *ngIf="isAgreePolicy == false"
+                      class="error-message-form"
+                      >
+                      {{'register.accept_terms_and_conditions' | translate }}
+                    </div>
+                    </div>
+                  </div>
+
+                  <div *ngIf="error_register == true">
+                    <p class="error-message">{{ error_message }}</p>
+                    
+                </div>
+
+                  <div class="form-group login-btn">
+                    <button
+                      [disabled]="form.invalid || disabledButton"
+                      class="btn btn-primary btn-block"
+                      type="submit"
+                    >
+                      Sign up
+                    </button>
+                  </div>
+                </form>
+                <!-- /Form -->
+
+                <div class="next-sign">
+                  <p class="account-subtitle">
+                    {{'register.already_has_account' | translate }}
+                    <a [routerLink]="routes.login">Login</a>
+                  </p>
+
+                  <!-- Social Login -->
+                   <!-- 
+                  <div class="social-login">
+                    <a href="javascript:;"
+                      ><img src="assets/img/icons/login-icon-01.svg" alt=""
+                    /></a>
+                    <a href="javascript:;"
+                      ><img src="assets/img/icons/login-icon-02.svg" alt=""
+                    /></a>
+                    <a href="javascript:;"
+                      ><img src="assets/img/icons/login-icon-03.svg" alt=""
+                    /></a>
+                  </div>
+                  -->
+                  <!-- /Social Login -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Login Content -->
+    </div>
+  </div>
+</div>
+<!-- /Main Wrapper -->

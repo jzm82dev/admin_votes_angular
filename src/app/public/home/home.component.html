@@ -1,0 +1,528 @@
+
+
+	<div class="main-wrapper" id="home">
+
+		<app-home-header></app-home-header>
+
+		<!-- Start Banner -->
+		<div id="home" class="hero-section auto-height text-center">
+			<div class="container">
+				<div class="hero-wrap">
+					<div class="container-sm" data-aos="fade-up">
+						<div class="content my-3">
+							<h1>WE LOVE RACKET<br> {{'home_page.phrase_1' | translate }}</h1>
+							<p>
+								<b>{{'home_page.phrase_1_b' | translate }}</b> {{'home_page.phrase_2' | translate }} 
+							</p>
+							<a class="smooth-menu view-btn" [routerLink]="[ '/register-club' ]">{{'home_page.register_club' | translate }}</a>
+						</div>
+					</div>
+					<div class="container-sm" data-aos="fade-up">
+						<div class="banner">
+							<!-- <img class="movebounce" src="assets/home/assets/img/1.jpg" alt=""> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Banner -->
+
+		<!-- Start Features -->
+		<div id="features" class="features-section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col-sm-6 equal-height">
+						<div class="feature-list" data-aos="fade-right">
+							<div class="feature-icon">
+								<i class="la la-laptop"></i>
+							</div>
+							<div class="feature-info">
+								<h4>{{'home_page.title_phrase_3' | translate }}</h4>
+								<p>
+									{{'home_page.phrase_3' | translate }}
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-6 equal-height" data-aos="fade-right" data-aos-delay="100">
+						<div class="feature-list">
+							<div class="feature-icon">
+								<i class="la la-cube"></i>
+							</div>
+							<div class="feature-info">
+								<h4>{{'home_page.title_phrase_4' | translate }}</h4>
+								<p>
+									{{'home_page.phrase_4' | translate }}
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-6 equal-height" data-aos="fade-right" data-aos-delay="200">
+						<div class="feature-list">
+							<div class="feature-icon">
+								<i class="la la-code"></i>
+							</div>
+							<div class="feature-info">
+								<h4>{{'home_page.title_phrase_5' | translate }}</h4>
+								<p>
+									{{'home_page.phrase_5' | translate }}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Features -->
+
+		
+		<!-- Start Clubs -->
+		<div id="clubs" class="custom-section ">
+			<div class="container ">
+				<div class="container-xs ">
+					<div class="section-heading text-center" data-aos="zoom-in" data-aos-duration="2000">
+						<h2><span class="black">{{'home_page.phrase_6' | translate }}</span>&nbsp; We Love Racket</h2>
+						<p>{{'home_page.phrase_7' | translate }} <b>WE <span class="heart"> &#10084;</span> RACKET. </b> {{'home_page.phrase_7b' | translate }}</p>
+					</div>
+					<div class="subscribe" data-aos="fade-up" data-aos-duration="2500">
+						<form id="contact-form">
+							<div class="messages"></div>
+							<div class="input-group">
+								<input id="form_email" type="text" [(ngModel)]="searchDataValue"  placeholder="{{'home_page.phrase_9' | translate }}"
+									class="form-control" name="email" required="required">
+								<span class="input-group-addon">
+									<button type="submit" (click)="searchData(searchDataValue)">
+										<i class="la la-search"></i>
+									</button>
+								</span>
+							</div>
+						</form>
+					</div>
+				</div>
+				
+				<div class="row margin my-4">
+					<div class="col-sm-4 col-md-4 col-xl-3" *ngFor="let club of clubs">
+						<div class="blog grid-blog">
+							<div class="blog-image ">
+								<a [routerLink]="[ '/club', club.hash ]"><img class="img-fluid size" [src]="club.avatar" alt=""></a>
+								<ul class="nav view-blog-list blog-views">
+									<li><i class="feather icon-calendar me-1"></i>{{ club.additional_info.created_at | date: 'dd MMMM yyyy' }}</li>
+								</ul>
+							</div>
+							<div class="blog-content">
+								<div class="blog-grp-blk">
+									<div class="blog-img-blk">
+										<div class="content-blk-blog ms-2">
+											<h4></h4>
+											<h5></h5>
+										</div>
+									</div>
+									<span><i class="feather icon-user me-1"></i>{{'home_page.members' | translate }}: {{ club.total_users }}</span>
+									<span><i class="feather icon-minus-square me-1"></i>{{'home_page.courts' | translate }}: {{ club.courts.length }}</span>
+								</div>
+								<h3 class="blog-title text-start my-3"><a [routerLink]="[ '/club', club.hash ]">{{club.name}}</a></h3>
+								<!-- <div class="text-start size2" [innerHTML]=club.additional_info.description></div> -->
+								
+								<div class="text-end">
+									<a [routerLink]="[ '/club', club.hash ]" class="read-more  text-end"> {{'home_page.go_to_club' | translate }}<i class="fa fa-long-arrow-right ms-2"></i></a>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- End Clubs -->
+
+		<!-- Start Players -->
+		<div id="players" class="features-section">
+			<div class="container ">
+				<div class="container-xs ">
+					<div class="section-heading text-center" data-aos="zoom-in" data-aos-duration="2000">
+						<h2>{{'home_page.phrase_44' | translate }}</h2>
+						<p>
+							<b>{{'home_page.phrase_24' | translate }}</b>. {{'home_page.phrase_25' | translate }}. {{'home_page.phrase_26' | translate }}
+						</p>
+						
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col-sm-6 equal-height">
+						<div class="feature-list" data-aos="fade-right">
+							<div class="feature-icon">
+								<i class="la la-laptop"></i>
+							</div>
+							<div class="feature-info">
+								<h4>{{'home_page.phrase_27' | translate }}</h4>
+								<p>
+									{{'home_page.phrase_28' | translate }}<br>
+									<br><b>{{'home_page.phrase_29' | translate }}</b>
+									<br>1. {{'home_page.phrase_30' | translate }}
+									<br>2. {{'home_page.phrase_31' | translate }}
+									<br>3. {{'home_page.phrase_32' | translate }}
+								</p>
+								
+								
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-6 equal-height">
+						<div class="feature-list" data-aos="fade-right">
+							<div class="feature-icon">
+								<i class="la la-code"></i>
+							</div>
+							<div class="feature-info">
+								<h4>{{'home_page.phrase_34' | translate }}</h4>
+								<p>
+									{{'home_page.phrase_35' | translate }} {{'home_page.phrase_36' | translate }}<br>
+									
+									<br>{{'home_page.phrase_38' | translate }}
+									<br>{{'home_page.phrase_39' | translate }}
+									<br>{{'home_page.phrase_40' | translate }}
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-6 equal-height" data-aos="fade-right" data-aos-delay="100">
+						<div class="feature-list">
+							<div class="feature-icon">
+								<i class="la la-cube"></i>
+							</div>
+							<div class="feature-info">
+								<h4>{{'home_page.phrase_41' | translate }}</h4>
+								<p>
+									{{'home_page.phrase_42' | translate }}<br> 
+									<br>{{'home_page.phrase_43' | translate }}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="container ">
+					<div class="container-xs ">
+						<div class="section-heading text-center" data-aos="zoom-in" data-aos-duration="2000">
+							<a class="smooth-menu view-btn btn-register" [routerLink]="[ '/register-player' ]">{{'home_page.sign_up' | translate }}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Players -->
+
+		<!-- Start Demo -->
+		 <!-- 
+		<div id="viewdemos" class="demo-section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="container-xs">
+							<div class="section-heading text-center">
+								<h2>Multiple Template Options</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="row demo-row">
+					<div class="col-md-6 col-sm-6 col-12">
+						<div class="demo-wrap aos-init aos-animate" data-aos="fade-up">
+							<div class="demo-tabs">
+								<ul class="nav nav-tabs">
+									<li class="nav-item">
+										<a target="_blank" href="https://preclinic.dreamstechnologies.com/html/template/index.html" title="Html Preview">Liga</a>
+									</li>
+									<li class="nav-item">
+										<a target="_blank" href="https://preclinic.dreamstechnologies.com/laravel/template/public/index" title="Laravel Preview">Torneo</a>
+									</li>
+								</ul>
+							</div>
+							<div class="demo-box">
+								<a href="template/index.html" target="_blank">
+								<img class="img-fluid" src="assets/home/assets/img/screen1.jpg" width="735" height="418" alt="Default">
+								<h3 class="demo-title">Default</h3>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-sm-6 col-12">
+						<div class="demo-wrap aos-init aos-animate" data-aos="fade-up">
+							<div class="demo-tabs">
+								<ul class="nav nav-tabs">
+									<li class="nav-item">
+										<a target="_blank" href="https://preclinic.dreamstechnologies.com/html/template/index.html" title="Html Preview">Liga</a>
+									</li>
+									<li class="nav-item">
+										<a target="_blank" href="https://preclinic.dreamstechnologies.com/laravel/template/public/index" title="Laravel Preview">Torneo</a>
+									</li>
+								</ul>
+							</div>
+							<div class="demo-box">
+								<a href="template-rtl/index.html" target="_blank">
+								<img class="img-fluid" src="assets/home/assets/img/screen2.jpg" width="735" height="418" alt="RTL">
+								<h3 class="demo-title">RTL</h3>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		-->
+		<!-- End Demo  assets/home/assets/img/-->
+
+		<div id="about" class="about-section">
+
+			<div class="section-left">
+				<div class="content-table">
+					<div class="table-col" data-aos="fade-right">
+						<div class="showcase-img"><img src="assets/home/assets/img/courts.jpg" alt=""></div>
+					</div>
+					<div class="table-col" data-aos="fade-left" data-aos-duration="2500">
+						<div class="showcase">
+							<h3 class="title">{{'home_page.phrase_10_title' | translate }}</h3>
+							<p class="desc">{{'home_page.phrase_10' | translate }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section-right">
+				<div class="content-table">
+					<div class="table-col" data-aos="fade-left">
+						<div class="showcase-img"><img src="assets/home/assets/img/booking.jpg" alt=""></div>
+					</div>
+					<div class="table-col" data-aos="fade-right">
+						<div class="showcase">
+							<h3 class="title">{{'home_page.phrase_11_title' | translate }}</h3>
+							<p class="desc">{{'home_page.phrase_11' | translate }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section-left">
+				<div class="content-table">
+					<div class="table-col" data-aos="fade-right">
+						<div class="showcase-img"><img src="assets/home/assets/img/tournament.jpg" alt=""></div>
+					</div>
+					<div class="table-col">
+						<div class="showcase" data-aos="fade-left" data-aos-duration="2500">
+							<h3 class="title">{{'home_page.phrase_12_title' | translate }}</h3>
+							<p class="desc">{{'home_page.phrase_12' | translate }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="section-right">
+				<div class="content-table">
+					<div class="table-col" data-aos="fade-left">
+						<div class="showcase-img"><img src="assets/home/assets/img/league.jpg" alt=""></div>
+					</div>
+					<div class="table-col" data-aos="fade-right" data-aos-duration="2500">
+						<div class="showcase">
+							<h3 class="title">{{'home_page.phrase_13_title' | translate }}</h3>
+							<p class="desc">{{'home_page.phrase_13' | translate }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+
+
+		<!-- Start Overview -->
+		<div id="overview" class="overview-section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="container-xs" data-aos="fade-up" data-aos-delay="100">
+							<div class="section-heading text-center">
+								<h2>{{'home_page.phrase_14_options' | translate }}</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<ngx-slick-carousel class="center slider carousel"  
+							#slickModal="slick-carousel" 
+							[config]="slideConfig" >
+							
+								<div class="overview-img" *ngFor="let slide of slides">
+									<div  ngxSlickItem class="slide">
+										<img src="{{ slide.img }}" alt="" width="100%">
+										<h4>{{ slide.text }}</h4>
+									</div>
+								</div>
+						</ngx-slick-carousel>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Overview -->
+		<!-- Contact Form -->
+		<section class="contact-form-sec">
+			<div class="container">
+				<div class="section-heading text-center">
+					<h2>{{'home_page.phrase_15' | translate }}</h2>
+					<p class="sub-title">{{'home_page.phrase_16' | translate }}</p>
+				</div>
+				<div class="row">
+					<div class="col-md-6 m-auto">
+						<form method="post" id="contact_form">
+							<div class="messages"></div>
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="form-group mb-4">
+										<input type="text"  [(ngModel)]="client_name" name="client_name"  class="form-control" placeholder="{{'home_page.phrase_17' | translate }}" autocomplete="off" required>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group mb-4">
+										<input type="email" [(ngModel)]="client_email" name="client_email" class="form-control" placeholder="Email" autocomplete="off" required>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group mb-4">
+										<input type="text" [(ngModel)]="client_club" name="client_club" class="form-control" placeholder="{{'home_page.phrase_21' | translate }}" autocomplete="off" required>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group mb-4">
+										<input type="text" [(ngModel)]="client_mobile" name="client_mobile" class="form-control" placeholder="{{'home_page.phrase_22' | translate }}" minlength="7" maxlength="15" autocomplete="off" required>
+									</div>
+								</div>
+								<div class="col-lg-12">
+									<div class="form-group mb-4">
+										<textarea type="text" [(ngModel)]="client_comment" name="client_comment" class="form-control" rows="4" name="comments" placeholder="{{'home_page.phrase_18' | translate }}" id="comments" required></textarea>
+									</div>
+								</div>
+								<button (click)="sendEmail()" class="button m-auto" [disabled]="disabledSent">{{'home_page.phrase_send' | translate }} </button>
+								<p *ngIf="show_error_fields" class="sub-title my-3 error-sent">{{'home_page.phrase_23' | translate }}</p>
+								<p *ngIf="sent_ok" class="sub-title my-3">{{'home_page.phrase_19' | translate }} </p>
+								<p *ngIf="sent_error" class="sub-title my-3 error-sent">{{'home_page.phrase_20' | translate }} <a *ngIf="sent_error" href="mailto:support@weloveracket.com" class="contact_list">support@weloveracket.com</a></p>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- /Contact Form -->
+
+		<!-- Start Footer -->
+		<footer class="footer">
+			<div class="container">
+				<div class="footer-top">
+					<div class="row">
+						<!-- 
+						<div class="col-md-4 col-sm-12">
+							<div class="footer-widget" data-aos="fade-up" data-aos-duration="2500">
+								<h4 class="text-center">Social Links</h4>
+								<div class="footer-list">
+									<ul>
+										<li>
+											<div class="info-list social-list">
+												<a href="#" class="social-icon" target="_blank">
+													<i class="la la-facebook"></i>
+												</a>
+												<a href="#" class="social-icon" target="_blank">
+													<i class="la la-twitter"></i>
+												</a>
+												<a href="#" class="social-icon" target="_blank">
+													<i class="la la-youtube"></i>
+												</a>
+												<a href="#" class="social-icon" target="_blank">
+													<i class="la la-linkedin"></i>
+												</a>
+												<a href="#" class="social-icon" target="_blank">
+													<i class="la la-instagram"></i>
+												</a>
+												<a href="#" class="social-icon" target="_blank">
+													<i class="la la-behance"></i>
+												</a>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						 -->
+						<div class="col-md-4 col-sm-12">
+							<div class="footer-widget" data-aos="fade-up" data-aos-duration="2500">
+								<h4 class="text-center">Privacy & Policy</h4>
+								<div class="footer-list text-center">
+									<ul>
+										<li>
+												<a [routerLink]="[ '/terms-and-conditions' ]" 
+													target="_blank">
+													<span>{{'register.terms_and_conditions' | translate }} </span>
+												</a>
+											
+										</li>
+										<li>
+											
+												<a [routerLink]="[ '/cookie-policy' ]"
+													target="_blank">
+													
+													<span>Cookies policy<span class="category"></span></span>
+												</a>
+											
+										</li>
+										
+									</ul>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-md-4 col-sm-12">
+							<div class="footer-widget twitter-widget" data-aos="fade-up" data-aos-duration="2500">
+								<h4 class="text-center">Contact Info</h4>
+								<div class="footer-list text-center">
+									<ul>
+										<li>
+											<a href="mailto:business@weloveracket.com" target="_blank">
+												<span>contact@weloveracket.com</span>
+											</a>
+										</li>
+										<li>
+											<a href="tel:+34 640963295">	
+												<span>+34 640 963 295</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Start Footer Bottom -->
+				<div class="footer-bottom">
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<p>&copy; Copyright 2025. All Rights Reserved by <a href="#">weloveracket.com</a></p>
+						</div>
+						<!-- <div class="col-md-6">
+							<div class="powered-by">
+								<p>A Product Of <a target="_blank" href="https://weloveracket.com"><img width="187" height="54" alt="dreamstechnologies" src="assets/home/assets/img/footer-logo.svg"></a></p>
+							</div>
+						</div> -->
+					</div>
+				</div>
+				<!-- End Footer Bottom -->
+
+			</div>
+		</footer>
+		<!-- End Footer -->
+
+

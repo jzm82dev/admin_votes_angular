@@ -1,0 +1,204 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.patientsList">Appointment </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">Eddit Appointment</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>Edit Appointment #{{appointement_id}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">
+                                    <div class="form-group local-forms">
+                                        <label >Date Of Appointment <span class="login-danger">*</span></label>
+                                        <input (dateChange)="onDateChange($event)" class="form-control datetimepicker"  [(ngModel)]="date_appointment" name="date_appointment" type="text"  placeholder="" matInput [matDatepicker]="picker">
+                                        <mat-datepicker #picker></mat-datepicker>
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">
+                                    <div class="form-group local-forms">
+                                        <label >Hora <span class="login-danger">*</span></label>
+                                            <mat-select [(ngModel)]="hour" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select  Hour">
+                                                <mat-option *ngFor="let data of hours" [value]="data.id">
+                                                {{data.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 col-md-3 col-xl-3">
+                                    <div class="form-group local-forms">
+                                        <label >Specialitie <span class="login-danger">*</span></label>
+                                            <mat-select [(ngModel)]="specialitie_id" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select  Speciality">
+                                                <mat-option *ngFor="let data of specialities" [value]="data.id">
+                                                {{data.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-3 col-xl-3">
+                                    <div class="form-group local-forms">
+                                        <button class="btn btn-sm btn-primary" (click)="filter()">Filtro</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>Availability</h4>
+                                    </div>
+                                </div>
+                                <div class="col-8" *ngIf="aviable_doctors.length > 0">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Doctor {{aviable_doctors.length}}</th>
+                                                    <th>Disponibilidad</th>
+                                                    <th>Ver</th>
+                                                </tr>
+                                            </thead>
+                                                <ng-container *ngFor="let doctor_rep of aviable_doctors">
+                                                    <tr [ngClass]="{'bg-success':doctor_rep.doctor_selected}">
+                                                        <td>{{ doctor_rep.doctor.full_name }}</td>
+                                                        <td>{{ doctor_rep.aviables }}</td>
+                                                        <td><button class="btn btn-primary btn-sm" (click)="showAvialablesHours(doctor_rep)">+</button></td>
+                                                    </tr>
+                                                </ng-container>   
+                                        </table>
+                                    </div>    
+                                </div>
+                                <div class="col-4">
+                                    <div class="table-responsive" *ngIf="doctor_selected">
+                                        <table class="table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Hora</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngFor="let segment of available_segmets">
+                                                    <tr [ngClass]="{'bg-success': segment.selected}">
+                                                        <input type="radio" [value]="segment.id" name="radio" (click)="selectSegment(segment)"  
+                                                               [(ngModel)]="radio"> {{ segment.format_segment.format_hour_start}} - {{ segment.format_segment.format_hour_end}}
+                                                    </tr>
+                                                </ng-container> 
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>   
+                            </div>
+                            <div class="row align-items-center py-4">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>Patient Data</h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">
+                                    <div class="form-group local-forms">
+                                        <label >DNI <span class="login-danger">*</span></label>
+                                        <input disabled class="form-control" (keyup.enter)="findPaptient()" [(ngModel)]="dni" name="dni" type="dni" placeholder="" >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">  
+                                    <div class="form-group local-forms">
+                                        <label >First Name <span class="login-danger">*</span></label>
+                                        <input disabled class="form-control" [(ngModel)]="name" name="name" type="text" placeholder="" >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">
+                                    <div class="form-group local-forms">
+                                        <label >Surname <span class="login-danger">*</span></label>
+                                        <input disabled class="form-control" [(ngModel)]="surname" name="surname" type="text" placeholder="" >
+                                    </div>
+                                </div>                             
+                                <div class="col-12 col-md-6 col-xl-6">
+                                    <div class="form-group local-forms">
+                                        <label >Mobile <span class="login-danger">*</span></label>
+                                        <input disabled class="form-control" [(ngModel)]="mobile" name="mobile" type="number" placeholder="" >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">  
+                                    <div class="form-group local-forms">
+                                        <label> Name Companion <span class="login-danger">*</span></label>
+                                        <input disabled class="form-control" [(ngModel)]="name_companion" name="name_companion" type="text" placeholder="" >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">
+                                    <div class="form-group local-forms">
+                                        <label >Surname Companion<span class="login-danger">*</span></label>
+                                        <input disabled class="form-control" [(ngModel)]="surname_companion" name="surname_companion" type="text" placeholder="" >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center py-4">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>Payment Data</h4>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 col-md-4 col-xl-4">  
+                                    <div class="form-group local-forms">
+                                        <label >Total Amount <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="total_amount" name="total_amount" type="number" placeholder="" >
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row align-items-center">
+
+                                <div class="col-12">
+                                    <div class="doctor-submit text-end">
+                                        <button type="button" (click)="update()" class="btn btn-primary submit-form me-2">Guardar</button>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                        <strong>Error!</strong> {{ error_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                      </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="success_message != ''">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>Bien!</strong> {{ success_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                    </div>
+                                </div>
+                             
+                            </div>
+                    </div>
+                </div>
+                
+                
+               
+            </div>					
+        </div>
+    </div>
+</div>
+ 

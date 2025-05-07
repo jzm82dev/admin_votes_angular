@@ -1,0 +1,397 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.staffList">Clubs </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">Añadir Club</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <div class="settings-menu-links">
+            <ul class="nav nav-tabs menu-tabs">
+                <li class="nav-item active" [ngClass]="{'active': tab_selected == 1}">
+                    <a href="#" class="nav-link" onclick="return false;"  (click)="tabSeleted(1)">Datos Generales</a>
+                </li>
+                <li class="nav-item" [ngClass]="{'active': tab_selected == 2}">
+                    <a href="#" class="nav-link" onclick="return false;"  (click)="tabSeleted(2)">Horario</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.paymentSettings">Horarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.emailSettings">Precios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.othersSettings">Otros</a>
+                </li> --> 
+            </ul>
+        </div>
+
+
+        <div class="row" *ngIf="tab_selected == 1">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Datos del club</h5>
+                    </div>
+                    <div class="card-body pt-0">
+                        <form>
+                            <div class="settings-form">
+                                <div class="form-group">
+                                    <label >Nombre <span class="login-danger">*</span></label>
+                                    <input class="form-control" [(ngModel)]="name" name="name" type="text"  >
+                                </div>
+                                <div class="form-group">
+                                    <label >Nombre representante </label>
+                                    <input class="form-control" [(ngModel)]="club_manager" name="club_manager" type="text"  >
+                                </div>
+                                <div class="form-group">
+                                    <label >Teléfono <span class="login-danger">*</span></label>
+                                    <input class="form-control" [(ngModel)]="mobile" name="mobile" type="text"  >   
+                                </div>
+                                <div class="form-group">
+                                    <label >Email <span class="login-danger">*</span></label>
+                                    <input class="form-control" [(ngModel)]="email" name="email" type="email"  >  
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="local-top">Logo </label>
+                                    <div class="settings-btn upload-files-avator">
+                                        <input type="file" accept="image/*" name="image" id="file"  (change)="loadFile($event)" class="hide-input">
+                                        <label for="file" class="upload">Selecciona imagen</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="" *ngIf="image_preview">
+                                        <img [src]="image_preview" alt="" width="150px" height="150px">
+                                    </div>
+                                </div>
+
+                                
+                                <div class="form-group mb-0">
+                                    <div class="settings-btns">
+                                        <button type="submit" class="border-0 btn btn-primary btn-gradient-primary btn-rounded">Guardar</button>&nbsp;&nbsp;
+                                        <button type="submit" class="btn btn-secondary btn-rounded">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Dirección</h5>
+                    </div>
+                    <div class="card-body pt-0">
+                         <form>
+                            <div class="settings-form">
+                                <div class="form-group">
+                                    <label>Dirección <span class="star-red">*</span></label>
+                                    <input type="text" class="form-control" [(ngModel)]="address" name="address" placeholder="Introduzca dirección">
+                                </div>
+                                <div class="form-group">
+                                    <label>Datos adicionales dirección </label>
+                                    <input type="text" class="form-control" [(ngModel)]="address_2" name="address_2" placeholder="Introduce Más información">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Ciudad </label>
+                                            <input type="text" class="form-control" [(ngModel)]="city" name="city" placeholder="Introduce Ciudad">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Provincia </label>
+                                            <input type="text" class="form-control" [(ngModel)]="province" name="province" placeholder="Introduce Provincia">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Código Postal </label>
+                                            <input type="text" class="form-control" [(ngModel)]="postal_code" name="postal_code" placeholder="Introduce Código postal">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Código Postal </label>
+                                            <input type="text" class="form-control" [(ngModel)]="country" name="country" placeholder="Introduce Paísl">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <div class="settings-btns">
+                                        <button type="submit" class="border-0 btn btn-primary btn-gradient-primary btn-rounded">Guardar</button>&nbsp;&nbsp;
+                                        <button type="submit" class="btn btn-secondary btn-rounded">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form> 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="tab_selected == 2">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Añade horario diario</h5>
+                    </div>
+                    <div class="card-body pt-0 my-4">
+                        <form>
+                            <!-- DAYS -->
+                            <div class="row" *ngFor="let day of schedule_hour_days; let i = index;">
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <h5 class="card-title">{{ day.day_name }}</h5>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 text-end">
+                                            <div class="status-toggle ">
+                                                <input type="checkbox"  [(ngModel)]="day.closed" [name]="day.id" [id]="day.id" class="check" [ngModelOptions]="{standalone: true}" >
+                                                <label [for]="day.id" class="checktoggle">checkbox</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Cerrado</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" *ngIf="!day.closed">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="settings-form">
+                                                <div class="form-group">
+                                                    <div class="form-group local-forms">
+                                                        <label >Abre a las <span class="login-danger">*</span></label>
+                                                        <mat-select [(ngModel)]="opening_time" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Hora ...">
+                                                            <mat-option *ngFor="let data of hours" [value]="data.id">
+                                                                {{data.format_hour}}
+                                                                </mat-option>
+                                                        </mat-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="settings-form">
+                                                <div class="form-group links-info">
+                                                    <div class=" links-cont">
+                                                        <div class="form-group local-forms form-placeholder d-flex">
+                                                            <label >Cierra a las <span class="login-danger">*</span></label>
+                                                            <mat-select [(ngModel)]="closing_time" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Hora ...">
+                                                                <mat-option *ngFor="let data of hours" [value]="data.id">
+                                                                    {{data.format_hour}}
+                                                                    </mat-option>
+                                                            </mat-select>
+                                                            <a (click)="addHourSchedule(day.day_name)" href="javascript:void(0);" class="btn trash">
+                                                                <i class="fa fa-plus me-1"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row" >
+                                        <div class="table-responsive">
+                                            <table class="table table-hover mb-0">
+                                                <thead>
+                                                    <tr class="text-center">
+                                                        <th>Abre a las </th>
+                                                        <th>Cierra a las </th>
+                                                        <th>Borrar </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let item of day.hours; let i = index">
+                                                        <td class="text-center">{{ item.opening_time }} h</td>
+                                                        <td class="text-center">{{ item.closing_time }} h</td>
+                                                        <td class="settings-form text-center">
+                                                            <a (click)="deleteHourSchedule(i, day.id)" href="javascript:void(0);" class="btn trash">
+                                                                <i class="feather icon-trash-2"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr *ngIf="day.hours.length == 0">
+                                                        <td colspan="3" class="text-center"> No hay horario definido para el {{ day.day_name }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div><hr></div>
+                                
+                            </div>
+                            <div class="col-md-12 my-4" *ngIf="error_message_schedule != ''">
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                    <strong>Error!</strong> {{ error_message_schedule }}
+                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                  </div>
+                            </div>
+                            <div class="col-md-12 my-4" *ngIf="success_message_schedule != ''">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Bien!</strong> {{ success_message_schedule }}
+                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group mb-0">
+                                <div class="settings-btns">
+                                    <button type="submit" class="border-0 btn btn-primary btn-gradient-primary btn-rounded" (click)="saveScheduleHours()">Guardar</button>
+                                </div>
+                            </div>
+                            <!-- END DAYS -->
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+        
+
+        <div class="row">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>Datos</h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">  
+                                    <div class="form-group local-forms">
+                                        <label >Nombre club<span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="name" name="name" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">
+                                    <div class="form-group local-forms">
+                                        <label >Nombre representante </label>
+                                        <input class="form-control" [(ngModel)]="club_manager" name="club_manager" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >Teléfono <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="mobile" name="mobile" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-8">
+                                    <div class="form-group local-forms">
+                                        <label >Email <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="email" name="email" type="email"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12">
+                                    <div class="form-group local-forms">
+                                        <label>Dirección  </label>
+                                        <textarea class="form-control" [(ngModel)]="address" name="address" rows="3" cols="30"></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 col-md-6 col-xl-6">
+                                    <div class="form-group local-top-form">
+                                        <label class="local-top">Logo </label>
+                                        <div class="settings-btn upload-files-avator">
+                                            <input type="file" accept="image/*" name="image" id="file"  (change)="loadFile($event)" class="hide-input">
+                                            <label for="file" class="upload">Selecciona imagen</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center">
+                                    <div class="row">
+                                        <div class="col-12 col-md-2 col-xl-2">  
+                                            <div class="form-group local-forms">
+                                                <h4>Lunes</h4>
+                                            </div>
+                                            <div>
+                                                <label>Cerrado</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-2 col-xl-2">  
+                                            <div class="form-group local-forms">
+                                                <label >Abre a las  <span class="login-danger">*</span></label>
+                                                <input  class="form-control" [(ngModel)]="opening_time" name="opening_time" type="text" placeholder="" >
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-2 col-xl-2">  
+                                            <div class="form-group local-forms">
+                                                <label >Cierra a las  <span class="login-danger">*</span></label>
+                                                <input  class="form-control" [(ngModel)]="opening_time" name="opening_time" type="text" placeholder="" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                
+                                </div>
+
+                                <div class="" *ngIf="image_preview">
+                                    <img [src]="image_preview" alt="" width="150px" height="150px">
+                                </div>
+                               
+                                <div class="col-12">
+                                    <div class="doctor-submit text-end">
+                                        <button type="button" class="btn btn-primary submit-form me-2" (click)="save()">GUARDAR</button>
+                                        <button type="submit" class="btn btn-primary cancel-form">Cancel</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                        <strong>Error!</strong> {{ error_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                      </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="success_message != ''">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>Bien!</strong> {{ success_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>							
+            </div>					
+        </div>
+    </div>
+</div>
+ 
+
+
+
+

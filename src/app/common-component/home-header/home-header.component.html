@@ -1,0 +1,117 @@
+
+
+    <div id="loader-wrapper" *ngIf="loaded == false">
+        <div id="loader">
+            <div class="loader-ellips">
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                    <div class="cookie-consent-modal" id="modal-cookie">
+                        <div class="content-cookie">
+                        <h2>Permitir cookies</h2>
+                        <p>Esta web utiliza cookies propias para su correcto funcionamiento. Contiene enlaces a sitios web de terceros con políticas de 
+                            privacidad ajenas que podrás aceptar o no cuando accedas a ellos. Al hacer clic en el botón Aceptar, acepta el uso de estas tecnologías 
+                            y el procesamiento de tus datos para estos propósitos. Más información <a [routerLink]="[ '/cookie-policy' ]" target="_blank"> aquí</a>.</p>
+                        <div class="btns">
+                            <button class="btn cancel">cancel</button>
+                            <button id="accetp_cookie" class="btn accept" (click)="acceptCookie()">Accept</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="top-header " >
+       
+
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="list-inline-items d-flex text-logo">WE &nbsp;<span class="heart"> &#10084;</span>&nbsp; RACKET</div>
+                </div>  
+                <div class="col-md-6 text-right">
+                    <ul class="list-inline-item list-unstyled m-0">
+                        <li class="list-inline-items"><a href="mailto:contact@weloveracket.com" class="contact_list"><i class="la la-envelope" aria-hidden="true"></i>contact@weloveracket.com</a></li>
+                        <li><span>|</span></li>
+                        <li class="list-inline-items"><a href="tel:+34 640963295" class="contact_list"><i class="la la-phone" aria-hidden="true"></i>+34 640 963 295</a></li>
+                        <li><span>|</span></li>
+                        <li class="list-inline-items">
+                            <a href="javascript:void(0);" (click)="changeLanguage(default_flag_language.code)">
+                                <span>
+                                    <img class=" flag-size"  [src]="default_flag_language.logo"  [alt]="default_flag_language.code">
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header id="home" class="header">
+         <nav class="navbar navbar-expand-md home-menu " id="menu-nav-bar">
+            <div class="container">
+
+                <!-- <a class="logo-link smooth-menu" href="#home">
+                    <img src="assets/img/logo.png" width="20" class="logo logo-display" alt="Logo">
+                    <img src="assets/img/logo.png" class="logo logo-scrolled" alt="Logo">
+                </a> -->
+                <button class="navbar-toggler " type="button" (click)="openMenu()">
+                    <i class="la la-bars"></i>
+                </button>
+                <!--<a href="javascript:void(0);" class="navbar-toggler" data-bs-toggle="dropdown" aria-expanded="false"><i class="la la-bars"></i></a>-->
+                
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="smooth-menu nav-link" href="#home">{{'home_page.home' | translate }}</a>
+                        </li>
+                        <!-- 
+                        <li class="nav-item">
+                            <a class="smooth-menu nav-link" (click)="scrollToAnchroingPosition('features')" href="javascript:void(0);">{{'home_page.features' | translate }}</a>
+                        </li>
+                        -->
+                        <li class="nav-item">
+                            <a class="smooth-menu nav-link" (click)="scrollToAnchroingPosition('clubs')">{{'home_page.clubs' | translate }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="smooth-menu nav-link" (click)="scrollToAnchroingPosition('players')" >{{'home_page.players' | translate }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="smooth-menu nav-link" (click)="scrollToAnchroingPosition('about')" >{{'home_page.examples' | translate }}</a>
+                        </li>                       
+                        <li class="nav-item">
+                            <a class="smooth-menu nav-link" (click)="scrollToAnchroingPosition('overview')" >{{'home_page.pages' | translate }}</a>
+                        </li>                                                                 
+                        <!-- <li class="nav-item">
+                            <a class="smooth-menu nav-link" (click)="scrollToAnchroingPosition('overview')" href="javascript:void(0);">Prices</a>
+                        </li> -->
+                        
+                    </ul>
+                    <div class="nav-btn">
+                        <a [routerLink]="[ '/login' ]" class="download-btn">{{'home_page.login' | translate }}</a>
+                    </div>
+                </div>
+                <!-- Language mobile -->
+                <div class="text-right show-language">
+                    <a href="javascript:void(0);" (click)="changeLanguage(default_flag_language.code)">
+                        <span>
+                            <img class=" flag-size"  [src]="default_flag_language.logo"  alt="Admin">
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+        </nav>
+
+        <!-- End Navigation -->
+
+    </header>
+    <!-- End Header -->

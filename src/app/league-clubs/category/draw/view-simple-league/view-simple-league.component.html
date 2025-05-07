@@ -1,0 +1,174 @@
+<div class="page-wrapper" >
+    <div class="content" >
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="[ '/tournament/data', tournament_id ]">{{'tournaments.tournament' | translate }} </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'leagues.category' | translate }} ({{ name }})</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="settings-menu-links" *ngIf="category_selected">
+            <ul class="nav nav-tabs menu-tabs">             
+                <li class="nav-item" >
+                    <a class="nav-link" [routerLink]="[ '/tournament/data', tournament_id, 3 ]">{{'tournaments.tournament' | translate }}</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" onclick="return false;" class="nav-link" [routerLink]="[ '/category/data', category_id, 1 ]">{{'leagues.tabs.general_data' | translate }}</a>
+                </li>
+                <li class="nav-item ">
+                    <a href="#" onclick="return false;" class="nav-link" [routerLink]="[ '/category/data', category_id, 2 ]">{{'leagues.tabs.couples' | translate }} </a>
+                </li>
+                <li class="nav-item" *ngIf="tournament_id != null && (category_type == '1' || category_type == '2' || category_type == '6')">
+                    <a class="nav-link" [routerLink]="[ '/category/draw/clasification', category_id ]">{{'tournaments.clasification' | translate }}</a>
+                </li>
+                <li class="nav-item active" *ngIf="tournament_id != null && (category_type == '1' || category_type == '2' || category_type == '6')">
+                    <a class="nav-link" [routerLink]="[ '/category/draw/simple-league', category_id ]">{{'leagues.tabs.journeys' | translate }}</a>
+                </li>
+                <li class="nav-item" *ngIf="tournament_id != null && category_type == '2'">
+                    <a class="nav-link" [routerLink]="[ '/category/draw/main', category_id ]">Playoff</a>
+                </li> 
+            </ul>
+        </div>
+
+        <div class="col-sm-12" *ngIf="isLoaded == true" >
+            
+            <div class="card">
+                <div class="card-body background">
+                    <form>
+
+                        <div class="container align-bottom">
+                            <div class="row">
+                                <div class="col-auto text-start float-end ms-auto download-grp">
+                                    <a href="javascript:;" class=" me-2" (click)="generateDrawPdf()"><img src="assets/img/icons/pdf-icon-01.svg" alt=""></a>
+                                </div>
+                            </div>
+                            <div id="matchs_league">
+                            <div class="form-group theme-set row my-0" *ngIf="category_type == '2'">
+                                <label class="col-lg-10 col-form-label"></label>
+                                
+                                <div class="col-lg-2 text-center ">
+                                    <p class="player color_1 bold border" [routerLink]="[ '/category/draw/clasification', category_id ]">{{'leagues.ranking.group' | translate }} A</p>
+                                </div>
+                            </div>
+                            <div class="form-group theme-set row" *ngIf="category_type == '2'">
+                                <label class="col-lg-10 col-form-label"></label>
+                                
+                                <div class="col-lg-2 text-center">
+                                    <p class="player color_2 bold border" [routerLink]="[ '/category/draw/clasification', category_id ]">{{'leagues.ranking.group' | translate }} B</p>
+                                </div>
+                            </div>
+                            
+                            
+                            
+                            <div class="row" *ngFor="let journey of matches_league; let i = index; ">
+                                <div class="row" *ngIf="journey.show_first_leg == true">
+                                    <div class="col">
+                                        <p class="legs">{{'leagues.journeys.first_legs' | translate }}</p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="journey.show_second_leg == true">
+                                    <div class="col">
+                                        <p class="legs">{{'leagues.journeys.second_legs' | translate }}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6 col-xl-6 " *ngIf="matches_league.length > 0">
+                                        <p>{{'leagues.journeys.journey' | translate }} {{ i + 1}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 my-3 player div-square" [ngClass]="{'color_1': match.league_number == 1 || category_type == '1', 'color_2' : match.league_number == 2 || match.is_second_leg == 1 }"
+                                 (click)="addResult(match.id)" *ngFor="let match of journey">
+                                <div class="row" >
+                                    <div class="12 text-end">
+                                        <span>{{match.time}} {{'tournaments.court' | translate }} {{match.court_name}}</span>
+                                    </div>
+                                </div>
+                               
+                                <div class="row my-2" [ngClass]="{'couple-selected' : match.local_couple_id == couple_selected_id}">
+                                    <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+                                        
+                                        <div class="row" [ngClass]="{'looser' : match.visiting_winner, 'winner': match.local_winner}">
+                                            <div class="12">
+                                                {{match.local_players[0].title | slice:0:10}}
+                                            </div>
+                                            <div class="12" *ngIf="match_type == 'double'">
+                                                {{match.local_players[1].title | slice:0:10}}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- <div class="col-1 center ">
+                                        <div *ngIf="match.local_winner" class="side-info-item winner-mark center">
+                                            <svg class="default-winner-svg" style="fill: #2e37a4;width: 13px; height: 13px;" xmlns="http://www.w3.org/2000/svg" 
+                                                 width="20" height="20" viewBox="0 0 20 20"><path xmlns="http://www.w3.org/2000/svg" 
+                                                 d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z"></path>
+                                            </svg>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-2 center" [ngClass]="{'looser' : match.visiting_winner, 'winner': match.local_winner}">
+                                        {{match.result_set_1_local}}
+                                    </div>
+                                    <div class="col-2 center" [ngClass]="{'looser' : match.visiting_winner, 'winner': match.local_winner}">
+                                        {{match.result_set_2_local}}
+                                    </div>
+                                    <div class="col-2 center" [ngClass]="{'looser' : match.visiting_winner, 'winner': match.local_winner}">
+                                        {{match.result_set_3_local}}
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row my-2" [ngClass]="{'couple-selected' : match.visiting_couple_id == couple_selected_id}">
+                                    <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+
+                                        <div class="row" [ngClass]="{'looser' : match.local_winner, 'winner' :match.visiting_winner }">
+                                            <div class="12">
+                                                {{match.visiting_players[0].title | slice:0:15}}
+                                            </div>
+                                            <div class="12" *ngIf="match_type == 'double'">
+                                                {{match.visiting_players[1].title | slice:0:15}} 
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                   <!-- <div class="col-1 center ">
+                                        <div *ngIf="match.visiting_winner" class="side-info-item winner-mark center"><svg class="default-winner-svg" style="fill: #2e37a4;width: 13px;
+                                            height: 13px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path xmlns="http://www.w3.org/2000/svg" d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z"></path></svg></div>
+                                    </div> -->
+                                    <div class="col-2 center" [ngClass]="{'looser' : match.local_winner, 'winner' :match.visiting_winner }">
+                                        {{match.result_set_1_visiting}}
+                                    </div>
+                                    <div class="col-2 center" [ngClass]="{'looser' : match.local_winner, 'winner' :match.visiting_winner }">
+                                        {{match.result_set_2_visiting}}
+                                    </div>
+                                    <div class="col-2 center" [ngClass]="{'looser' : match.local_winner, 'winner' :match.visiting_winner }">
+                                        {{match.result_set_3_visiting}}
+                                    </div>
+                                </div>
+                    
+                              </div>
+                              
+                            </div>
+
+                        </div>
+                            
+                        </div>
+
+
+
+
+
+                        
+
+                        
+                    </form>
+                </div>
+            </div>	
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.memberList">Email </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">>New email marketing</li>
+                    
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <!-- Begin Data -->
+        <div class="row">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>Send Email</h4>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-12 col-md-6 col-xl-4">  
+                                    <div class="form-group local-forms">
+                                        <label >Email <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="email" name="email" type="text" placeholder="Introduce el email del club" >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >Email a mandar <span class="login-danger">*</span></label>
+                                        <mat-select [(ngModel)]="type_email" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Selecciona el email a enviar">
+                                            <mat-option value="0">
+                                               ...
+                                            </mat-option>
+                                            <mat-option value="email_1">
+                                                Marketing Email 1
+                                            </mat-option>
+                                            <mat-option value="email_2">
+                                                Marketing Email 2
+                                            </mat-option>
+                                            <mat-option value="email_3">
+                                                Marketing Email 3
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 my-4">
+                                    <div class="doctor-submit text-end">
+                                        <button type="button" class="btn btn-primary submit-form me-2" (click)="sendEmail()">Send</button>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 my-4" *ngIf="error_send_email  != ''">
+                                        <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                            <strong>{{'commun_translations.error' | translate }}</strong> {{ error_send_email  }}
+                                            <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                                <span aria-hidden="true"> </span>
+                                            </button>
+                                            <ul *ngIf="message_errors_member.length > 0">
+                                                <li *ngFor="let error of message_errors_member">{{ error }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 my-4" *ngIf="success_send_email  != ''">
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <strong>{{'commun_translations.success' | translate }}</strong> {{ success_send_email  }}
+                                            <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                                <span aria-hidden="true"> </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>	
+            </div>
+        </div>
+    </div>
+</div>		

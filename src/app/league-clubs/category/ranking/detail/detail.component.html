@@ -1,0 +1,196 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item">{{'leagues.categories' | translate }} </li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'leagues.details.statistics' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="settings-menu-links">
+            <ul class="nav nav-tabs menu-tabs">
+                <li class="nav-item ">
+                    <a class="nav-link" [routerLink]="[ '/category/data', category_id, 1 ]">{{'leagues.tabs.general_data' | translate }}</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="[ '/category/data', category_id, 2 ]">{{ match_tab_player }}</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" [routerLink]="[ '/category/journeys', category_id, ]">{{'leagues.tabs.journeys' | translate }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="[ '/category/ranking', category_id, ]">{{'leagues.tabs.ranking' | translate }}</a>
+                </li> 
+            </ul>
+        </div>
+         <!-- /Page Header -->
+
+         <div class="row" *ngIf="isLoaded">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row my-4 ">
+                                <div class="col-12 text-center">
+                                    <div class="form-heading text-success">
+                                        <h3 *ngIf="type_league == 'double'">{{couple_name}}</h3>
+                                        <h3 *ngIf="type_league == 'singles'">{{ players[0].name }} {{ players[0].surname }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row text-center my-4" *ngIf="type_league == 'double'">
+                                <div class="col-12">     
+                                    <h4>{{'leagues.details.players' | translate }}</h4>
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>{{'leagues.name' | translate }}</th>
+                                                    <th>{{'leagues.surname' | translate }}</th>
+                                                    <th>{{'leagues.mobile' | translate }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="table-primary" *ngFor="let player of players; let i = index;">
+                                                    <td>{{'leagues.details.player' | translate }} {{i + 1}}</td>
+                                                    <td>{{ player.name }}</td>
+                                                    <td>{{player.surname}}</td>
+                                                    <td>{{player.mobile}}</td>
+                                                </tr>
+                                                <tr *ngFor="let player of substitute_players; let i = index;" class="table-info">
+                                                    <td>{{'leagues.substitute' | translate }} </td>
+                                                    <td>{{ player.name }}</td>
+                                                    <td>{{player.surname}}</td>
+                                                    <td>{{player.mobile}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>  
+                                </div>
+                            </div>
+                            
+                            <div class="row my-4 text-center">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>{{'leagues.details.statistics' | translate }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            
+
+                            <div class="row text-center graphics">
+                                
+                                <div class="col-4 center">
+                                    <div class="card text-center">
+                                       
+                                            <div class="chart-title">
+                                                <h4>{{'leagues.details.matchs' | translate }}</h4>
+                                                <h2><span class="counter-up" [countUp]="matches_played" [options]="{duration: 10}">{{ matches_played }}</span></h2>
+                                            </div>	
+                                            <div id="donut-chart-dash" class="chart-user-icon ">
+                                                <apx-chart class="donut-chart-custom "
+                                                [series]="chartOptionsMatch.series"
+                                                [chart]="chartOptionsMatch.chart"
+                                                [labels]="chartOptionsMatch.labels"
+                                                [colors]="chartOptionsMatch.colors"
+                                                [responsive]="chartOptionsMatch.responsive"
+                                                [dataLabels]="chartOptionsMatch.dataLabels"
+                                                [legend]="chartOptionsMatch.legend"></apx-chart>
+                                                
+                                            </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-4  d-flex center">
+                                    <div class="card text-center">
+                                        
+                                            <div class="chart-title">
+                                                <h4>{{'leagues.details.sets' | translate }}</h4>
+                                                <h2><span class="counter-up" [countUp]="sets_played" [options]="{duration: 10}">{{ sets_played }}</span></h2>
+                                            </div>	
+                                            <div id="donut-chart-dash" class="chart-user-icon">
+                                                <apx-chart class="donut-chart-custom"
+                                                [series]="chartOptionsSet.series"
+                                                [chart]="chartOptionsSet.chart"
+                                                [labels]="chartOptionsSet.labels"
+                                                [colors]="chartOptionsSet.colors"
+                                                [responsive]="chartOptionsSet.responsive"
+                                                [dataLabels]="chartOptionsSet.dataLabels"
+                                                [legend]="chartOptionsSet.legend"></apx-chart>
+                                            </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-4  d-flex center">
+                                    <div class="card text-center">
+                                        
+                                            <div class="chart-title">
+                                                <h4>{{'leagues.details.games' | translate }}</h4>
+                                                <h2><span class="counter-up" [countUp]="games_played" [options]="{duration: 10}">{{ games_played }}</span></h2>
+                                            </div>	
+                                            <div id="donut-chart-dash" class="chart-user-icon">
+                                                <apx-chart class="donut-chart-custom"
+                                                [series]="chartOptionsGame.series"
+                                                [chart]="chartOptionsGame.chart"
+                                                [labels]="chartOptionsGame.labels"
+                                                [colors]="chartOptionsGame.colors"
+                                                [responsive]="chartOptionsGame.responsive"
+                                                [dataLabels]="chartOptionsGame.dataLabels"
+                                                [legend]="chartOptionsGame.legend"></apx-chart>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                            
+                            <div class="row text-center my-4" *ngIf="matches_result.length > 0">
+                                <div class="col-12">     
+                                    <h4>{{'leagues.details.matchs' | translate }}</h4>
+                                    <div class="table-responsive">
+                                        <table class="table mb-0 ">
+                                            <thead>
+                                                <tr>
+                                                    <th>{{'leagues.journeys.journey' | translate }}</th>
+                                                    <th class="text-start">{{'leagues.journeys.couple_1' | translate }}</th>
+                                                    <th class="text-start">{{'leagues.journeys.couple_2' | translate }}</th>
+                                                    <th>{{'leagues.journeys.set_1' | translate }}</th>
+                                                    <th>{{'leagues.journeys.set_2' | translate }}</th>
+                                                    <th>{{'leagues.journeys.set_3' | translate }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let match of matches_result; let i = index;" [ngClass]="{'table-primary': match.match_finisehd == '1', 'table-warning' : match.match_finisehd == '0' }">
+                                                    <td>{{'leagues.journeys.journey' | translate }} {{ i + 1 }}</td>
+                                                    <td class="text-start"><span *ngFor="let player of match.local_players">{{ player.title }}<br></span></td>
+                                                    <td class="text-start"><span *ngFor="let player of match.visiting_players">{{ player.title }}<br></span></td>
+                                                    <td>{{ match.result_set_1 }}</td>
+                                                    <td>{{ match.result_set_2 }}</td>
+                                                    <td>{{ match.result_set_3 }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>  
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>							
+            </div>					
+        </div>
+
+    </div>
+</div>

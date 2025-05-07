@@ -1,0 +1,24 @@
+.list-group-item{
+    cursor: pointer;
+}
+
+.list-group-item:hover{
+    background-color: #f2f2f2;
+}
+
+.players{
+    font-style: italic;
+    font-size: 14px;
+}
+
+.space{
+    margin-bottom: 15px;
+}
+
+span{
+    font-weight: bold;
+}
+
+.settings-form .trash{
+    display: inline !important;
+}

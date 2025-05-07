@@ -1,0 +1,67 @@
+<div class="page-wrapper">
+    <div class="content">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.staffList">{{'leagues.category' | translate }} </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'tournaments.draw' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="settings-menu-links" >
+            <ul class="nav nav-tabs menu-tabs">
+                <li class="nav-item" >
+                    <a class="nav-link" [routerLink]="[ '/tournament/data', tournament_id, 3 ]">{{'tournaments.tournament' | translate }}</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" onclick="return false;" class="nav-link" [routerLink]="[ '/category/data', category_id, 1 ]">{{'leagues.tabs.general_data' | translate }}</a>
+                </li>
+                <li class="nav-item ">
+                    <a href="#" onclick="return false;" class="nav-link" [routerLink]="[ '/category/data', category_id, 2 ]">{{'leagues.tabs.couples' | translate }} </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" [routerLink]="[ '/category/view-draw', category_id ]">{{'tournaments.draw' | translate }}</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" [routerLink]="[ '/category/draw/matchs', 3 ]">{{'tournaments.matchs' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="row" *ngIf="isLoaded">
+          
+          <div class="row">
+            <div class="col-md-12" *ngIf="draw_generated == false">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="activity">
+                            <div class="activity-box">
+                                <ul class="activity-list">
+                                    <li>
+                                        <div class="activity-content timeline-group-blk"> 
+                                            <div class="comman-activitys flex-grow-1" *ngIf="total_couples > 0">
+                                              <h3>{{'tournaments.draw_to_be_defined' | translate }}. <span> {{'tournaments.no_draw' | translate }}.</span></h3>
+                                              <p>{{'tournaments.create_draw_text' | translate }}.</p>
+                                            </div>  
+                                            <div class="comman-activitys flex-grow-1" *ngIf="total_couples == 0">
+                                                <h3>{{'tournaments.draw_to_be_defined' | translate }}. <span> {{'tournaments.no_draw_no_couples' | translate }}.</span></h3>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div> 
+						
+            </div>					
+        </div>
+             
+    </div>
+</div>

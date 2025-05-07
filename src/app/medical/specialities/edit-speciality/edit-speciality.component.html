@@ -1,0 +1,82 @@
+<div class="page-wrapper">
+    <div class="content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.listSpeciality">Specialities </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">Register</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card-box">
+                    <h4 class="card-title">New Speciality</h4>
+                    <form action="#">
+                        <div class="form-group row">
+                            <label class="col-form-label col-md-2">Name<span class="login-danger">*</span></label>
+                            <div class="col-md-10">
+                                <input type="text" [(ngModel)]="name" name="name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-6">
+                            <div class="form-group select-status">
+                                <label class="gen-label">Status<span class="login-danger">*</span></label>
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" [value]="1" [(ngModel)]="status" name="status"  class="form-check-input">Active
+                                    </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                        <input type="radio" [value]="0" [(ngModel)]="status" name="status"  class="form-check-input">Desactive
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12 text-end">
+                                <button class="btn btn-primary" (click)="update()">UPDATE</button>
+                            </div>
+                        </div>
+                        <div class="form-group row" *ngIf="valid_form">
+                            <div class="col-md-12">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" >
+                                    <strong>Error!</strong> Es necesario rellenar nombre y estado.
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="form-group row" *ngIf="text_validation!=''">
+                            <div class="col-md-12">
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                    <strong>Error!</strong> {{ text_validation}}
+                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="form-group row" *ngIf="text_success">
+                            <div class="col-md-12">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Bien!</strong> {{ text_success }}.
+                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

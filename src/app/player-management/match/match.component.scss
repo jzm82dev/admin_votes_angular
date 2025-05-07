@@ -1,0 +1,36 @@
+.center {
+    width:max-content !important;
+}
+
+.graphics{
+    justify-content: center;
+}
+
+tr{
+    vertical-align:middle;
+}
+
+
+@media screen and (max-width: 800px) {
+    p{
+      font-size: 15px;
+    }
+
+    .reservation_schedule{
+      margin-left: 2px;
+      font-size: 12px !important;
+      display: block;
+    }
+  }
+
+  @media screen and (max-width: 480px) { 
+    .hide-mobile { 
+      display: none !important; 
+    } 
+  }
+
+  @media screen and (min-width: 481px) { 
+    .hide-desktop { 
+      display: none !important; 
+    } 
+  }

@@ -1,0 +1,27 @@
+.center-elements {
+    align-items: center;
+    font-weight: normal;
+    vertical-align: middle;
+}
+
+
+@media screen and (max-width: 480px) { 
+    .hide-mobile { 
+      display: none !important; 
+    } 
+  }
+
+  @media screen and (min-width: 481px) { 
+    .hide-desktop { 
+      display: none !important; 
+    } 
+  }
+
+
+  .align-element{
+    align-items: center;
+  }
+
+  .settings-form .links-cont .social-icon::after{
+    content: none !important;
+}

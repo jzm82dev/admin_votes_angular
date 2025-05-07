@@ -1,0 +1,360 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.jorneyList">Jornadas </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">Nueva jornada</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>Datos</h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">  
+                                    <div class="form-group local-forms">
+                                        <label >Nombre<span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="name" name="name" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">
+                                    <div class="form-group local-forms">
+                                        <label >Fecha Prevista  <span class="login-danger">*</span></label>
+                                        <input class="form-control datetimepicker" type="text" matInput [matDatepicker]="picker" [(ngModel)]="date_planned" name="date_planned" >
+                                        <mat-datepicker #picker></mat-datepicker>
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-xl-12">
+                                    <div class="form-group local-forms">
+                                        <label >Descripción </label>
+                                        <input class="form-control" [(ngModel)]="description" name="description" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title">Jornada Acabada</h5>
+                                        <div class="status-toggle d-flex justify-content-between align-items-center">
+                                            <input type="checkbox" [(ngModel)]="status" name="status" id="status" class="check" >
+                                            <label for="status" class="checktoggle">checkbox</label>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                               
+                                <div class="col-12"  *ngIf="cron_executed_at == null">
+                                    <div class="doctor-submit text-end">
+                                        <button type="button" class="btn btn-primary submit-form me-2" (click)="save()">GUARDAR</button>
+                                        <button type="submit" class="btn btn-primary cancel-form">Cancel</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                        <strong>Error!</strong> {{ error_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                      </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="success_message != ''">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>Bien!</strong> {{ success_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="doctor-personals-grp">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="tab-content-set">
+                                                <ul class="nav">
+                                                    <li *ngFor="let category of list_categories; let i = index;">
+                                                        <a href="#" onclick="return false;" [ngClass]="{'active': tab_selected == category.category_id}" (click)="tabSeleted(category.category_id, i)"><span class="set-about-icon me-2" ><img src="assets/img/icons/menu-icon-16.svg" alt=""></span>{{ category.name }}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <ng-container *ngFor="let category of list_categories"  >
+                                                <div *ngIf="tab_selected == category.category_id">                                               
+                                                   
+
+                                                    <!-- BEGIN TABLE -->
+                                                <ng-container *ngIf="flag2 ==true">
+                                                
+                                                    <div  class="row" *ngFor="let match of matches_category; let i = index; let isOdd=odd;">
+                                                        
+                                                        <div class="col-lg-12">
+                                                            <div class="card-box">
+                                                                <div class="card-block">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table mb-0 " >
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th class="text-center">{{ match.local_team_name }}</th>
+                                                                                    <th class="text-center">{{ match.visiting_team_name }}</th>
+                                                                                    <th class="text-center">Set 1</th>
+                                                                                    <th class="text-center">Set 2</th>
+                                                                                    <th class="text-center">Set 3</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                        
+                                                                                <tr class="table-primary">
+                                                                                    <td>
+                                                                                        <mat-select [(ngModel)]="player_by_team_matriz[( (i*3) + 1)].local_player_1" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Selecciona jugador 1">
+                                                                                            <mat-option *ngFor="let player of match.local_players" [value]="player.id">
+                                                                                                {{player.name}}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                        <mat-select [(ngModel)]="player_by_team_matriz[( (i*3) + 1)].local_player_2" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Selecciona jugador 2">
+                                                                                            <mat-option *ngFor="let player of match.local_players" [value]="player.id">
+                                                                                                {{player.name}}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <mat-select [(ngModel)]="player_by_team_matriz[( (i*3) + 1)].visiting_player_1" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Selecciona jugador 1">
+                                                                                            <mat-option *ngFor="let player of match.visiting_players" [value]="player.id">
+                                                                                                {{player.name}}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                        <mat-select [(ngModel)]="player_by_team_matriz[( (i*3) + 1)].visiting_player_2" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Selecciona jugador 2">
+                                                                                            <mat-option *ngFor="let player of match.visiting_players" [value]="player.id">
+                                                                                                {{player.name}}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input  class="form-control text-center" placeholder="3-6" [ngModelOptions]="{standalone: true}" [(ngModel)]="player_by_team_matriz[( (i*3) + 1)].result_set_1" [name]="player_by_team_matriz[( (i*3) + 1)].result_set_1" type="text"  (keypress)="setValue($event)">
+                                                                                     </td>
+                                                                                    <td>
+                                                                                        <input  class="form-control text-center"  placeholder="6-7" [ngModelOptions]="{standalone: true}" [(ngModel)]="player_by_team_matriz[( (i*3) + 1)].result_set_2" [name]="player_by_team_matriz[( (i*3) + 1)].result_set_2" type="text" (keypress)="setValue($event)" >
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input  class="form-control text-center"  placeholder="1-6" [ngModelOptions]="{standalone: true}" [(ngModel)]="player_by_team_matriz[( (i*3) + 1)].result_set_3" [name]="player_by_team_matriz[( (i*3) + 1)].result_set_3" type="text" (keypress)="setValue($event)" >
+                                                                                    </td>
+                                                                                </tr>
+
+
+
+                                                                                <tr class="table-secondary">
+                                                                                    <td>
+                                                                                        <mat-select [(ngModel)]="player_by_team_matriz[( (i*3) + 2)].local_player_1" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Selecciona jugador 1">
+                                                                                            <mat-option *ngFor="let player of match.local_players" [value]="player.id">
+                                                                                                {{player.name}}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                        <mat-select [(ngModel)]="player_by_team_matriz[( (i*3) + 2)].local_player_2" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Selecciona jugador 2">
+                                                                                            <mat-option *ngFor="let player of match.local_players" [value]="player.id">
+                                                                                                {{player.name}}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <mat-select [(ngModel)]="player_by_team_matriz[( (i*3) + 2)].visiting_player_1" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Selecciona jugador 1">
+                                                                                            <mat-option *ngFor="let player of match.visiting_players" [value]="player.id">
+                                                                                                {{player.name}}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                        <mat-select [(ngModel)]="player_by_team_matriz[( (i*3) + 2)].visiting_player_2" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Selecciona jugador 2">
+                                                                                            <mat-option *ngFor="let player of match.visiting_players" [value]="player.id">
+                                                                                                {{player.name}}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input  class="form-control text-center" placeholder="3-6" [ngModelOptions]="{standalone: true}" [(ngModel)]="player_by_team_matriz[( (i*3) + 2)].result_set_1" [name]="player_by_team_matriz[( (i*3) + 2)].result_set_1" type="text"  (keypress)="setValue($event)">
+                                                                                     </td>
+                                                                                    <td>
+                                                                                        <input  class="form-control text-center"  placeholder="6-7" [ngModelOptions]="{standalone: true}" [(ngModel)]="player_by_team_matriz[( (i*3) + 2)].result_set_2" [name]="player_by_team_matriz[( (i*3) + 2)].result_set_2" type="text" (keypress)="setValue($event)" >
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input  class="form-control text-center"  placeholder="1-6" [ngModelOptions]="{standalone: true}" [(ngModel)]="player_by_team_matriz[( (i*3) + 2)].result_set_3" [name]="player_by_team_matriz[( (i*3) + 2)].result_set_3" type="text" (keypress)="setValue($event)" >
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr class="table-info">
+                                                                                    <td>
+                                                                                        <mat-select [(ngModel)]="player_by_team_matriz[( (i*3) + 3)].local_player_1" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Selecciona jugador 1">
+                                                                                            <mat-option *ngFor="let player of match.local_players" [value]="player.id">
+                                                                                                {{player.name}}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                        <mat-select [(ngModel)]="player_by_team_matriz[( (i*3) + 3)].local_player_2" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Selecciona jugador 2">
+                                                                                            <mat-option *ngFor="let player of match.local_players" [value]="player.id">
+                                                                                                {{player.name}}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <mat-select [(ngModel)]="player_by_team_matriz[( (i*3) + 3)].visiting_player_1" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Selecciona jugador 1">
+                                                                                            <mat-option *ngFor="let player of match.visiting_players" [value]="player.id">
+                                                                                                {{player.name}}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                        <mat-select [(ngModel)]="player_by_team_matriz[( (i*3) + 3)].visiting_player_2" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Selecciona jugador 2">
+                                                                                            <mat-option *ngFor="let player of match.visiting_players" [value]="player.id">
+                                                                                                {{player.name}}
+                                                                                            </mat-option>
+                                                                                        </mat-select>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input  class="form-control text-center" placeholder="3-6" [ngModelOptions]="{standalone: true}" [(ngModel)]="player_by_team_matriz[( (i*3) + 3)].result_set_1" [name]="player_by_team_matriz[( (i*3) + 3)].result_set_1" type="text"  (keypress)="setValue($event)">
+                                                                                     </td>
+                                                                                    <td>
+                                                                                        <input  class="form-control text-center"  placeholder="6-7" [ngModelOptions]="{standalone: true}" [(ngModel)]="player_by_team_matriz[( (i*3) + 3)].result_set_2" [name]="player_by_team_matriz[( (i*3) + 3)].result_set_2" type="text" (keypress)="setValue($event)" >
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <input  class="form-control text-center"  placeholder="1-6" [ngModelOptions]="{standalone: true}" [(ngModel)]="player_by_team_matriz[( (i*3) + 3)].result_set_3" [name]="player_by_team_matriz[( (i*3) + 3)].result_set_3" type="text" (keypress)="setValue($event)" >
+                                                                                    </td>
+                                                                                </tr>
+                                                                                
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="text-center" *ngIf="cron_executed_at == null">
+                                                                        <button class="btn btn-sm btn-primary my-3" (click)="saveBoard(match, i)">GUARDAR </button> &nbsp;
+                                                                        <button class="btn btn-sm btn-danger my-3" (click)="seletedBoard(match, i)" data-bs-toggle="modal" data-bs-target="#delete_board">BORRAR </button>
+                                                                    </div>
+                                                                    <div class="col-md-12 my-4" *ngIf="error_table_message != ''">
+                                                                        <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                                                            <strong>Error!</strong> {{ error_table_message }}
+                                                                            <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                                                                <span aria-hidden="true"> </span>
+                                                                            </button>
+                                                                          </div>
+                                                                    </div>
+                                                                    <div class="col-md-12 my-4" *ngIf="success_table_message != ''">
+                                                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                                            <strong>Bien!</strong> {{success_table_message}}
+                                                                            <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                                                                <span aria-hidden="true"> </span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>     
+
+                                                    
+                                                   
+                                                </ng-container>
+
+                                                
+                                                    <!-- END TABLE-->
+
+                                                    <div class="row my-4" *ngIf="cron_executed_at == null">
+                                                        <td>
+                                                            <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#add_player_modal" (click)="openPopup()">Añadir partido</button>
+                                                        </td>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>	
+                
+                <!-- POPUP -->
+
+                <div id="delete_board" class="modal fade delete-modal" role="dialog" >
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body text-center">
+                                <img src="assets/img/sent.png" alt="" width="50" height="46">
+                                <h3 *ngIf="board_to_delete" >¿Estás seguro de querer borrar los partidos?</h3>
+                                <div class="m-t-20"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebutton>Close</a>
+                                    <button type="submit" class="btn btn-danger" (click)="deleteBoard()">Borrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                            
+                <div id="add_player_modal" class="modal fade delete-modal" role="dialog" *ngIf="flag">  
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body text-center">
+                              <div class="row">
+                                  <div class="col-12 col-md-12 col-xl-12" > 
+                                    <h3>Crear partido</h3>
+                                  </div>
+                                </div>
+                                </div>
+
+                                <div class="row my-4 center" >
+                                    <div class="col-8 col-md-8 col-xl-8">
+                                        <div class="form-group local-forms">
+                                            <div class="form-group local-forms">
+                                                <label >Equipo local <span class="login-danger">*</span></label>
+                                                    <mat-select [(ngModel)]="local_team" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Seleciona equipo">
+                                                        <mat-option *ngFor="let data of list_categories[category_selected_id].teams" [value]="data.id">
+                                                            {{ data.name }} - {{ data.club_name }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row my-4 center" >
+                                        <div class="col-8 col-md-8 col-xl-8">
+                                            <div class="form-group local-forms">
+                                                <div class="form-group local-forms">
+                                              <label >Equipo visitante <span class="login-danger">*</span></label>
+                                                  <mat-select [(ngModel)]="visiting_team" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Seleciona equipo">
+                                                      <mat-option *ngFor="let data of list_categories[category_selected_id].teams" [value]="data.id">
+                                                            {{ data.name }} - {{ data.club_name }}
+                                                      </mat-option>
+                                                  </mat-select>
+                                          </div>
+                                      </div>
+                                    </div>   
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 my-4" *ngIf="error_message_popup != ''">
+                                        <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                            <strong>Error!</strong> {{ error_message_popup }}
+                                            <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                                <span aria-hidden="true"> </span>
+                                            </button>
+                                          </div>
+                                    </div>
+                                </div>
+                            <div class="m-t-20 text-center"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebuttonAddPLayer>Cerrar</a>
+                                <button *ngIf="text_modal_success=='' " type="submit" style="width: auto;" class="btn btn-primary text-white" (click)="addMatchJourney()">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                <!-- END POPUP -->
+
+            </div>					
+        </div>
+    </div>
+</div>
+ 
+
+

@@ -1,0 +1,378 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#" onclick="return false;">Patients </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">Patient Profile</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-sm-12" *ngIf="patient_selected">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="about-info">
+                                    <h4>Patients Profile  <span><a href="javascript:;"><i class="feather icon-more-vertical"></i></a></span></h4>
+                                </div>
+                                <div class="doctor-profile-head">
+                                    <!-- <div class="profile-bg-img">
+                                        <img  src="assets/img/profile-bg.jpg"  alt="Profile">
+                                    </div> -->
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4">
+                                            <div class="profile-user-box">
+                                                <div class="profile-user-img">
+                                                    <img  src="assets/img/profile-user-01.jpg"  alt="Profile">
+                                                    <div class="form-group doctor-up-files profile-edit-icon mb-0">
+                                                        <div class="uplod d-flex">
+                                                            <label class="file-upload profile-upbtn mb-0">
+                                                                <img  src="assets/img/icons/camera-icon.svg"  alt="Profile"><input type="file">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="names-profiles">
+                                                    <h4>{{ patient_name }} {{ patient_surname }}</h4>
+                                                    <h5>{{ patient_dni }}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 d-flex align-items-center">
+                                            <div class="follow-group">
+                                                <div class="doctor-follows">
+                                                    <h5>Appointment</h5>
+                                                    <h4>{{ appointments.length }}</h4>
+                                                </div>
+                                                <div class="doctor-follows">
+                                                    <h5>Money</h5>
+                                                    <h4>18K</h4>
+                                                </div>
+                                                <div class="doctor-follows">
+                                                    <h5>Pending Appointment</h5>
+                                                    <h4>{{ pending_appointments.length }}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 d-flex align-items-center">
+                                            <div class="follow-btn-group">
+                                                <a [routerLink]="['/patients/list/edit/', id_patient]" routerLinkActive="router-link-active"  class="btn btn-info follow-btns">Edit</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>								
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="doctor-personals-grp">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="heading-detail ">
+                                        <h4 class="mb-3">About me</h4>
+                                        <p>Hello I am Smith Bruklin a Gynaecologist in Sanjivni Hospital Surat. I love to work with all my hospital staff and seniour doctors.</p>
+                                    </div>
+                                    <div class="about-me-list">
+                                        <ul class="list-space">
+                                            <li>
+                                                <h4>Gender</h4>
+                                                <span>Male</span>
+                                            </li>
+                                            <li>
+                                                <h4>Operation Done</h4>
+                                                <span>30+</span>
+                                            </li>
+                                            <li>
+                                                <h4>Designation</h4>
+                                                <span>Engineer</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="doctor-personals-grp">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="heading-detail">
+                                        <h4>Skills:</h4>
+                                    </div>
+                                    <div class="skill-blk">
+                                        <div class="skill-statistics">
+                                            <div class="skills-head">
+                                                <h5>FC</h5>
+                                                <p>{{patient_fc}}%</p>
+                                            </div>
+                                            <div class="progress mb-0"  >
+                                                <div class="progress-bar bg-operations" role="progressbar" style="width: {{patient_fc}}%"  [attr.aria-valuenow]="patient_fc" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill-statistics">
+                                            <div class="skills-head">
+                                                <h5>FR</h5>
+                                                <p>{{patient_fr}}%</p>
+                                            </div>
+                                            <div class="progress mb-0"  >
+                                                <div class="progress-bar bg-haemoglobin" role="progressbar" style="width: {{patient_fr}}%" [attr.aria-valuenow]="patient_fr" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill-statistics">
+                                            <div class="skills-head">
+                                                <h5>Blood Pressure </h5>
+                                                <p>65%</p>
+                                            </div>
+                                            <div class="progress mb-0"  >
+                                                <div class="progress-bar bg-statistics" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill-statistics">
+                                            <div class="skills-head">
+                                                <h5>Sugar </h5>
+                                                <p>90%</p>
+                                            </div>
+                                            <div class="progress mb-0"  >
+                                                <div class="progress-bar bg-visit" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="doctor-personals-grp">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="tab-content-set">
+                                        <ul class="nav">
+                                            <li>
+                                                <a href="#" onclick="return false;" [ngClass]="{'active': tab_selected == 1}" (click)="tabSeleted(1)"><span class="set-about-icon me-2" ><img src="assets/img/icons/menu-icon-02.svg" alt=""></span>About me</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" onclick="return false;" [ngClass]="{'active': tab_selected == 2}" (click)="tabSeleted(2)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-16.svg" alt=""></span>List Appointments</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <ng-container *ngIf="tab_selected == 1">
+                                        <div class="personal-list-out" >
+                                            <div class="row">
+                                                <div class="col-xl-3 col-md-6">
+                                                    <div class="detail-personal">
+                                                        <h2>Full Name</h2>
+                                                        <h3>Smith Bruklin</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-3 col-md-6">
+                                                    <div class="detail-personal">
+                                                        <h2>Mobile </h2>
+                                                        <h3>264-625-2583</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-3 col-md-6">
+                                                    <div class="detail-personal">
+                                                        <h2>Email</h2>
+                                                        <h3>smith@email.com</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-3 col-md-6">
+                                                    <div class="detail-personal">
+                                                        <h2>Location</h2>
+                                                        <h3>USA</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="hello-park">
+                                            <p> <b>Personal Antecedent:</b> {{ patient_antecedent_personal }}</p>
+                                            <p> <b>Family Antecedent:</b> {{ patient_antecedent_family }}</p>
+                                            <p> <b>Allergic Antecedent:</b> {{ patient_antecedent_allergic }}</p>
+                                        </div>
+                                    </ng-container>
+                                    
+                                    <ng-container *ngIf="tab_selected == 2">
+                                        <div class="activity">
+                                            <div class="activity-box">
+                                                <ul class="activity-list">
+                                                    <li>
+                                                        <div class="activity-user">
+                                                            <a href="#" onclick="return false;" title="Lesley Grauer" data-bs-toggle="tooltip" class="avatar">
+                                                                <img alt="Lesley Grauer" src="assets/img/user-02.jpg" class="img-fluid rounded-circle">
+                                                            </a>
+                                                        </div>
+                                                        <div class="activity-content timeline-group-blk">
+                                                            <div class="timeline-group flex-shrink-0">
+                                                                <h4>20 Oct 2022</h4>
+                                                                <span class="time">5.50 PM</span>
+                                                            </div>
+                                                            <div class="comman-activitys flex-grow-1">
+                                                                <h3>Dr.Henry Markhay <span> Completed the Patient visit at Glory Hospital in Florida, USA .</span></h3>
+                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="activity-user">
+                                                            <a href="#" onclick="return false;" title="Lesley Grauer" data-bs-toggle="tooltip" class="avatar">
+                                                                <img alt="Lesley Grauer" src="assets/img/user-06.jpg" class="img-fluid rounded-circle">
+                                                            </a>
+                                                        </div>
+                                                        <div class="activity-content timeline-group-blk">
+                                                            <div class="timeline-group flex-shrink-0">
+                                                                <h4>Today</h4>
+                                                                <span class="time">4.50 PM</span>
+                                                            </div>
+                                                            <div class="comman-activitys flex-grow-1">
+                                                                <h3>Bernardo James <span>  Uploaded 3 new photos for World Safety Event</span></h3>
+                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
+                                                                <ul class="nav activity-sub-list mt-2">
+                                                                    <li><img class="img-fluid" src="assets/img/activity-01.jpg" alt=""></li>
+                                                                    <li><img class="img-fluid" src="assets/img/activity-02.jpg" alt=""></li>
+                                                                    <li><img class="img-fluid" src="assets/img/activity-03.jpg" alt=""></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="activity-user">
+                                                            <a href="#" onclick="return false;" title="Catherine Manseau" data-bs-toggle="tooltip" class="avatar">
+                                                                <img alt="Catherine Manseau" src="assets/img/user-05.jpg" class="img-fluid rounded-circle">
+                                                            </a>
+                                                        </div>
+                                                        <div class="activity-content timeline-group-blk">
+                                                            <div class="timeline-group flex-shrink-0">
+                                                                <h4>Yesterday</h4>
+                                                                <span class="time">3.20 PM</span>
+                                                            </div>
+                                                            <div class="comman-activitys flex-grow-1">
+                                                                <h3>Dr. Linda Carpenter  <span> Doctors Meeting </span></h3>
+                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
+                                                                <div class="activity-maps mt-2">
+                                                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3304.686401249513!2d-118.29111468533449!3d34.077552423844466!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75d59983353%3A0x14ab68d941678167!2sPATH!5e0!3m2!1sen!2sin!4v1669811489573!5m2!1sen!2sin" ></iframe>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="activity-user">
+                                                            <a href="javascript:void(0);" title="Bernardo Galaviz" data-bs-toggle="tooltip" class="avatar">
+                                                                <img alt="Bernardo Galaviz" src="assets/img/user-03.jpg" class="img-fluid rounded-circle">
+                                                            </a>
+                                                        </div>
+                                                        <div class="activity-content timeline-group-blk">
+                                                            <div class="timeline-group flex-shrink-0">
+                                                                <h4>05 Sep 2022</h4>
+                                                                <span class="time">1.20 PM</span>
+                                                            </div>
+                                                            <div class="comman-activitys flex-grow-1">
+                                                                <h3>Dr.Markhay smith <span> was Completed the Operation With in Deadline</span></h3>
+                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="activity-user">
+                                                            <a href="#" onclick="return false;" title="Mike Litorus" data-bs-toggle="tooltip" class="avatar">
+                                                                <img alt="Mike Litorus" src="assets/img/user-04.jpg" class="img-fluid rounded-circle">
+                                                            </a>
+                                                        </div>
+                                                        <div class="activity-content timeline-group-blk">
+                                                            <div class="timeline-group flex-shrink-0">
+                                                                <h4>20 Oct 2022</h4>
+                                                                <span class="time">2.20 PM</span>
+                                                            </div>
+                                                            <div class="comman-activitys flex-grow-1">
+                                                                <h3>Rio Williams <span> Posted a Blog about Corona Safety Measurements</span></h3>
+                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
+                                                                <ul class="latest-posts latest-posts-act mt-2">
+                                                                    <li>
+                                                                        <div class="post-thumb">
+                                                                            <a href="javascript:;">
+                                                                                <img class="img-fluid" src="assets/img/blog/blog-8.jpg" alt="">
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="post-info">
+                                                                            <div class="date-posts">
+                                                                                <h5>Safety</h5>
+                                                                                <span class="ms-2">10 Oct 2022</span>
+                                                                            </div>
+                                                                            <h4>
+                                                                                <a href="javascript:;">Keep Hand Sanitizers Away from Young Children</a>
+                                                                            </h4>
+                                                                            <p> Read more in 8 Minutes<i class="fa fa-long-arrow-right ms-2"></i></p>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title ">Pending Appointment </h4>
+                                </div>
+                                <div class="card-body p-0 table-dash">
+                                    <div class="table-responsive">
+                                        <table matSort class="table mb-0 border-0 datatable custom-table patient-profile-table">
+                                            <thead>
+                                                <tr>
+                                                    <th mat-sort-header="checkbox">
+                                                        <div class="form-check check-tables">
+                                                            <input class="form-check-input" type="checkbox" value="something">
+                                                        </div>
+                                                    </th>
+                                                    <th mat-sort-header="date">Date</th>
+                                                    <th mat-sort-header="specialitie">Specialitie</th>
+                                                    <th mat-sort-header="doctor">Doctor</th>
+                                                    <th mat-sort-header="charges">Charges ($)</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of pending_appointments">
+                                                    <td>
+                                                        <div class="form-check check-tables">
+                                                            <input class="form-check-input" type="checkbox" value="something">
+                                                        </div>
+                                                    </td>
+                                                    <td >{{data.date_appointment_format}} </td>
+                                                    <td >{{data.doctor.name}} {{data.doctor.surname}}</td>
+                                                    <td>{{data.specialitie.name}}</td>
+                                                    <td>{{data.amount}} €</td>
+                                                    <td class="text-end">
+                                                        <!--<div class="dropdown dropdown-action">
+                                                            <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                            <div class="dropdown-menu dropdown-menu-end">
+                                                                <a class="dropdown-item" [routerLink]="routes.editAppointment"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
+                                                                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#delete_appointment"><i class="fa fa-trash-alt m-r-5"></i> Delete</a>
+                                                            </div>
+                                                        </div> -->
+                                                    </td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 

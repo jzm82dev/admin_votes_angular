@@ -1,0 +1,162 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{'leagues.journeys.my_matches' | translate }}</li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'leagues.journeys.league_and_tournament' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESKTOP -->
+        <div class="row text-center my-4 hide-mobile" >
+            <div class="col-12 my-4">     
+                <h4>{{'leagues.journeys.league_matches' | translate }}</h4>
+                <div class="table-responsive">
+                    <table class="table mb-0 ">
+                        <thead>
+                            <tr>
+                                <th>{{'leagues.journeys.journey' | translate }}</th>
+                                <th class="text-start">{{'leagues.journeys.couple_1' | translate }}</th>
+                                <th class="text-start">{{'leagues.journeys.couple_2' | translate }}</th>
+                                <th>{{'leagues.journeys.set_1' | translate }}</th>
+                                <th>{{'leagues.journeys.set_2' | translate }}</th>
+                                <th>{{'leagues.journeys.set_3' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let match of league_matches; let i = index;" [ngClass]="{'table-primary': match.match_finisehd == '1', 'table-warning' : match.match_finisehd == '0' }">
+                                <td>{{ match.league_name }} <br> {{'leagues.journeys.journey' | translate }} {{ match.id }}</td>
+                                <td class="text-start"><span *ngFor="let player of match.local_players">{{ player.name }} {{ player.surname }}<br></span></td>
+                                <td class="text-start"><span *ngFor="let player of match.visiting_players">{{ player.name }} {{ player.surname }}<br></span></td>
+                                <td>{{ match.result_set_1 }}</td>
+                                <td>{{ match.result_set_2 }}</td>
+                                <td>{{ match.result_set_3 }}</td>
+                            </tr>
+                            <tr *ngIf="league_matches.length == 0">
+                                <td colspan="6">
+                                    {{'leagues.journeys.not_match_played' | translate }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>  
+            </div>
+        </div>
+
+        <div class="row text-center my-4 hide-mobile">
+            <div class="col-12 my-4">     
+                <h4>{{'leagues.journeys.tournament_matches' | translate }}</h4>
+                <div class="table-responsive">
+                    <table class="table mb-0 ">
+                        <thead>
+                            <tr>
+                                <th>{{'leagues.journeys.tournament' | translate }}</th>
+                                <th class="text-start">{{'leagues.journeys.couple_1' | translate }}</th>
+                                <th class="text-start">{{'leagues.journeys.couple_2' | translate }}</th>
+                                <th>{{'leagues.journeys.set_1' | translate }}</th>
+                                <th>{{'leagues.journeys.set_2' | translate }}</th>
+                                <th>{{'leagues.journeys.set_3' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let match of tournament_matches; let i = index;" [ngClass]="{'table-primary': match.match_finisehd == '1', 'table-warning' : match.match_finisehd == '0' }">
+                                <td>{{ match.tournament_name }} </td>
+                                <td class="text-start"><span *ngFor="let player of match.local_players">{{ player.name }} {{ player.surname }}<br></span></td>
+                                <td class="text-start"><span *ngFor="let player of match.visiting_players">{{ player.name }} {{ player.surname }}<br></span></td>
+                                <td>{{ match.result_set_1 }}</td>
+                                <td>{{ match.result_set_2 }}</td>
+                                <td>{{ match.result_set_3 }}</td>
+                            </tr>
+                            <tr *ngIf="tournament_matches.length == 0">
+                                <td colspan="6">
+                                    {{'leagues.journeys.not_match_played' | translate }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>  
+            </div>
+        </div>
+        <!-- END DESKTOP -->
+
+        <!-- MOBILE -->
+        <div class="row text-center my-4 hide-desktop" >
+            <div class="col-12 my-4">     
+                <h4>{{'leagues.journeys.league_matches' | translate }}</h4>
+                <div class="table-responsive">
+                    <table class="table mb-0 ">
+                        <thead>
+                            <tr>
+                                <th>{{'leagues.journeys.journey' | translate }}</th>
+                                <th class="text-start">{{'leagues.journeys.couple_1' | translate }}</th>
+                                <th class="text-start">{{'leagues.journeys.couple_2' | translate }}</th>
+                                <th>{{'leagues.journeys.set_1' | translate }}</th>
+                                <th>{{'leagues.journeys.set_2' | translate }}</th>
+                                <th>{{'leagues.journeys.set_3' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let match of league_matches; let i = index;" [ngClass]="{'table-primary': match.match_finisehd == '1', 'table-warning' : match.match_finisehd == '0' }">
+                                <td>{{ match.league_name }} <br> {{'leagues.journeys.journey' | translate }} {{ match.id }}</td>
+                                <td class="text-start"><span *ngFor="let player of match.local_players">{{ player.name }} <br></span></td>
+                                <td class="text-start"><span *ngFor="let player of match.visiting_players">{{ player.name }} <br></span></td>
+                                <td>{{ match.result_set_1 }}</td>
+                                <td>{{ match.result_set_2 }}</td>
+                                <td>{{ match.result_set_3 }}</td>
+                            </tr>
+                            <tr *ngIf="league_matches.length == 0">
+                                <td colspan="6">
+                                    {{'leagues.journeys.not_match_played' | translate }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>  
+            </div>
+        </div>
+
+        <div class="row text-center my-4 hide-desktop">
+            <div class="col-12 my-4">     
+                <h4>{{'leagues.journeys.tournament_matches' | translate }}</h4>
+                <div class="table-responsive">
+                    <table class="table mb-0 ">
+                        <thead>
+                            <tr>
+                                <th>{{'leagues.journeys.tournament' | translate }}</th>
+                                <th class="text-start">{{'leagues.journeys.couple_1' | translate }}</th>
+                                <th class="text-start">{{'leagues.journeys.couple_2' | translate }}</th>
+                                <th>{{'leagues.journeys.set_1' | translate }}</th>
+                                <th>{{'leagues.journeys.set_2' | translate }}</th>
+                                <th>{{'leagues.journeys.set_3' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let match of tournament_matches; let i = index;" [ngClass]="{'table-primary': match.match_finisehd == '1', 'table-warning' : match.match_finisehd == '0' }">
+                                <td>{{ match.tournament_name }} </td>
+                                <td class="text-start"><span *ngFor="let player of match.local_players">{{ player.name }} <br></span></td>
+                                <td class="text-start"><span *ngFor="let player of match.visiting_players">{{ player.name }} <br></span></td>
+                                <td>{{ match.result_set_1 }}</td>
+                                <td>{{ match.result_set_2 }}</td>
+                                <td>{{ match.result_set_3 }}</td>
+                            </tr>
+                            <tr *ngIf="tournament_matches.length == 0">
+                                <td colspan="6">
+                                    {{'leagues.journeys.not_match_played' | translate }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>  
+            </div>
+        </div>
+
+        <!-- END MOBILE -->
+    </div>
+</div>

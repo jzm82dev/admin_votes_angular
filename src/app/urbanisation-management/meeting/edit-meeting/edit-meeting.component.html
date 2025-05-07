@@ -1,0 +1,199 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="[ '/meeting/list/edit', this.urbanisation_id ]">Urbanización </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">Junta General</li>
+                    
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <!-- Begin Data -->
+        <div class="row">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>Datos de la junta</h4>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-12 col-md-6 col-xl-4">  
+                                    <div class="form-group local-forms">
+                                        <label >Nombre <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="name" name="name" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >Urbanización <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="urbanisation_name" name="urbanisation_name" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >Fecha <span class="login-danger">*</span></label>
+                                        <input class="form-control datetimepicker" [(ngModel)]="date" name="date" type="text"  placeholder="" matInput [matDatepicker]="picker">
+                                        <mat-datepicker #picker></mat-datepicker>
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    </div>
+                                </div>
+                               
+                                
+                            </div>
+                            
+                            <div class="col-12 my-4 text-center">
+                                <div class="doctor-submit text-center">
+                                    <button *ngIf="meeting_id != '' && hasPermission('register_wallet')" type="button" class="btn btn-primary submit-form me-2" 
+                                          data-bs-toggle="modal" data-bs-target="#add_property" (click)="openPopup()">Añadir Pregunta <i class="fa fa-plus"></i>
+                                    </button>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                    <div class="form-heading">
+                                                        <h4>Preguntas</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table  class="table border-0 custom-table comman-table datatable mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Pregunta</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let data of questions; let i = index;">
+                                                            <td>{{ i + 1 }} </td>
+                                                            <td >
+                                                              {{ data.name }}
+                                                            </td>
+                                                            
+                                                            <td class="text-end" >
+                                                                <div class="dropdown dropdown-action">
+                                                                    <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                                        <a class="dropdown-item"  [routerLink]="[ '/question/edit', data.id ]" href="#"><i class="fa-solid fa-pen-to-square m-r-5"></i> Editar</a>
+                                                                        <a class="dropdown-item"  [routerLink]="[ '/question/vote', data.id ]" href="#"><i class="fa-solid fa-person-booth m-r-5"></i> Votar</a>
+                                                                        <a class="dropdown-item"  [routerLink]="[ '/question/result', data.id ]" href="#"><i class="fa-solid fa-square-poll-vertical m-r-5"></i> Resultados</a>
+                                                                        <a class="dropdown-item" *ngIf="hasPermission('edit_urbanisations')" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#delete_spent" (click)="selectQuestion(data)"><i class="fa fa-trash-alt m-r-5"></i> {{'commun_translations.remove' | translate }}</a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 my-4 text-center">
+                                <div class="doctor-submit text-center">
+                                    <button *ngIf="meeting_id != '' && hasPermission('register_wallet')" type="button" class="btn btn-success submit-form me-2" 
+                                        [routerLink]="[ '/question/report', meeting_id ]" ><i class="fa-solid fa-square-poll-vertical m-r-5"></i>VER ACTA &nbsp;<i class="fa-solid fa-square-poll-vertical m-r-5"></i>
+                                    </button>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-12 my-4">
+                                <div class="doctor-submit text-end">
+                                    <button [routerLink]="[ '/meeting/list' ]" type="submit" class="btn btn-primary cancel-form">Volver</button>&nbsp;
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>							
+            </div>					
+        </div>
+        <!-- End Data -->
+
+        <!-- BEGIN CREATE QUESTION-->
+        <div id="add_property" class="modal fade delete-modal" role="dialog" >  
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                     <div class="modal-body text-center">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-xl-12" > 
+                            <h3>Nueva pregunta</h3>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-6 col-xl-12 my-4 text-center" > 
+                            <div class="form-group local-forms">
+                                <label >Pregunta<span class="login-danger">*</span></label>
+                                <input class="form-control" [(ngModel)]="new_question" name="new_question" type="text"  >
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 my-4" *ngIf="error_message_popup != ''">
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                <strong>Error!</strong> {{ error_message_popup }}
+                                <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                    <span aria-hidden="true"> </span>
+                                </button>
+                                <ul *ngIf="message_errors.length > 0">
+                                    <li *ngFor="let error of message_errors">{{ error }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-12 my-4" *ngIf="susccess_message_popup != ''">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Bien!</strong> {{ susccess_message_popup }}
+                                </div>
+                        </div>
+                    </div>
+                    <div class="row my-2 center" >  
+                        <div class="m-t-20 text-center"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebuttonAddShedule (click)="closePopup()">{{'commun_translations.close' | translate }}</a>
+                            <button type="submit" style="width: auto;" class="btn btn-primary text-white" *ngIf="susccess_message_popup == ''" (click)="addQuestion()">{{'commun_translations.save' | translate }}</button>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+        <!-- END POPUP CREATE QUESTION -->
+
+        <!-- BEGIN DELETE QUESTION -->
+        <div id="delete_spent" class="modal fade delete-modal" role="dialog" >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <img src="assets/img/sent.png" alt="" width="50" height="46">
+                        <h3 *ngIf="question_selected" >¿Estás seguro de borrar la pregunta &nbsp;"{{ question_selected.name }}" ?</h3>
+                        <div class="m-t-20"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebutton>{{'commun_translations.close' | translate }}</a>
+                            <button type="submit" class="btn btn-danger" (click)="removeQuestion()">Borrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        <!-- END DELETE QUESTION-->
+
+    </div>
+</div>
+ 
+
+

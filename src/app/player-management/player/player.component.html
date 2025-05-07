@@ -1,0 +1,140 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+     
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>{{'members.your_data' | translate }}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'members.name' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="name" name="name" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'members.lastname' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="surname" name="surname" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'members.mobile' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="mobile" name="mobile" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'members.email' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="email" name="email" type="email"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'members.birthday' | translate }}  <span class="login-danger">*</span></label>
+                                        <input class="form-control datetimepicker" type="text" matInput [matDatepicker]="picker" [(ngModel)]="birthday" name="birthday" >
+                                        <mat-datepicker #picker></mat-datepicker>
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group select-gender">
+                                        <label class="gen-label">{{'members.gender' | translate }}<span class="login-danger">*</span></label>
+                                        <div class="form-check-inline">
+                                            <label class="form-check-label">
+                                                <input type="radio" value="1" [(ngModel)]="gender" name="gender" class="form-check-input">{{'members.male' | translate }}
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline">
+                                            <label class="form-check-label">
+                                                <input type="radio" value="2" [(ngModel)]="gender" name="gender" class="form-check-input">{{'members.female' | translate }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'members.password' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="password" name="password" type="password" autocomplete="password" >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'members.confirm_password' | translate }}<span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="confirm_password" name="confirm_password" type="password" autocomplete="confirm_password" >
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-4 col-xl-4">
+                                        <div class="form-group">
+                                            <label class="local-top">{{'members.photo' | translate }} </label>
+                                            <div class="settings-btn upload-files-avator">
+                                                <input type="file" accept="image/*" name="image" id="file"  (change)="loadFile($event)" class="hide-input">
+                                                <label for="file" class="upload">{{'club_translations.club_information.form_select_img' | translate }}</label>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        <div class="form-group">
+                                            <div class="" *ngIf="image_preview">
+                                                <img [src]="image_preview" alt="" width="150px" height="150px">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                        <strong>{{'commun_translations.error' | translate }}!</strong> {{ error_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                        <ul *ngIf="message_errors.length > 0">
+                                            <li *ngFor="let error of message_errors">{{ error }}</li>
+                                        </ul>
+                                      </div>
+                                </div>
+                                
+                                <div class="col-12" *ngIf="hide_buttons == false">
+                                    <div class="doctor-submit text-end">
+                                        <button type="button" class="btn btn-primary submit-form me-2" (click)="save()">{{'commun_translations.save' | translate }}</button>
+                                    </div>
+                                </div>
+                                <div class="col-12" *ngIf="hide_buttons == true">
+                                    <div class="doctor-submit text-end">
+                                        <button type="button" class="btn btn-primary submit-form me-2" [routerLink]="routes.staffList">{{'commun_translations.come_back' | translate }}</button>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="col-md-12 my-4" *ngIf="success_message != ''">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>{{'commun_translations.success' | translate }}!</strong> {{'commun_translations.data_save_correctly' | translate }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>							
+            </div>					
+        </div>
+    </div>
+</div>
+ 
+
+

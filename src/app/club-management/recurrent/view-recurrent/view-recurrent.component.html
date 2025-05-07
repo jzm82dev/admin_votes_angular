@@ -1,0 +1,93 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.listRecurrent">{{'reservations.recurrent.recurrent_booking' | translate }}</a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'commun_translations.edit' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>{{'reservations.recurrent.book_data' | translate }}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'reservations.name' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="reservation_name" name="reservation_name" type="text" placeholder="" >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'reservations.telephone' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="reservation_mobile" name="reservation_mobile" type="text" placeholder="" >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'reservations.recurrent.end_reservation' | translate }} </label>
+                                        <input class="form-control" disabled [(ngModel)]="end_date" name="end_date" type="text" placeholder="" >
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="doctor-submit text-end">
+                                        <button type="submit" class="btn btn-primary cancel-form" [routerLink]="routes.listRecurrent">{{'commun_translations.come_back' | translate }}</button>
+                                    </div>
+                                </div>
+                                
+                               
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-heading">
+                            <h4>{{'reservations.recurrent.booking_days' | translate }}</h4>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>{{'reservations.recurrent.day' | translate }}</th>
+                                        <th>{{'reservations.court' | translate }}</th>
+                                        <th>{{'reservations.time' | translate }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-primary" *ngFor="let reservation of reservation_days">
+                                        <td>{{ reservation.date  | date: 'dd/MM/yyyy' }}</td>
+                                        <td>{{ reservation.court_name }}</td>
+                                        <td>{{ reservation.start_time }}-{{ reservation.end_time }}</td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      
+
+    </div>
+</div>

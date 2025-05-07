@@ -1,0 +1,554 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.staffList">{{'leagues.category' | translate }} </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'leagues.update' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="settings-menu-links" >
+            <ul class="nav nav-tabs menu-tabs">
+                <li class="nav-item" [ngClass]="{'active': tab_selected == 1}" >
+                    <a href="#" onclick="return false;" class="nav-link" (click)="tabSeleted(1)">{{'leagues.tabs.general_data' | translate }}</a>
+                </li>
+                <li class="nav-item" [ngClass]="{'active': tab_selected == 2}">
+                    <a *ngIf="id_tournament != ''" href="#" onclick="return false;" class="nav-link" (click)="tabSeleted(2)">{{'tournaments.schedule' | translate }}</a>
+                    <a *ngIf="id_tournament == ''" class="nav-link nav-link-disabled">{{'tournaments.schedule' | translate }}</a>
+                </li>
+                <li class="nav-item" [ngClass]="{'active': tab_selected == 3}">
+                    <a *ngIf="id_tournament != ''" href="#" onclick="return false;" class="nav-link" (click)="tabSeleted(3)">{{'leagues.categories' | translate }}</a>
+                    <a *ngIf="id_tournament == ''" class="nav-link nav-link-disabled">{{'leagues.categories' | translate }}</a>
+                </li>
+                <li class="nav-item" *ngIf="id_tournament != ''">
+                    <a class="nav-link" [routerLink]="[ '/category/draw/all-matchs', id_tournament ]">{{'tournaments.match_schedule' | translate }}</a>
+                </li> 
+                <li class="nav-item" *ngIf="id_tournament != ''">
+                    <a class="nav-link" [routerLink]="[ '/category/draw/all-players', id_tournament ]">{{'tournaments.payments' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /Page Header -->
+
+         <!-- Begin Data -->
+        <div class="row" *ngIf="tab_selected == 1">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body" *ngIf="loaded == true">
+                        <form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>{{'leagues.data' | translate }}</h4>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-12 col-md-3 col-xl-3">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'tournaments.name' | translate }}<span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="name" name="name" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">
+                                    <div class="form-group local-forms">
+                                        <label >{{'club_translations.sport' | translate }} <span class="login-danger">*</span></label>
+                                        <mat-select [(ngModel)]="type_sport" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'club_translations.select_sport_type' | translate }}">
+                                            <mat-option *ngFor="let data of kind_sport" [value]="data.id">
+                                                {{data.name}}
+                                                </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">
+                                    <div class="form-group local-forms">
+                                        <label >{{'tournaments.start_date' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control datetimepicker" [(ngModel)]="date_start" name="date_start" type="text"  placeholder="" matInput [matDatepicker]="picker">
+                                        <mat-datepicker #picker></mat-datepicker>
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">
+                                    <div class="form-group local-forms">
+                                        <label >{{'tournaments.end_date' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control datetimepicker" [(ngModel)]="date_end" name="date_end" type="text"  placeholder="" matInput [matDatepicker]="picker2">
+                                        <mat-datepicker #picker2></mat-datepicker>
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-3 col-xl-3">
+                                    <div class="form-group local-forms">
+                                        <label >{{'tournaments.start_registration' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control datetimepicker" [(ngModel)]="date_starts_registration" name="date_starts_registration" type="text"  placeholder="" matInput [matDatepicker]="picker4">
+                                        <mat-datepicker #picker4></mat-datepicker>
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker4"></mat-datepicker-toggle>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-2 col-xl-2">
+                                    <div class="form-group local-forms">
+                                        <label >At <span class="login-danger">*</span></label>
+                                        <mat-select [(ngModel)]="hour_starts_registration" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'club_translations.schedule.hour' | translate }}">
+                                            <mat-option *ngFor="let data of hours" [value]="data.format_hour">
+                                                {{data.format_hour}}
+                                                </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">
+                                    <div class="form-group local-forms">
+                                        <label >{{'tournaments.end_registration' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control datetimepicker" [(ngModel)]="date_ends_registration" name="date_ends_registration" type="text"  placeholder="" matInput [matDatepicker]="picker5">
+                                        <mat-datepicker #picker5></mat-datepicker>
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker5"></mat-datepicker-toggle>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-2 col-xl-2">
+                                    <div class="form-group local-forms">
+                                        <label >At <span class="login-danger">*</span></label>
+                                        <mat-select [(ngModel)]="hour_ends_registration" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'club_translations.schedule.hour' | translate }}">
+                                            <mat-option *ngFor="let data of hours" [value]="data.format_hour">
+                                                {{data.format_hour}}
+                                                </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-3 col-xl-3">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'tournaments.price' | translate }}<span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="price" name="price" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'tournaments.member_price' | translate }}<span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="price_member" name="price_member" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'tournaments.time_match' | translate }}<span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="time_per_match" name="time_per_match" type="text"  >
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 col-md-6 col-xl-6">
+                                    <div class="form-group local-top-form">
+                                        <label class="local-top">{{'leagues.logo' | translate }} </label>
+                                        <div class="settings-btn upload-files-avator">
+                                            <input type="file" accept="image/*" name="image" id="file"  (change)="loadFile($event)" class="hide-input">
+                                            <label for="file" class="upload">{{'leagues.form_select_img' | translate }}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="" *ngIf="image_preview">
+                                    <img [src]="image_preview" alt="" width="150px" height="150px">
+                                </div>
+                               
+                                <div class="col-12" >
+                                    <div class="doctor-submit text-end">
+                                        <button type="submit" class="btn btn-secondary submit-form me-3" *ngIf="hasPermission('edit_tournament')" (click)="save('1')">{{'tournaments.save_as_draft' | translate }}</button>
+                                        <button type="button" class="btn btn-primary submit-form" *ngIf="hasPermission('edit_tournament') && is_draft == '1'" (click)="save('0')">{{'tournaments.publish' | translate }}</button>
+                                        <button type="button" class="btn btn-primary submit-form" *ngIf="hasPermission('edit_tournament') && is_draft == '0'" (click)="save('0')">{{'commun_translations.save' | translate }}</button>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                        <strong>{{'commun_translations.error' | translate }} </strong> {{ error_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                        <ul *ngIf="message_errors.length > 0">
+                                            <li *ngFor="let error of message_errors">{{ error }}</li>
+                                        </ul>
+                                      </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="success_message != ''">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>{{'commun_translations.success' | translate }} </strong> {{ success_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- En data -->
+
+        <!-- Schedule -->
+        <div class="row" *ngIf="tab_selected == 2">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body" *ngIf="loaded == true">
+                        <form>
+                            <div class="row">
+                            
+                            <ng-container>
+                                <div class="row my-4">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title">{{'tournaments.schedule' | translate }} </h5>
+                                    </div>
+                                    <p>(*) {{'tournaments.default_schedule' | translate }}</p>
+                                    <form>
+                                        <div class="row col-12">
+                                            <div class="col-4"  *ngIf="hasPermission('register_tournament')">
+                                                <div class="row settings-form">
+                                                    <div class="col-12 ">  
+                                                        <div class="form-group local-forms">
+                                                            <label >{{'tournaments.day' | translate }} <span class="login-danger">*</span></label>
+                                                            <input [min]="date_start" [max]="date_end" lang="es" class="form-control datetimepicker" [(ngModel)]="date_schedule" name="date_schedule" type="text" placeholder="" matInput [matDatepicker]="picker3">
+                                                            <mat-datepicker #picker3></mat-datepicker>
+                                                            <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+                                                        </div>
+                                                        <div class="form-group local-forms">
+                                                            <label >{{'tournaments.start_hour' | translate }} <span class="login-danger">*</span></label>
+                                                            <mat-select [(ngModel)]="opening_time" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'club_translations.schedule.hour' | translate }}">
+                                                                <mat-option *ngFor="let data of hours" [value]="data.format_hour">
+                                                                    {{data.format_hour}}
+                                                                    </mat-option>
+                                                            </mat-select>
+                                                        </div>
+                                                        <div class="form-group local-forms">
+                                                            <label >{{'tournaments.end_hour' | translate }} <span class="login-danger">*</span></label>
+                                                            <mat-select [(ngModel)]="closing_time" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'club_translations.schedule.hour' | translate }}">
+                                                                <mat-option *ngFor="let data of hours" [value]="data.format_hour">
+                                                                    {{data.format_hour}}
+                                                                    </mat-option>
+                                                            </mat-select>
+                                                        </div>
+                                                        <div class="form-group local-forms">
+                                                            <div class="doctor-submit text-center">
+                                                                <button type="button" class="btn btn-primary submit-form me-2" (click)="addSchedule()">GUARDAR</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-8 settings-form">
+                                                <div class="table-responsive">
+                                                    <table class="table mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>{{'tournaments.day' | translate }}</th>
+                                                                <th>{{'tournaments.start_hour' | translate }}</th>
+                                                                <th>{{'tournaments.end_hour' | translate }}</th>
+                                                                <th *ngIf="can_edit == true">{{'commun_translations.action' | translate }}</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <ng-container *ngFor="let item of schedule_list; let i = index;">
+                                                                <tr class="align-items-center">
+                                                                    <td>
+                                                                        {{item.date | date: 'dd/MM/yyyy' }}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{item.opening_time}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{item.closing_time}}
+                                                                    </td>
+                                                                    <td *ngIf="can_edit == true" > 
+                                                                        <a onclick="return false;" data-bs-toggle="modal" (click)="selectItem(item, i, 1)" data-bs-target="#delete_schedule" class="btn trash trash-style">
+                                                                        <i class="feather icon-trash-2 service"></i></a>
+                                                                        <a onclick="return false;" (click)="selectSchedule(item, i)"  class="btn trash trash-style">
+                                                                            <i class="feather icon-edit service"></i></a>
+                                                                    </td>
+                                                                </tr>
+                                                                
+                                                            </ng-container>
+                                                            <tr *ngIf="schedule_list.length == 0">
+                                                                <td colspan="4" class="text-center">{{'tournaments.no_schedule_created' | translate }}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>  
+                                            
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 my-4" *ngIf="error_message_schedule != ''">
+                                                <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                                    <strong>{{'commun_translations.error' | translate }}</strong> {{ error_message_schedule }}
+                                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                                        <span aria-hidden="true"> </span>
+                                                    </button>
+                                                    <ul *ngIf="message_errors_schedule.length > 0">
+                                                        <li *ngFor="let error of message_errors_schedule">{{ error }}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 my-4" *ngIf="success_message_schedule != ''">
+                                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                    <strong>{{'commun_translations.success' | translate }}</strong> {{ success_message_schedule }}
+                                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                                        <span aria-hidden="true"> </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </ng-container>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Schedule -->
+    <!-- Begin Categories -->
+    <div class="row" *ngIf="tab_selected == 3 && loaded == true">
+        <div class="col-12  settings-form"  *ngIf="hasPermission('edit_league')">
+            <div class="card">
+                <div class="card-body" *ngIf="loaded == true">
+                    <form>
+                        <div class="row my-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="card-title"> {{'tournaments.new_category' | translate }}</h5>
+                            </div>
+                            <div class="col-12 col-md-4 col-xl-4">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'leagues.name' | translate }}  <span class="login-danger">*</span></label>
+                                        <input  class="form-control" [(ngModel)]="name_category" name="name_category" type="text" placeholder="" >
+                                    </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-xl-4" *ngIf="type_sport == '2' || type_sport == '3'">
+                                <div class="form-group local-forms">
+                                    <label >{{'club_translations.type_match' | translate }} <span class="login-danger">*</span></label>
+                                    <mat-select [(ngModel)]="match_type_id" [ngModelOptions]="{standalone: true}"  class="form-control select"  placeholder="{{'club_translations.select_type' | translate }}">
+                                        <mat-option *ngFor="let data of match_types" [value]="data.id">
+                                            {{data.name}}
+                                            </mat-option>
+                                    </mat-select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12 col-md-4 col-xl-4 form-group local-forms doctor-submit">
+                                <button type="button" class="btn btn-primary submit-form me-2" (click)="addCategory()">{{'leagues.add' | translate }} CATEGORÏA</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 my-4" *ngIf="error_message_category != ''">
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                    <strong>{{'commun_translations.error' | translate }}</strong> {{ error_message_category }}
+                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                    <ul *ngIf="message_errors_category.length > 0">
+                                        <li *ngFor="let error of message_errors_category">{{ error }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-12 my-4" *ngIf="success_message_category != ''">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>{{'commun_translations.success' | translate }}</strong> {{ success_message_category }}
+                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>{{'leagues.categories' | translate }} ({{'leagues.couples' | translate }})</th>
+                                            <th>{{'tournaments.type_category.type' | translate }}</th>
+                                            <th>{{'tournaments.format' | translate }}</th>
+                                            <th *ngIf="can_edit == true">{{'commun_translations.remove' | translate }}</th>
+                                            <th *ngIf="can_edit == true">{{'leagues.setting' | translate }}</th>
+                                            <th *ngIf="can_edit == false">{{'commun_translations.view' | translate }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let item of categories_list; let i = index;">
+                                            <tr class="align-items-center" [ngClass]="{'table-primary': item.type != 0  }">
+                                                <td [ngClass]="{'incomplete_category' : item.type == 0 || item.total_couple == 0 }">
+                                                    {{item.name}} ({{item.total_couple}})
+                                                </td>
+                                                <td *ngIf="item.match_type == 'double'" [ngClass]="{'incomplete_category' : item.type == 0 || item.total_couple == 0 }">
+                                                    {{'club_translations.match_type_double' | translate }}
+                                                </td>
+                                                <td *ngIf="item.match_type == 'singles'" [ngClass]="{'incomplete_category' : item.type == 0 || item.total_couple == 0 }">
+                                                    {{'club_translations.match_type_single' | translate }}
+                                                </td>
+                                                <td [ngClass]="{'incomplete_category' : item.type == 0 || item.total_couple == 0 }">
+                                                    {{item.type_name}}
+                                                </td>
+                                                <td *ngIf="can_edit == true" [ngClass]="{'incomplete_category' : item.type == 0 || item.total_couple == 0 }">
+                                                    <a onclick="return false;" data-bs-toggle="modal" (click)="selectItem(item, i, 2)" data-bs-target="#delete_schedule" class="btn trash trash-style">
+                                                    <i class="feather icon-trash-2 service"></i></a>
+                                                </td>
+                                                <td *ngIf="can_edit == true" [ngClass]="{'incomplete_category' : item.type == 0 || item.total_couple == 0 }">
+                                                    <a [routerLink]="[ '/category/data', item.id, 1 ]" href="#" class="btn trash trash-style" >
+                                                        <img src='assets/img/icons/menu-icon-16.svg' alt="" /></a>
+                                                </td>
+                                                <td *ngIf="can_edit == false" [ngClass]="{'incomplete_category' : item.type == 0 || item.total_couple == 0 }">
+                                                    <a [routerLink]="[ '/category/data', item.id, 1 ]" href="#" class="btn trash trash-style">
+                                                        <img src='assets/img/icons/menu-icon-16.svg' alt="" /></a>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                        <tr *ngIf="categories_list.length == 0">
+                                            <td colspan="4" class="text-center">{{'tournaments.no_category_created' | translate }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+      
+        
+
+        <div class="col-sm-12">
+        
+            <div class="card">
+                <div class="card-body" *ngIf="loaded == true">
+        
+
+                    <!-- Create Draw -->
+                    <ng-container *ngIf="creating_draw == 1"> <!-- Display beauty generate draw -->
+                        <div class="row my-4">
+                            <div class="col-md-12" >
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="activity">
+                                            <div class="activity-box comman-activitys">
+                                                <ul>
+                                                    <li *ngFor="let item of messages">  
+                                                        <div class="activity-content timeline-group-blk"> 
+                                                            <div class=" flex-grow-1 ">
+                                                            <span > {{item}}</span>
+                                                            </div>  
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="creating_draw == 0">
+                    <div class="row my-4">
+                        <div class="col-md-12" >
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="activity">
+                                        <div class="activity-box comman-activitys">
+                                            <ul class="activity-list text-center">
+                                                <li>
+                                                    <div class="activity-content timeline-group-blk"> 
+                                                        <div class=" flex-grow-1 comman-activitys" *ngIf="category_no_couple == false  && draw_generated == 0">
+                                                            <h3>{{'tournaments.draw_to_be_defined' | translate }}. <span> {{'tournaments.no_draw' | translate }}.</span></h3>
+                                                            <p>{{'tournaments.create_draw_text' | translate }}.</p>
+                                                        </div>  
+                                                        <div class="comman-activitys flex-grow-1" *ngIf="category_no_couple == true  && draw_generated == 0" >
+                                                            <h3>{{'tournaments.draw_to_be_defined' | translate }}. <span> {{'tournaments.no_draw_no_couples' | translate }}.</span></h3>
+                                                        </div>
+                                                        <div class="comman-activitys flex-grow-1" *ngIf="draw_generated == 1">
+                                                            <h3>{{'tournaments.torunament_setup' | translate }}. <span> {{'tournaments.torunament_setup_info' | translate }}.</span></h3>
+                                                            <p>{{'tournaments.consult_categories' | translate }}.</p>
+                                                            </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="col-12 d-flex align-items-center" *ngIf="category_no_couple == false && hasPermission('edit_league') && draw_generated == 0">
+                                                <div class="follow-btn-group">
+                                                    <button type="submit" class="btn btn-info message-btns" (click)="configureDraw()">{{'tournaments.create_tournament' | translate }}</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 d-flex align-items-center" *ngIf="category_no_couple == false && hasPermission('edit_league') && draw_generated == 1">
+                                                <div class="follow-btn-group">
+                                                    <a onclick="return false;" data-bs-toggle="modal"  data-bs-target="#delete_draw" class="btn btn-warning message-btns">{{'tournaments.reset_tournament' | translate }}</a>
+                                                </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                    </div> 
+                </div>
+                    </ng-container>
+                </div>
+            </div>							
+        </div>					
+    </div>
+    <!-- End Categories-->
+
+    <div class="row" *ngIf="tab_selected == 4">
+        <div class="col-sm-12">
+        
+            <div class="card">
+                <div class="card-body" *ngIf="loaded == true">
+                    <form>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>
+
+<div id="delete_schedule" class="modal fade delete-modal" role="dialog" >
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="assets/img/sent.png" alt="" width="50" height="46">
+                <h3 *ngIf="schedule_selected" >{{'tournaments.sure_delete_schedule' | translate }} {{schedule_selected.date | date: 'dd/MM/yyyy'}} {{ schedule_selected.opening_time }} - {{schedule_selected.closing_time}}?</h3>
+                <h3 *ngIf="category_selected" >{{'tournaments.sure_delete_category' | translate }} {{category_selected.name }} ?</h3>
+                <div *ngIf="schedule_selected" class="m-t-20"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebutton>{{'commun_translations.close' | translate }}</a>
+                    <button type="submit" class="btn btn-danger" (click)="deleteSchedule()">{{'commun_translations.remove' | translate }}</button>
+                </div>
+                <div *ngIf="category_selected" class="m-t-20"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebutton>{{'commun_translations.close' | translate }}</a>
+                    <button type="submit" class="btn btn-danger" (click)="deleteCategory()">{{'commun_translations.remove' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="delete_draw" class="modal fade delete-modal" role="dialog" >
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="assets/img/sent.png" alt="" width="50" height="46">
+                <h3 >{{'tournaments.sure_delete_draw' | translate }}</h3>
+                <p>{{'tournaments.info_delete_draw' | translate }}</p>
+                <div class="m-t-20"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebutton_delete_draws>{{'commun_translations.close' | translate }}</a>
+                    <button type="submit" class="btn btn-danger" (click)="deleteDraw()">{{'commun_translations.remove' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+
+

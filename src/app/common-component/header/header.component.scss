@@ -1,0 +1,25 @@
+#home .hero-section:after {
+    background: rgba(46, 55, 164, 0.65) !important;
+    background: url(../../../assets/home/assets/img/hero-bg.png) bottom no-repeat;
+}
+
+.flag{
+    width: 30px;
+    border-radius: 5px
+}
+
+.same-line{
+    display: flex !important;
+}
+
+.feather{
+    cursor: pointer;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.heart{
+    color: red;
+}

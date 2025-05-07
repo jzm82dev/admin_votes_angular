@@ -1,0 +1,112 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="[ '/meeting/list/edit', this.question_id ]">Pregunta </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">Votos</li>
+                    
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h3 class="text-question text-center">{{ question }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <mat-select [(ngModel)]="building_id" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Edificio" (ngModelChange)="getOwners()">
+                                        <mat-option *ngFor="let data of building" [value]="data.building">
+                                        {{data.building}}
+                                        </mat-option>
+                                    </mat-select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card-box">
+                                        <div class="card-block">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Piso</th>
+                                                            <th>Propietario</th>
+                                                            <th *ngFor="let answer of answers"  class="text-center">
+                                                                {{ answer.name }}
+                                                            </th>
+                                                            <th class="text-center"><span>Borrar</span></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let owner of ownersList">
+                                                            <td>{{ owner.floor }}-{{ owner.letter }}</td>
+                                                            <td> {{ owner.name }}</td>
+                                                            <td *ngFor="let answer of answers" class="text-center">
+                                                                <input class="form-check-input" type="radio" name="answer_{{ owner.id }}" 
+                                                                       id="answer_{{ owner.id }}_{{ answer.id }}" value="answer_{{ owner.id }}_{{ answer.id }}" 
+                                                                       [checked]="lookForVote(answer.id, owner.id)" >
+                                                            </td> 
+                                                            <td  class="text-center">
+                                                                <input class="form-check-input" type="radio" name="answer_{{ owner.id }}" 
+                                                                       id="answer_{{ owner.id }}"  >
+                                                            </td>
+                                                        </tr>
+                                                        <tr *ngIf="ownersList.length == 0">
+                                                            <td colspan="6" class="text-center">Seleccione un edificio de propietario para votar</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="doctor-submit text-end">
+                                        <button [routerLink]="['/meeting/edit', meeting_id]" type="submit" class="btn btn-primary cancel-form">Volver</button>&nbsp;
+                                        <button type="button" class="btn btn-primary submit-form me-2" (click)="save()">Guardar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                        <strong>Error!</strong> {{ error_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                        <ul *ngIf="message_errors.length > 0">
+                                            <li *ngFor="let error of message_errors">{{ error }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="susccess_message != ''">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>Bien!</strong> {{ susccess_message }}
+                                        </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

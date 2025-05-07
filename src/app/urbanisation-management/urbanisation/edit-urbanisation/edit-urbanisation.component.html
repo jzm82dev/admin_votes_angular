@@ -1,0 +1,177 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{'club_translations.dashboard' | translate }}</li>
+                        <li class="breadcrumb-item "><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">Urbanización</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+
+        <div class="settings-menu-links">
+            <ul class="nav nav-tabs menu-tabs">
+                <li class="nav-item active">
+                    <a class="nav-link" [routerLink]="routes.club">{{'club_translations.tabs.general_data' | translate }}</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" [routerLink]="[ '/owner/list', urbanisation_id ]">Propietarios</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row" *ngIf="tab_selected == 1">
+
+            <!-- DATA -->
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>Urbanización</h4>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-12 col-md-6 col-xl-6"> 
+                                    <div class="form-group local-forms">
+                                        <label >Nombre <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="name" name="name" type="text" [disabled]="can_edit == false">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6"> 
+                                    <div class="form-group local-forms">
+                                        <label >Presidente <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="president" name="president" type="text" [disabled]="can_edit == false">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6"> 
+                                    <div class="form-group local-forms">
+                                        <label >{{'club_translations.club_information.form_mobile' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="mobile" name="mobile" type="text" [disabled]="can_edit == false" >   
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6"> 
+                                    <div class="form-group local-forms">
+                                        <label >{{'club_translations.club_information.form_email' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="email" name="email" type="email" [disabled]="can_edit == false" >  
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6"> 
+                                    <div class="form-group local-forms">
+                                        <label>{{'club_translations.club_address.form_street_address' | translate }} <span class="star-red">*</span></label>
+                                        <input type="text" class="form-control" [(ngModel)]="address" name="address" placeholder="{{'club_translations.club_address.form_street_address_placeholder' | translate }}" [disabled]="can_edit == false">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6"> 
+                                    <div class="form-group local-forms">
+                                        <label>Datos adicionales</label>
+                                        <input type="text" class="form-control" [(ngModel)]="additional_address" name="additional_address" placeholder="{{'club_translations.club_address.form_additional_address_placeholder' | translate }}" [disabled]="can_edit == false">
+                                    </div>
+                                </div>
+                                
+                                   
+                                <div class="col-12 col-md-6 col-xl-6"> 
+                                    <div class="form-group local-forms">
+                                            <label >{{'club_translations.club_address.form_country' | translate }} <span class="login-danger">*</span></label>
+                                            <mat-select [(ngModel)]="country_id" [ngModelOptions]="{standalone: true}" class="form-control select"  
+                                                (selectionChange)="countrySelected($event.value)" placeholder="{{'club_translations.club_address.form_select_country' | translate }}">
+                                                <mat-option *ngFor="let country of countries" [value]="country.id">
+                                                    {{country.name}}
+                                                    </mat-option>
+                                            </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6"> 
+                                    <div class="form-group local-forms">
+                                            <label >{{'club_translations.club_address.form_province' | translate }} <span class="login-danger">*</span></label>
+                                            <mat-select [(ngModel)]="state_id" [ngModelOptions]="{standalone: true}" class="form-control select"  
+                                                (selectionChange)="stateSelected($event.value)" placeholder="{{'club_translations.club_address.form_select_state' | translate }}">
+                                                <mat-option *ngFor="let state of states" [value]="state.id">
+                                                    {{state.name}}
+                                                    </mat-option>
+                                            </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6"> 
+                                    <div class="form-group local-forms">
+                                            <label >{{'club_translations.club_address.form_city' | translate }} <span class="login-danger">*</span></label>
+                                            <mat-select [(ngModel)]="city_id" [ngModelOptions]="{standalone: true}" class="form-control select"  
+                                                    placeholder="{{'club_translations.club_address.form_select_city' | translate }}">
+                                                <mat-option *ngFor="let city of cities" [value]="city.id">
+                                                    {{city.name}}
+                                                    </mat-option>
+                                            </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6"> 
+                                    <div class="form-group local-forms">
+                                        <label>{{'club_translations.club_address.form_postal_code' | translate }} <span class="star-red">*</span></label>
+                                        <input type="text" class="form-control" [(ngModel)]="postal_code" name="postal_code" placeholder="{{'club_translations.club_address.form_postal_code_placeholder' | translate }}" [disabled]="can_edit == false">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-xl-6"> 
+                                    <div class="form-group local-forms" *ngIf="can_edit == true">
+                                        <label class="local-top">{{'club_translations.club_information.form_logo' | translate }} </label>
+                                        <div class="settings-btn upload-files-avator">
+                                            <input type="file" accept="image/*" name="image" id="file"  (change)="loadFile($event)" class="hide-input">
+                                            <label for="file" class="upload">{{'club_translations.club_information.form_select_img' | translate }}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="" *ngIf="image_preview">
+                                    <img [src]="image_preview" alt="" width="150px" height="150px">
+                                </div>
+                                
+                                <div class="form-group mb-0 text-end" *ngIf="can_edit == true">
+                                    <div class="settings-btns">
+                                        <button type="submit" class="border-0 btn btn-primary btn-gradient-primary btn-rounded" (click)="saveData()">{{'commun_translations.save' | translate }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                            <strong>{{'commun_translations.error' | translate }} </strong> {{ error_message }}
+                            <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                <span aria-hidden="true"> </span>
+                            </button>
+                            <ul *ngIf="message_errors.length > 0">
+                                <li *ngFor="let error of message_errors">{{ error }}</li>
+                            </ul>
+                          </div>
+                    </div>
+                    <div class="col-md-12 my-4" *ngIf="success_message != ''">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>{{'commun_translations.success' | translate }} </strong> {{ success_message }}
+                            <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                <span aria-hidden="true"> </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <!-- END DATA -->
+
+   
+        </div>
+
+    </div>
+</div>
+ 
+
+
+
+

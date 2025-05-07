@@ -1,0 +1,142 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.listRecurrent">{{'reservations.recurrent.recurrent_booking' | translate }}</a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'commun_translations.edit' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>{{'reservations.recurrent.book_data' | translate }}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'reservations.name' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="reservation_name" name="reservation_name" type="text" placeholder="" >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'reservations.telephone' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control" [(ngModel)]="reservation_mobile" name="reservation_mobile" type="text" placeholder="" >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'reservations.recurrent.end_reservation' | translate }} </label>
+                                        <input class="form-control" disabled [(ngModel)]="end_date" name="end_date" type="text" placeholder="" >
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="doctor-submit text-end">
+                                        <button type="button" class="btn btn-primary submit-form me-2" (click)="save()">{{'commun_translations.save' | translate }}</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="success_message != ''">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>Bien!</strong> {{ success_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                        <strong>Error!</strong> {{ error_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                        <ul *ngIf="message_errors.length > 0">
+                                            <li *ngFor="let error of message_errors">{{ error }}</li>
+                                        </ul>
+                                      </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-heading">
+                            <h4>{{'reservations.recurrent.booking_days' | translate }}</h4>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>{{'reservations.recurrent.day' | translate }}</th>
+                                        <th>{{'reservations.court' | translate }}</th>
+                                        <th>{{'reservations.time' | translate }}</th>
+                                        <th>{{'commun_translations.remove' | translate }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-primary" *ngFor="let reservation of reservation_days">
+                                        <td>{{ reservation.date  | date: 'dd/MM/yyyy' }}</td>
+                                        <td>{{ reservation.court_name }}</td>
+                                        <td>{{ reservation.start_time }}-{{ reservation.end_time }}</td>
+                                        <td class="settings-form text-center">
+                                            <a (click)="selectReservation(reservation.id)" data-bs-toggle="modal" data-bs-target="#delete_reservation_modal" href="javascript:void(0);" class="btn trash">
+                                                <i class="feather icon-trash-2"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12 my-4" *ngIf="success_message_2 != ''">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>{{'commun_translations.success' | translate }}</strong> {{ success_message_2 }}
+                                <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                    <span aria-hidden="true"> </span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-12 my-4" *ngIf="error_message_2 != ''">
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                <strong>{{'commun_translations.error' | translate }}</strong> {{ error_message_2 }}
+                                <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                    <span aria-hidden="true"> </span>
+                                </button>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="delete_reservation_modal" class="modal fade delete-modal" role="dialog" >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <img src="assets/img/sent.png" alt="" width="50" height="46">
+                        <h3 *ngIf="reservation_selected" >{{'reservations.recurrent.phrase_confirmation' | translate }} {{ reservation_selected.date | date: 'dd/MM/yyyy'}} ?</h3>
+                        <div class="m-t-20"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebutton>{{'commun_translations.close' | translate }}</a>
+                            <button type="submit" class="btn btn-danger" (click)="removeReservation()">{{'commun_translations.remove' | translate }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+    </div>
+</div>

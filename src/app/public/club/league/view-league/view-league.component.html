@@ -1,0 +1,485 @@
+<div class="main-wrapper" id="home">
+    <app-home-header></app-home-header>
+    <!-- Start Banner -->
+    <div class="hero-section auto-height text-center">
+        <div class="container">
+            <div class="hero-wrap">
+                <!-- Profile -->
+                <div class="card-box profile-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="profile-view">
+                                <div class="profile-img-wrap">
+                                    <div class="profile-img">
+                                         <a href="javascript:void(0);"><img class="avatar" [src]="image_preview" alt=""></a> 
+                                    </div>
+                                </div>
+                                <div class="profile-basic">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="profile-info-left">
+                                                <h3 class="user-name m-t-0 mb-0">{{ name }}</h3>
+                                                <small class="text-muted">{{ name_sport }}</small>
+                                                <div class="staff-id">Club : <a class="link-profile" [routerLink]="[ '/club', club_hash, 'schedule' ]">{{ club_name }}</a></div>
+                                                <div class="staff-msg hide-mobile"><a href="mailto:{{email}}" class="btn btn-primary button-chat">{{'leagues.tabs.send_message' | translate }}</a></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 hide-mobile">
+                                            <ul class="personal-info">
+                                                <li>
+                                                    <span class="title">{{'leagues.tabs.start' | translate }}:</span>
+                                                    <span class="text">{{ date_start | date: 'dd/MM/yyyy' }}</span>
+                                                </li>
+                                                <li>
+                                                    <span class="title">{{'tournaments.price' | translate }}:</span>
+                                                    <span class="text">{{ price }} €</span>
+                                                </li>
+                                                <div class="hide-mobile">
+                                                    <li>
+                                                        <span class="title">{{'leagues.tabs.you_win' | translate }} (2-0)/(2-1):</span>
+                                                        <span class="text">{{ points_per_win_2_0 }} / {{ points_per_win_2_1 }} puntos</span>
+                                                    </li>
+                                                
+                                                    <li>
+                                                        <span class="title">{{'leagues.tabs.you_lost' | translate }}(0-2)/(1-2):</span>
+                                                        <span class="text">{{ points_per_lost_0_2 }} / {{ points_per_lost_1_2 }} puntos</span>
+                                                    </li>
+                                                </div>
+                                                <div class="hide-desktop">
+                                                    <li>
+                                                        <span class="title">{{'leagues.tabs.you_win' | translate }}(2-0)</span>
+                                                        <span class="text">{{ points_per_win_2_0 }} puntos</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="title">{{'leagues.tabs.you_win' | translate }}(2-1)</span>
+                                                        <span class="text">{{ points_per_win_2_1 }} puntos</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="title">{{'leagues.tabs.you_lost' | translate }}(1-2)</span>
+                                                        <span class="text">{{ points_per_lost_1_2 }} puntos</span>
+                                                    </li>
+                                                    <li>
+                                                        <span class="title">{{'leagues.tabs.you_lost' | translate }}(0-2)</span>
+                                                        <span class="text">{{ points_per_lost_0_2 }}  puntos</span>
+                                                    </li>
+                                                </div>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-tabs my-3">
+        
+                    <div class="tab-content">
+                       
+                        <div class="tab-pane  show active" id="monitors" >
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card-box">
+                                        <div class="experience-box">
+                                            <ul class="nav nav-tabs menu-tabs">
+                                                <li class="nav-item" *ngFor="let category of categories_list" [ngClass]="{'active': category.id == category_id}">
+                                                    <a href="javascript:void(0);" class="nav-link on-hover" (click)="getCategoryData(category.id)">{{ category.name }}</a>
+                                                </li>
+                                            </ul>
+                                            <br>
+                                            <ul class="nav nav-tabs nav-tabs-bottom" *ngIf="show_data">
+                                                <li class="nav-item"><a class="nav-link active" id="link_couples" href="#couples" (click)="showCouples()" data-bs-toggle="tab">{{'leagues.tabs.couples' | translate }}</a></li>
+                                                <li class="nav-item"><a class="nav-link" id="link_journeys" href="#journeys"  (click)="showJourneys()" data-bs-toggle="tab">{{'leagues.tabs.journeys' | translate }}</a></li>
+                                                <li class="nav-item"><a class="nav-link active" href="#restults" *ngIf="show_matchs_journey" data-bs-toggle="tab">{{'leagues.details.resutls' | translate }}</a></li>
+                                                <li class="nav-item"><a class="nav-link" id="link_ranking" href="#ranking" (click)="showRanking()" data-bs-toggle="tab">{{'leagues.tabs.ranking' | translate }}</a></li>
+                                                <li class="nav-item"><a class="nav-link active" href="#details" *ngIf="show_details" data-bs-toggle="tab">{{'leagues.tabs.details' | translate }}</a></li>
+                                            </ul>
+                                        </div>
+                                        <!-- SHOW COUPLES -->
+                                        <div class="table-responsive my-4" *ngIf="show_couples && type_matchs != 'singles'">
+                                            <table matSort class="table table-striped border-0 custom-table comman-table datatable mb-0 ">
+                                                <thead>
+                                                    <tr>
+                                                        <th mat-sort-header="name">{{'leagues.name' | translate }}</th>
+                                                        <th mat-sort-header="player_1">{{'leagues.player_1' | translate }}</th>
+                                                        <th mat-sort-header="player_2">{{'leagues.player_2' | translate }}</th>
+                                                        <th mat-sort-header="substitute">{{'leagues.substitute' | translate }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let couple of couple_list">
+                                                        <td class="text-start">{{couple.name}}</td>
+                                                        <td class="text-start">{{couple.players[0].name}} {{couple.players[0].surname}}</td>
+                                                        <td class="text-start">{{couple.players[1].name}} {{couple.players[1].surname}}</td>
+                                                        <td class="text-start" *ngIf="couple.substitute_player.length > 0">{{couple.substitute_player[0].name}} {{couple.substitute_player[0].surname}}</td>
+                                                        <td class="text-start" *ngIf="couple.substitute_player.length == 0"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- END SHOW COUPLES -->
+                                        <!-- SHOW PLAYERS -->
+                                        <div class="table-responsive my-4" *ngIf="show_couples && type_matchs == 'singles'">
+                                            <table matSort class="table table-striped border-0 custom-table comman-table datatable mb-0 ">
+                                                <thead>
+                                                    <tr>
+                                                        <th mat-sort-header="player">{{'leagues.name' | translate }}</th>
+                                                        <th mat-sort-header="surname">{{'leagues.surname' | translate }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let couple of couple_list">
+                                                        <td class="text-start">{{couple.players[0].name}}</td>
+                                                        <td class="text-start">{{couple.players[0].surname}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- END SHOW PLAYERS -->
+                                        <!-- SHOW JOURNEYS -->
+                                        <div class="table-responsive my-4" *ngIf="show_journey">
+                                            <table matSort class="table border-0 custom-table comman-table datatable mb-0">
+                                                <thead>
+                                                    <tr >
+                                                        <th mat-sort-header="enumerate">#</th>
+                                                        <th mat-sort-header="name">{{'leagues.journeys.name' | translate }}</th>
+                                                        <th mat-sort-header="start_date">{{'leagues.journeys.date' | translate }}</th>
+                                                        <th mat-sort-header="status" >{{'leagues.journeys.status' | translate }} ({{'leagues.journeys.pending' | translate }})</th>
+                                                        <th mat-sort-header="atcion"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let data of journeysList; let i = index;" (click)="showJorneyResults(data.id)" class="cursor-pointer">
+                                                        <td class="text-start">{{i + 1}}</td>
+                                                        <td class="text-start" >{{data.name}}</td>
+                                                        <td class="text-start">{{data.date}}</td>
+                                                        <td class="text-start">
+                                                            <button (click)="showJorneyResults(data.id)" href="#" [ngClass]="{'status-green' : data.matchs_pending == 0, 'status-pink' : data.matchs_pending > 0}" class="custom-badge">{{ data.matchs_pending > 0 ? pending_text : finished_text }} ({{data.matchs_pending}})</button>
+                                                        </td>
+                                                        <td class="text-start"><a class="btn" (click)="showJorneyResults(data.id)"><img src="assets/img/icons/search-normal.svg" alt=""></a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- END SHOW JOURNEYS -->
+                                        <!-- SHOW RANKING -->
+
+                                        <!-- Desktop -->
+                                        <div class="table-responsive my-4 hide-mobile" *ngIf="show_ranking">
+                                            <table class="table mb-0 table-striped my-4">
+                                                <thead>
+                                                    <tr  class="table-primary">
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th ></th>
+                                                        <td colspan="3" class="text-center">{{'leagues.ranking.matchs' | translate }}</td>
+                                                        <td colspan="2" class="text-center">{{'leagues.ranking.sets' | translate }}</td>
+                                                        <td colspan="3" class="text-center">{{'leagues.ranking.games' | translate }}</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr  class="table-primary text-center">
+                                                        <th>#</th>
+                                                        <th >{{'leagues.ranking.couple' | translate }}</th>
+                                                        <th>{{'leagues.ranking.points' | translate }}</th>
+                                                        <th>{{'leagues.ranking.played' | translate }}</th>
+                                                        <th>{{'leagues.ranking.won' | translate }}</th>
+                                                        <th>{{'leagues.ranking.lost' | translate }}</th>
+                                                        <th>{{'leagues.ranking.won' | translate }}</th>
+                                                        <th>{{'leagues.ranking.lost' | translate }}</th>
+                                                        <th>{{'leagues.ranking.won' | translate }}</th>
+                                                        <th>{{'leagues.ranking.lost' | translate }}</th>
+                                                        <th>AVG</th>
+                                                        <th>Ver</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let couple of ranking_couples; let i = index;" class="text-center">
+                                                        <td class="points">{{ i + 1 }}º</td>
+                                                        <td class="text-start"><span *ngFor="let player of couple.players">{{ player.name }} {{ player.surname }}<br></span></td>
+                                                        <td class="points">{{ couple.total_points ? couple.total_points : '0' }}</td>
+                                                        <td>{{ couple.matches_played ? couple.matches_played : '0' }}</td>
+                                                        <td>{{ couple.matchs_won ? couple.matchs_won : '0' }}</td>
+                                                        <td>{{ couple.matchs_lost ? couple.matchs_lost : '0' }}</td>
+                                                        <td>{{ couple.sets_won ? couple.sets_won : '0' }}</td>
+                                                        <td>{{ couple.sets_lost ? couple.sets_lost : 0 }}</td>
+                                                        <td>{{ couple.games_won ? couple.games_won : 0 }}</td>
+                                                        <td>{{ couple.games_lost ? couple.games_lost : 0 }}</td>
+                                                        <td>{{ couple.avg_games ? couple.avg_games : 0 }}</td>
+                                                        <td class="text-start"><a class="btn" (click)="showDetails(couple.couple_id)"><img src="assets/img/icons/search-normal.svg" alt=""></a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <!-- Mobile -->
+                                        <div class="table-responsive my-4 hide-desktop " *ngIf="show_ranking">
+                                            <table matSort class="table table-striped border-0 custom-table comman-table datatable mb-0 ">
+                                                <thead>
+                                                    <tr class="text-cente ">
+                                                        <th>#</th>
+                                                        <th mat-sort-header="name" >{{'leagues.ranking.couple' | translate }}</th>
+                                                        <th mat-sort-header="points" class="text-center mobile-size">{{'leagues.ranking.points' | translate }}</th>
+                                                        <th mat-sort-header="played" >{{'leagues.ranking.played' | translate }}</th>
+                                                        <th mat-sort-header="won" >{{'leagues.ranking.won' | translate }}</th>
+                                                        <th mat-sort-header="lost" >{{'leagues.ranking.lost' | translate }}</th>
+                                                        <th mat-sort-header="view" >Ver</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let couple of ranking_couples; let i = index;" >
+                                                        <td class="text-start" >{{ i + 1 }}º</td>
+                                                        <td class="text-start" ><span *ngFor="let player of couple.players">{{ player.name }}<br></span></td>
+                                                        <td class="text-start" >{{ couple.total_points ? couple.total_points : '0' }}</td>
+                                                        <td class="text-start" >{{ couple.matches_played ? couple.matches_played : '0' }}</td>
+                                                        <td class="text-start" >{{ couple.matchs_won ? couple.matchs_won : '0' }}</td>
+                                                        <td class="text-start" >{{ couple.matchs_lost ? couple.matchs_lost : '0' }}</td>
+                                                        <td class="text-start"><a class="btn" (click)="showDetails(couple.couple_id)"><img src="assets/img/icons/search-normal.svg" alt=""></a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        
+                                        <!-- END SHOW RANKING -->
+                                        <!-- SHOW MATCHS JOURNEY -->
+                                        <div class="table-responsive my-4" *ngIf="show_matchs_journey">
+                                            <table class="table mb-0 " >
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">{{'leagues.journeys.match' | translate }}</th>
+                                                        <th class="text-center">{{'leagues.journeys.set_1' | translate }}</th>
+                                                        <th class="text-center">{{'leagues.journeys.set_2' | translate }}</th>
+                                                        <th class="text-center">{{'leagues.journeys.set_3' | translate }}</th>
+                                                    </tr>
+                                                </thead>
+                                               
+            
+                                                <tbody>
+                                                    <ng-container *ngFor="let match of match_list; let i = index;">
+                                                    
+                                                        <tr>
+                                                            <td class="text-start hide-mobile"><span *ngFor="let player of match.local_players" class="player-name">{{ player.name }} {{ player.surname }} <br> </span></td>
+                                                            <td class="text-start hide-desktop"><span *ngFor="let player of match.local_players" class="player-name">{{ player.name }} <br> </span></td>
+                                                            <td>
+                                                                <input [ngClass]="{'color-blue':match.match_finisehd == '1', 'color-red' : match.match_finisehd == '0' }" class="form-control text-center font-weight" pattern="[0-7]" maxlength="1" tabindex="1" placeholder="-" [ngModelOptions]="{standalone: true}" [(ngModel)]="match_list[i].result_set_1_local" [name]="match_list[i].result_set_1_local" type="text" readonly>
+                                                            </td>
+                                                            <td>
+                                                                <input [ngClass]="{'color-blue':match.match_finisehd == '1', 'color-red' : match.match_finisehd == '0' }" class="form-control text-center font-weight" pattern="[0-7]" maxlength="1" tabindex="3" placeholder="-" [ngModelOptions]="{standalone: true}" [(ngModel)]="match_list[i].result_set_2_local" [name]="match_list[i].result_set_2_local" type="text" readonly>
+                                                            </td>
+                                                            <td>
+                                                                <input [ngClass]="{'color-blue':match.match_finisehd == '1', 'color-red' : match.match_finisehd == '0' }" class="form-control text-center font-weight" pattern="[0-7]" maxlength="1" tabindex="3" placeholder="-" [ngModelOptions]="{standalone: true}" [(ngModel)]="match_list[i].result_set_3_local" [name]="match_list[i].result_set_3_local" type="text" readonly>
+                                                            </td>
+                                                        </tr>
+            
+                                                        <tr >
+                                                            <td class="text-start"><span *ngFor="let player of match.visiting_players" class="player-name">{{ player.name }} <br></span></td>
+                                                            <td >
+                                                                <input [ngClass]="{'color-blue':match.match_finisehd == '1', 'color-red' : match.match_finisehd == '0' }" class="form-control text-center font-weight" pattern="[0-7]" maxlength="1" tabindex="1" placeholder="-" [ngModelOptions]="{standalone: true}" [(ngModel)]="match_list[i].result_set_1_visiting" [name]="match_list[i].result_set_1_visiting" type="text" readonly>
+                                                            </td>
+                                                            <td >
+                                                                <input [ngClass]="{'color-blue':match.match_finisehd == '1', 'color-red' : match.match_finisehd == '0' }" class="form-control text-center font-weight" pattern="[0-7]" maxlength="1" tabindex="3" placeholder="-" [ngModelOptions]="{standalone: true}" [(ngModel)]="match_list[i].result_set_2_visiting" [name]="match_list[i].result_set_2_visiting" type="text" readonly>
+                                                            </td>
+                                                            <td >
+                                                                <input [ngClass]="{'color-blue':match.match_finisehd == '1', 'color-red' : match.match_finisehd == '0' }" class="form-control text-center font-weight" pattern="[0-7]" maxlength="1" tabindex="3" placeholder="-" [ngModelOptions]="{standalone: true}" [(ngModel)]="match_list[i].result_set_3_visiting" [name]="match_list[i].result_set_3_visiting" type="text" readonly>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="4" class="test"></td>
+                                                        </tr>
+            
+                                                    </ng-container>
+                                                    
+                                               </tbody>
+            
+                                            </table>
+                                        </div>
+                                        <!-- END SHOW MATCHS JOURNEY -->
+                                        <!-- SHOW DETAILS-->
+                                        <div class="table-responsive my-4" *ngIf="show_details">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <form>
+                                                        <div class="row text-center my-4" *ngIf="type_league == 'double'">
+                                                            <div class="col-12">     
+                                                                <h4>{{'leagues.details.players' | translate }}</h4>
+                                                                <div class="table-responsive">
+                                                                    <table class="table mb-0">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>{{'leagues.name' | translate }}</th>
+                                                                                <th>{{'leagues.mobile' | translate }}</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr class="table-primary" *ngFor="let player of players; let i = index;">
+                                                                                <td>{{ player.name }} {{player.surname}}</td>
+                                                                                <td>******</td>
+                                                                            </tr>
+                                                                            <tr *ngFor="let player of substitute_players; let i = index;" class="table-info">
+                                                                                <td>{{ player.name }} {{player.surname}}</td>
+                                                                                <td>******</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>  
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="row my-4 text-center">
+                                                            <div class="col-12">
+                                                                <div class="form-heading">
+                                                                    <h4>{{'leagues.details.statistics' | translate }}</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                            
+                                                        
+                            
+                                                        <div class="row text-center graphics">
+                                                            
+                                                            <div class="col-4 center">
+                                                                <div class="card text-center">
+                                                                   
+                                                                        <div class="chart-title">
+                                                                            <h4>{{'leagues.details.matchs' | translate }}</h4>
+                                                                            <h2><span class="counter-up" [countUp]="matches_played" [options]="{duration: 10}">{{ matches_played }}</span></h2>
+                                                                        </div>	
+                                                                        <div id="donut-chart-dash" class="chart-user-icon ">
+                                                                            <apx-chart class="donut-chart-custom "
+                                                                            [series]="chartOptionsMatch.series"
+                                                                            [chart]="chartOptionsMatch.chart"
+                                                                            [labels]="chartOptionsMatch.labels"
+                                                                            [colors]="chartOptionsMatch.colors"
+                                                                            [responsive]="chartOptionsMatch.responsive"
+                                                                            [dataLabels]="chartOptionsMatch.dataLabels"
+                                                                            [legend]="chartOptionsMatch.legend"></apx-chart>
+                                                                            
+                                                                        </div>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-4  d-flex center">
+                                                                <div class="card text-center">
+                                                                    
+                                                                        <div class="chart-title">
+                                                                            <h4>{{'leagues.details.sets' | translate }}</h4>
+                                                                            <h2><span class="counter-up" [countUp]="sets_played" [options]="{duration: 10}">{{ sets_played }}</span></h2>
+                                                                        </div>	
+                                                                        <div id="donut-chart-dash" class="chart-user-icon">
+                                                                            <apx-chart class="donut-chart-custom"
+                                                                            [series]="chartOptionsSet.series"
+                                                                            [chart]="chartOptionsSet.chart"
+                                                                            [labels]="chartOptionsSet.labels"
+                                                                            [colors]="chartOptionsSet.colors"
+                                                                            [responsive]="chartOptionsSet.responsive"
+                                                                            [dataLabels]="chartOptionsSet.dataLabels"
+                                                                            [legend]="chartOptionsSet.legend"></apx-chart>
+                                                                        </div>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-4  d-flex center">
+                                                                <div class="card text-center">
+                                                                    
+                                                                        <div class="chart-title">
+                                                                            <h4>{{'leagues.details.games' | translate }}</h4>
+                                                                            <h2><span class="counter-up" [countUp]="games_played" [options]="{duration: 10}">{{ games_played }}</span></h2>
+                                                                        </div>	
+                                                                        <div id="donut-chart-dash" class="chart-user-icon">
+                                                                            <apx-chart class="donut-chart-custom"
+                                                                            [series]="chartOptionsGame.series"
+                                                                            [chart]="chartOptionsGame.chart"
+                                                                            [labels]="chartOptionsGame.labels"
+                                                                            [colors]="chartOptionsGame.colors"
+                                                                            [responsive]="chartOptionsGame.responsive"
+                                                                            [dataLabels]="chartOptionsGame.dataLabels"
+                                                                            [legend]="chartOptionsGame.legend"></apx-chart>
+                                                                        </div>
+                                                                    </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <!-- Desktop -->
+                                                        <div class="row text-center my-4 hide-mobile" *ngIf="matches_result.length > 0">
+                                                            <div class="col-12">     
+                                                                <h4>{{'leagues.details.matchs' | translate }}</h4>
+                                                                <div class="table-responsive">
+                                                                    <table class="table mb-0 ">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>{{'leagues.journeys.journey' | translate }}</th>
+                                                                                <th class="text-start">{{'leagues.journeys.couple_1' | translate }}</th>
+                                                                                <th class="text-start">{{'leagues.journeys.couple_2' | translate }}</th>
+                                                                                <th>{{'leagues.journeys.set_1' | translate }}</th>
+                                                                                <th>{{'leagues.journeys.set_2' | translate }}</th>
+                                                                                <th>{{'leagues.journeys.set_3' | translate }}</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr *ngFor="let match of matches_result; let i = index;" [ngClass]="{'table-primary': match.match_finisehd == '1', 'table-danger' : match.match_finisehd == '0' }">
+                                                                                <td>{{ i + 1 }}</td>
+                                                                                <td class="text-start"><span *ngFor="let player of match.local_players">{{ player.title }}<br></span></td>
+                                                                                <td class="text-start"><span *ngFor="let player of match.visiting_players">{{ player.title }}<br></span></td>
+                                                                                <td>{{ match.result_set_1 }}</td>
+                                                                                <td>{{ match.result_set_2 }}</td>
+                                                                                <td>{{ match.result_set_3 }}</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>  
+                                                            </div>
+                                                        </div>
+                                                        <!-- End Desktop -->
+                                                        <!-- Mobile -->
+                                                        <div class="table-responsive my-4 hide-desktop " *ngIf="matches_result.length > 0">
+                                                            <table matSort class="table table-striped border-0 custom-table comman-table datatable mb-0 ">
+                                                                <thead>
+                                                                    <tr class="text-cente ">
+                                                                        <th>{{'leagues.journeys.journey' | translate }}</th>
+                                                                        <th mat-sort-header="couple_1" >{{'leagues.journeys.couple_1' | translate }}</th>
+                                                                        <th mat-sort-header="couple_2" >{{'leagues.journeys.couple_2' | translate }}</th>
+                                                                        <th mat-sort-header="set_1" >{{'leagues.journeys.set_1' | translate }}</th>
+                                                                        <th mat-sort-header="set_2" >{{'leagues.journeys.set_2' | translate }}</th>
+                                                                        <th mat-sort-header="set_3" >{{'leagues.journeys.set_3' | translate }}</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngFor="let match of matches_result; let i = index;" [ngClass]="{'table-primary': match.match_finisehd == '1', 'table-danger' : match.match_finisehd == '0' }">
+                                                                        <td class="text-start" >{{ i + 1 }}º</td>
+                                                                        <td class="text-start" ><span *ngFor="let player of match.local_players">{{ player.title }}<br></span></td>
+                                                                        <td class="text-start" ><span *ngFor="let player of match.visiting_players">{{ player.title }}<br></span></td>
+                                                                        <td class="text-start" >{{ match.result_set_1 }}</td>
+                                                                        <td class="text-start" >{{ match.result_set_2 }}</td>
+                                                                        <td class="text-start" >{{ match.result_set_3 }}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!-- End Mobile -->
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- END SHOW DETAILS -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <br>
+                <br>
+                <br>
+                <br>
+                <!-- End Prfo-->
+            </div>
+        </div>
+               
+            
+    </div>
+</div>
+

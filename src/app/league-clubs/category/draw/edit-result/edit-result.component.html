@@ -1,0 +1,245 @@
+<div class="page-wrapper">
+    <div class="content">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="routes.staffList">{{'leagues.category' | translate }} </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'tournaments.draw' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="settings-menu-links" >
+            <ul class="nav nav-tabs menu-tabs">
+                <li class="nav-item" >
+                    <a class="nav-link" [routerLink]="[ '/tournament/data', tournament_id, 3 ]">{{'tournaments.tournament' | translate }}</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" onclick="return false;" class="nav-link" [routerLink]="[ '/category/data', category_id, 1 ]">{{'leagues.tabs.general_data' | translate }}</a>
+                </li>
+                <li class="nav-item ">
+                    <a href="#" onclick="return false;" class="nav-link" [routerLink]="[ '/category/data', category_id, 2 ]">{{'leagues.tabs.couples' | translate }} </a>
+                </li>
+                <li class="nav-item" *ngIf="tournament_id != null && (type_category == '1' || type_category == '2')">
+                    <a class="nav-link" [routerLink]="[ '/category/draw/clasification', category_id ]">{{'tournaments.clasification' | translate }}</a>
+                </li>
+                <li class="nav-item" *ngIf="tournament_id != null && (type_category == '1' || type_category == '2')">
+                    <a class="nav-link" [routerLink]="[ '/category/draw/simple-league', category_id ]">{{'leagues.tabs.journeys' | translate }}</a>
+                </li>
+                <li class="nav-item" *ngIf="tournament_id != null && type_category == '2'">
+                    <a class="nav-link" [routerLink]="[ '/category/draw/simple-league', category_id ]">Playoff</a>
+                </li>
+                <li class="nav-item" *ngIf="tournament_id != null && (type_category == '3' || type_category == '4') && draw_type == 'main-draw'">
+                    <a class="nav-link" [routerLink]="[ '/category/draw/main', category_id ]">{{'tournaments.draw' | translate }}</a>
+                </li>
+                <li class="nav-item" *ngIf="tournament_id != null && (type_category == '3' || type_category == '4') && draw_type == 'back-draw'">
+                    <a class="nav-link" [routerLink]="[ '/category/draw/back', category_id ]">{{'tournaments.draw' | translate }}</a>
+                </li>
+                <li class="nav-item active" *ngIf="tournament_id != null">
+                    <a class="nav-link">{{'tournaments.results' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="row" *ngIf="isLoaded">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row" *ngIf="tournament_id != null && (type_category == '3' || type_category == '4')">
+                                <div class="col-12 text-center">
+                                    <div class="form-heading">
+                                        <h4>{{ round }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" *ngIf="match_finished == '0'">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>{{'tournaments.schedule_match' | translate }}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'tournaments.start_date' | translate }} <span class="login-danger">*</span></label>
+                                        <input [min]="date_start_tournament" disabled [max]="date_end_tournament" class="form-control datetimepicker"  [(ngModel)]="date" name="date" type="text"  placeholder="" matInput [matDatepicker]="picker">
+                                        <mat-datepicker #picker></mat-datepicker>
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'tournaments.start_hour' | translate }} <span class="login-danger">*</span></label>
+                                        <mat-select [(ngModel)]="time" disabled [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'club_translations.schedule.hour' | translate }}">
+                                            <mat-option *ngFor="let data of hours" [value]="data.format_hour">
+                                                {{data.format_hour}}
+                                                </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >{{'tournaments.start_hour' | translate }} <span class="login-danger">*</span></label>
+                                        <mat-select [(ngModel)]="court" disabled [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'club_translations.schedule.hour' | translate }}">
+                                            <mat-option *ngFor="let data of courts" [value]="data.id">
+                                                {{data.name}}
+                                                </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>{{'tournaments.other_schedule' | translate }}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">
+                                    <div class="form-group local-forms">
+                                        <label >{{'tournaments.start_hour' | translate }} <span class="login-danger">*</span></label>
+                                        <mat-select [(ngModel)]="new_timetable" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'club_translations.schedule.hour' | translate }}">
+                                            <mat-option *ngFor="let timetable of recommended_timetables" [value]="timetable.id">
+                                                {{timetable.day}} - {{ timetable.time }} ({{timetable.date | date: 'dd/MM/yyyy' }})  - {{timetable.court}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="error_message_schedule != ''">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                        <strong>{{'commun_translations.error' | translate }}</strong> {{ error_message_schedule }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                        <ul *ngIf="message_errors_schedule.length > 0">
+                                            <li *ngFor="let error of message_errors_schedule">{{ error }}</li>
+                                        </ul>
+                                      </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="succes_message_schedule != ''">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>{{'commun_translations.success' | translate }} </strong>{{ succes_message_schedule }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                    </div>
+                                </div>
+    
+                                <div class="col-12 my-4">
+                                    <div class="doctor-submit text-end">
+                                        <button type="button" class="btn btn-primary submit-form me-2" (click)="updateSchedule()" *ngIf="hasPermission('edit_league')">{{'commun_translations.save' | translate }}</button>
+                                   </div>
+                                </div>    
+                            </div>
+
+                            
+                                       
+
+                            <div class="col-12 col-md-12 col-xl-12">
+                                <table class="table mb-0 " >
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">{{'leagues.journeys.match' | translate }}</th>
+                                            <th class="text-center">{{'leagues.journeys.set_1' | translate }}</th>
+                                            <th class="text-center">{{'leagues.journeys.set_2' | translate }}</th>
+                                            <th class="text-center">{{'leagues.journeys.set_3' | translate }}</th>
+                                        </tr>
+                                    </thead>
+                                   
+
+                                    <tbody *ngIf="sport_id == '1' || sport_id == '2'">
+                                        <tr>
+                                            <td ><span class="player-name">{{local_player_1}} <br> {{local_player_2}} </span></td>
+                                            <td>
+                                                <input [ngClass]="{'color-blue':match_finished == '1', 'color-red' : match_finished == '0' }" class="form-control text-center font-weight" pattern="[0-7]" maxlength="1" tabindex="1" placeholder="-" [ngModelOptions]="{standalone: true}" [(ngModel)]="result_set_1_local" [name]="result_set_1_local" type="text"  (keypress)="checkSetResult($event)">
+                                            </td>
+                                            <td>
+                                                <input [ngClass]="{'color-blue':match_finished == '1', 'color-red' : match_finished == '0' }" class="form-control text-center font-weight" pattern="[0-7]" maxlength="1" tabindex="3" placeholder="-" [ngModelOptions]="{standalone: true}" [(ngModel)]="result_set_2_local" [name]="result_set_2_local" type="text" (keypress)="checkSetResult($event)" >
+                                            </td>
+                                            <td>
+                                                <input [ngClass]="{'color-blue':match_finished == '1', 'color-red' : match_finished == '0' }" class="form-control text-center font-weight" pattern="[0-7]" maxlength="1" tabindex="5" placeholder="-" [ngModelOptions]="{standalone: true}" [(ngModel)]="result_set_3_local" [name]="result_set_3_local" type="text" (keypress)="checkSetResult($event)" >
+                                            </td>
+                                       </tr>
+                                       <tr>
+                                            <td><span class="player-name">{{visiting_player_1}} <br> {{visiting_player_2}} </span></td>
+                                            <td>
+                                                <input [ngClass]="{'color-blue':match_finished == '1', 'color-red' : match_finished == '0' }" class="form-control text-center font-weight" pattern="[0-7]" maxlength="1" tabindex="2" placeholder="-" [ngModelOptions]="{standalone: true}" [(ngModel)]="result_set_1_visiting" [name]="result_set_1_visiting" type="text"  (keypress)="checkSetResult($event)">
+                                            </td>
+                                            <td>
+                                                <input [ngClass]="{'color-blue':match_finished == '1', 'color-red' : match_finished == '0' }" class="form-control text-center font-weight" pattern="[0-7]" maxlength="1" tabindex="4" placeholder="-"  [ngModelOptions]="{standalone: true}" [(ngModel)]="result_set_2_visiting" [name]="result_set_2_visiting" type="text" (keypress)="checkSetResult($event)" >
+                                            </td>
+                                            <td>
+                                                <input [ngClass]="{'color-blue':match_finished == '1', 'color-red' : match_finished == '0' }" class="form-control text-center font-weight" pattern="[0-7]" maxlength="1" tabindex="6" placeholder="-" [ngModelOptions]="{standalone: true}" [(ngModel)]="result_set_3_visiting" [name]="result_set_3_visiting" type="text" (keypress)="checkSetResult($event)" >
+                                            </td>
+                                        </tr>
+                                   </tbody>
+
+                                   <tbody *ngIf="sport_id == '3'">
+                                    <tr >
+                                        <td ><span class="player-name">{{local_player_1}} <br> {{local_player_2}} </span></td>
+                                        <td>
+                                            <input [ngClass]="{'color-blue':match_finished == '1', 'color-red' : match_finished == '0' }" class="form-control text-center font-weight" pattern="[0-9]" maxlength="2" tabindex="1" placeholder="-" [ngModelOptions]="{standalone: true}" [(ngModel)]="result_set_1_local" [name]="result_set_1_local" type="text" (keypress)="checkSetResultPickleball($event)">
+                                        </td>
+                                        <td>
+                                            <input [ngClass]="{'color-blue':match_finished == '1', 'color-red' : match_finished == '0' }" class="form-control text-center font-weight" pattern="[0-9]" maxlength="2" tabindex="3" placeholder="-" [ngModelOptions]="{standalone: true}" [(ngModel)]="result_set_2_local" [name]="result_set_2_local" type="text" (keypress)="checkSetResultPickleball($event)" >
+                                        </td>
+                                        <td>
+                                            <input [ngClass]="{'color-blue':match_finished == '1', 'color-red' : match_finished == '0' }" class="form-control text-center font-weight" pattern="[0-9]" maxlength="2" tabindex="5" placeholder="-" [ngModelOptions]="{standalone: true}" [(ngModel)]="result_set_3_local" [name]="result_set_3_local" type="text" (keypress)="checkSetResultPickleball($event)" >
+                                        </td>
+                                   </tr>
+                                   <tr>
+                                        <td><span class="player-name">{{visiting_player_1}} <br> {{visiting_player_2}} </span></td>
+                                        <td>
+                                            <input [ngClass]="{'color-blue':match_finished == '1', 'color-red' : match_finished == '0' }" class="form-control text-center font-weight" pattern="[0-9]" maxlength="2" tabindex="2" placeholder="-" [ngModelOptions]="{standalone: true}" [(ngModel)]="result_set_1_visiting" [name]="result_set_1_visiting" type="text"  (keypress)="checkSetResultPickleball($event)">
+                                        </td>
+                                        <td>
+                                            <input [ngClass]="{'color-blue':match_finished == '1', 'color-red' : match_finished == '0' }" class="form-control text-center font-weight" pattern="[0-9]" maxlength="2" tabindex="4" placeholder="-"  [ngModelOptions]="{standalone: true}" [(ngModel)]="result_set_2_visiting" [name]="result_set_2_visiting" type="text" (keypress)="checkSetResultPickleball($event)" >
+                                        </td>
+                                        <td>
+                                            <input [ngClass]="{'color-blue':match_finished == '1', 'color-red' : match_finished == '0' }" class="form-control text-center font-weight" pattern="[0-9]" maxlength="2" tabindex="6" placeholder="-" [ngModelOptions]="{standalone: true}" [(ngModel)]="result_set_3_visiting" [name]="result_set_3_visiting" type="text" (keypress)="checkSetResultPickleball($event)" >
+                                        </td>
+                                    </tr>
+                               </tbody>
+
+                                </table>
+                            </div>
+
+                            <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                    <strong>{{'commun_translations.error' | translate }}</strong> {{ error_message }}
+                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                    <ul *ngIf="message_errors.length > 0">
+                                        <li *ngFor="let error of message_errors">{{ error }}</li>
+                                    </ul>
+                                  </div>
+                            </div>
+                            <div class="col-md-12 my-4" *ngIf="success_message != ''">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>{{'commun_translations.success' | translate }} </strong>{{ success_message }}
+                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="col-12 my-4">
+                                <div class="doctor-submit text-end">
+                                    <button type="button" class="btn btn-primary submit-form me-2" (click)="saveResultPickleball()" *ngIf="hasPermission('edit_league') && sport_id == '3'">{{'commun_translations.save' | translate }}</button>
+                                    <button type="button" class="btn btn-primary submit-form me-2" (click)="saveResult()" *ngIf="hasPermission('edit_league') && (sport_id == '1' || sport_id == '2')">{{'commun_translations.save' | translate }}</button>
+                                    <button *ngIf="draw_type == 'main-draw'" type="submit" class="btn btn-primary cancel-form" [routerLink]="[ '/category/draw/main', category_id ]">{{'commun_translations.come_back' | translate }}</button>
+                                    <button *ngIf="draw_type == 'back-draw'" type="submit" class="btn btn-primary cancel-form" [routerLink]="[ '/category/draw/back', category_id ]">{{'commun_translations.come_back' | translate }}</button>
+                                    <button *ngIf="draw_type == 'normal-league-draw'" type="submit" class="btn btn-primary cancel-form" [routerLink]="[ '/category/draw/simple-league', category_id ]">{{'commun_translations.come_back' | translate }}</button>
+                                </div>
+                            </div>                    
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

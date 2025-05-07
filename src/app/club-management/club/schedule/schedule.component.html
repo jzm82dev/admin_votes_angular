@@ -1,0 +1,383 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{'club_translations.dashboard' | translate }}</li>
+                        <li class="breadcrumb-item "><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'club_translations.club' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <div class="settings-menu-links">
+            <ul class="nav nav-tabs menu-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.club">{{'club_translations.tabs.general_data' | translate }}</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" [routerLink]="routes.description">{{'club_translations.tabs.description' | translate }}</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" [routerLink]="routes.localizationDetails">{{'club_translations.tabs.schedule' | translate }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.clubCourts">{{'club_translations.tabs.courts' | translate }}</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.clubServices">{{'club_translations.tabs.services' | translate }}</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.clubSocialLinks">{{'club_translations.tabs.social_links' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row" *ngIf="isLoaded && special_day_schedule_form == false">
+           <div class="col-md-7">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title">{{'club_translations.schedule.title' | translate }}</h5>
+                        <div class="status-toggle d-flex justify-content-between align-items-center " *ngIf="can_edit == true">
+                            <a href="javascript:void(0);" (click)="activateModifySchedule()"><i class="icon-edit-schedule fa-solid fa-pen"></i> </a>
+                            
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 my-4">
+                        <form>
+                            <!-- DAYS -->
+                            <div class="row" *ngFor="let day of schedule_hour_days; let i = index;">
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <h5 class="card-title">{{ day.day_name }}</h5>
+                                    </div>
+                                    <div class="row" *ngIf="day.closed && !modifySchedule ">
+                                        <div class="col-md-3 text-end">
+                                            <label class="margin-closed">{{'club_translations.schedule.closed' | translate }} </label>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="modifySchedule">
+                                        <div class="col-md-3 text-end">
+                                            <div class="status-toggle ">
+                                                <input type="checkbox"  [(ngModel)]="day.closed" [name]="day.day_id" [id]="day.day_id" class="check" [ngModelOptions]="{standalone: true}" >
+                                                <label [for]="day.day_id" class="checktoggle">checkbox</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>{{'club_translations.schedule.closed' | translate }}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" *ngIf="!day.closed">
+                                    <div class="row" *ngIf="modifySchedule">
+                                        <div class="col-md-5">
+                                            <div class="settings-form">
+                                                <div class="form-group">
+                                                    <div class="form-group local-forms">
+                                                        <label >{{'club_translations.schedule.opens_at' | translate }} <span class="login-danger">*</span></label>
+                                                        <mat-select [(ngModel)]="opening_time" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'club_translations.schedule.hour' | translate }}">
+                                                            <mat-option *ngFor="let data of hours" [value]="data.id">
+                                                                {{data.format_hour}}
+                                                                </mat-option>
+                                                        </mat-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="settings-form">
+                                                <div class="form-group links-info">
+                                                    <div class=" links-cont">
+                                                        <div class="form-group local-forms form-placeholder d-flex">
+                                                            <label >{{'club_translations.schedule.closes_at' | translate }} <span class="login-danger">*</span></label>
+                                                            <mat-select [(ngModel)]="closing_time" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'club_translations.schedule.hour' | translate }}">
+                                                                <mat-option *ngFor="let data of hours" [value]="data.id">
+                                                                    {{data.format_hour}}
+                                                                    </mat-option>
+                                                            </mat-select>
+                                                            <a (click)="addHourSchedule(day.day_name)" href="javascript:void(0);" class="btn trash">
+                                                                <i class="fa fa-plus me-1"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row" >
+                                        <div class="table-responsive">
+                                            <table class="table table-hover mb-0">
+                                                <thead>
+                                                    <tr class="text-center">
+                                                        <th>{{'club_translations.schedule.opens_at' | translate }} </th>
+                                                        <th>{{'club_translations.schedule.closes_at' | translate }} </th>
+                                                        <th *ngIf="modifySchedule">Borrar </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let item of day.hours; let i = index">
+                                                        <td class="text-center">{{ item.opening_time }} h</td>
+                                                        <td class="text-center">{{ item.closing_time }} h</td>
+                                                        <td class="settings-form text-center" *ngIf="modifySchedule">
+                                                            <a (click)="deleteHourSchedule(i, day.day_id)" href="javascript:void(0);" class="btn trash">
+                                                                <i class="feather icon-trash-2"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr *ngIf="day.hours.length == 0">
+                                                        <td colspan="3" class="text-center"> {{'club_translations.schedule.no_schedule_for' | translate }} {{ day.day_name }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                </div>
+                                <div><hr></div>
+                                
+                            </div>
+                            <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                    <strong>{{'commun_translations.error' | translate }}</strong> {{ error_message }}
+                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                    <ul *ngIf="message_errors.length > 0">
+                                        <li *ngFor="let error of message_errors">{{ error }}</li>
+                                    </ul>
+                                  </div>
+                            </div>
+                            <div class="col-md-12 my-4" *ngIf="success_message != ''">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>{{'commun_translations.success' | translate }}</strong> {{ success_message }}
+                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group mb-0 text-end" *ngIf="can_edit == true">
+                                <div class="settings-btns">
+                                    <button type="submit" class="border-0 btn btn-primary btn-gradient-primary btn-rounded" (click)="saveScheduleHours()">{{'commun_translations.save' | translate }}</button>
+                                </div>
+                            </div>
+                            <!-- END DAYS -->
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-xl-4">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title">{{'club_translations.schedule.special_days_schedule' | translate }}</h5>
+                        <div class="status-toggle d-flex justify-content-between align-items-center settings-form" *ngIf="can_edit == true">
+                            <a (click)="openSpecialDayScheduleForm()" href="javascript:void(0);" class="btn trash">
+                                <i class="fa fa-plus me-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 my-4">
+                        <div class="row" >
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr class="text-start">
+                                            <th>{{'club_translations.schedule.day' | translate }} </th>
+                                            <th>{{'club_translations.schedule.info' | translate }} </th>
+                                            <th class="text-center"> </th>
+                                        </tr>
+                                    </thead>
+                                     <tbody>
+                                        <tr *ngFor="let item of special_days; let i = index">
+                                            <td class="text-start">{{ item.date | date: 'dd/MM/yyyy' }}</td>
+                                            <td class="text-start">{{ item.information }}</td>
+                                            <td class="text-end" >
+                                                <div class="dropdown dropdown-action">
+                                                    <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                      <a class="dropdown-item cursor-pointer" (click)="selectSpecialDay(item, true)"><i class="fa-solid fa-eye m-r-5"></i> {{'commun_translations.view' | translate }}</a>
+                                                      <a class="dropdown-item" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#delete_special_day_modal" (click)="selectSpecialDay(item, false)">
+                                                        <i class="fa fa-trash-alt m-r-5"></i> {{'commun_translations.remove' | translate }}</a><br>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="special_days.length == 0">
+                                            <td colspan="3" class="text-center">{{'club_translations.schedule.no_special_schedule' | translate }}</td>
+                                        </tr>
+                                    </tbody> 
+                                </table>
+                                <br><br><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="special_day_schedule_form == true">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h4>{{'club_translations.schedule.special_days_by' | translate }}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'club_translations.schedule.day' | translate }} <span class="login-danger">*</span></label>
+                                        <input class="form-control datetimepicker" [(ngModel)]="special_day" name="special_day" type="text"  placeholder="" matInput [matDatepicker]="picker">
+                                        <mat-datepicker #picker></mat-datepicker>
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 col-xl-3">  
+                                    <div class="form-group local-forms">
+                                        <label >{{'club_translations.schedule.info' | translate }}</label>
+                                       <input class="form-control" [(ngModel)]="info" name="info" type="text"  >
+                                    </div>
+                                </div>
+                                
+                                <div class="row" *ngIf="!special_day_selected" >
+                                    <div class="col-md-1 text-end">
+                                        <div class="status-toggle ">
+                                            <input type="checkbox"  [(ngModel)]="special_day_closed" [name]="special_day_closed" [id]="special_day_closed" class="check" [ngModelOptions]="{standalone: true}" >
+                                            <label [for]="special_day_closed" class="checktoggle">checkbox</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>{{'club_translations.schedule.close_day' | translate }}</label>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="special_day_selected && special_day_closed ">
+                                    <div class="col-md-3 text-start">
+                                        <label class="margin-closed">{{'club_translations.schedule.closed' | translate }} </label>
+                                    </div>
+                                </div>
+                                <div class="row my-4">
+                                    <div class="col-md-6"  >
+                                        <div class="row" *ngIf="!special_day_closed">
+                                            <div class="col-md-5" *ngIf="!special_day_selected" >
+                                                <div class="settings-form">
+                                                    <div class="form-group">
+                                                        <div class="form-group local-forms">
+                                                            <label >{{'club_translations.schedule.opens_at' | translate }} <span class="login-danger">*</span></label>
+                                                            <mat-select [(ngModel)]="opening_time" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'club_translations.schedule.hour' | translate }}">
+                                                                <mat-option *ngFor="let data of hours" [value]="data.id">
+                                                                    {{data.format_hour}}
+                                                                    </mat-option>
+                                                            </mat-select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7" *ngIf="!special_day_selected" >
+                                                <div class="settings-form">
+                                                    <div class="form-group links-info settings-form">
+                                                        <div class=" links-cont">
+                                                            <div class="form-group local-forms form-placeholder d-flex">
+                                                                <label >{{'club_translations.schedule.closes_at' | translate }} <span class="login-danger">*</span></label>
+                                                                <mat-select [(ngModel)]="closing_time" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="{{'club_translations.schedule.hour' | translate }}">
+                                                                    <mat-option *ngFor="let data of hours" [value]="data.id">
+                                                                        {{data.format_hour}}
+                                                                        </mat-option>
+                                                                </mat-select>
+                                                                <a (click)="addHourSpecialDay()" href="javascript:void(0);" class="btn trash">
+                                                                    <i class="fa fa-plus me-1"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row"  *ngIf="!special_day_closed">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover mb-0">
+                                                    <thead>
+                                                        <tr class="text-center">
+                                                            <th>{{'club_translations.schedule.opens_at' | translate }} </th>
+                                                            <th>{{'club_translations.schedule.closes_at' | translate }} </th>
+                                                            <th *ngIf="!special_day_selected" class="text-center">{{'commun_translations.remove' | translate }} </th>
+                                                        </tr>
+                                                    </thead>
+                                                     <tbody>
+                                                        <tr *ngFor="let item of schedule_hour_special_day; let i = index">
+                                                             <td class="text-center">{{ item.opening_time }} h</td>
+                                                            <td class="text-center">{{ item.closing_time }} h</td>
+                                                            <td class="settings-form text-center" >
+                                                                <a *ngIf="!special_day_selected" (click)="deleteSpecialHourSchedule(i)" href="javascript:void(0);" class="btn trash">
+                                                                    <i class="feather icon-trash-2"></i>
+                                                                </a> 
+                                                            </td> 
+                                                        </tr>
+                                                        <tr *ngIf="schedule_hour_special_day.length == 0">
+                                                            <td colspan="3" class="text-center"> {{'club_translations.schedule.no_schedule_for' | translate }} </td>
+                                                        </tr>
+                                                    </tbody> 
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 my-4" *ngIf="error_special_day_message != ''">
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                                <strong>{{'commun_translations.error' | translate }}</strong> {{ error_special_day_message }}
+                                                <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                                    <span aria-hidden="true"> </span>
+                                                </button>
+                                                <ul *ngIf="message_special_day_errors.length > 0">
+                                                    <li *ngFor="let error of message_errors">{{ error }}</li>
+                                                </ul>
+                                              </div>
+                                        </div>
+                                        <div class="col-md-12 my-4" *ngIf="success_special_day_message != ''">
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                <strong>{{'commun_translations.success' | translate }}</strong> {{ success_special_day_message }}
+                                                <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                                    <span aria-hidden="true"> </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group mb-0 text-end my-4" *ngIf="can_edit == true">
+                                            <div class="settings-btns">
+                                                <button class="btn btn-primary cancel-form" (click)="closeSpecialDayScheduleForm()">{{'commun_translations.come_back' | translate }}</button>&nbsp;
+                                                <button *ngIf="!special_day_selected" type="submit" class="border-0 btn btn-primary " (click)="saveSpecialDay()">{{'commun_translations.save' | translate }}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+</div>
+
+<div id="delete_special_day_modal" class="modal fade delete-modal" role="dialog" >
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="assets/img/sent.png" alt="" width="50" height="46">
+                <h3 *ngIf="special_day_selected" >Estás seguro de borrar el día {{ special_day_selected.date | date: 'dd/MM/yyyy' }}?</h3>
+                <div class="m-t-20"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebutton>Cerrar</a>
+                    <button type="submit" class="btn btn-danger" (click)="removeSpecialDay()">Borrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

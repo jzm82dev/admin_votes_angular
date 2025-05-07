@@ -1,0 +1,55 @@
+
+
+p{
+    font-size: 14px;
+}
+
+table, th, td {
+    align-items: center;
+    font-weight: normal;
+    vertical-align: middle;
+  }
+
+
+  .icon-edit-schedule{
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      height: 42px;
+      width: 46px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      justify-content: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      background-color: white;
+      color: rgba(0, 0, 0, 0.6);
+      position: relative;
+      font-size: 16px;
+      margin-left: 6px;
+  }
+
+
+  .margin-closed {
+    margin-left: 3rem;
+  }
+
+  .change-court{
+    color: rgb(201, 155, 70) !important;
+  }
+
+  .no-court-available{
+    color: rgb(196, 73, 73) !important;
+  }
+  
+
+  .week-days {
+    color: #2e37a4;
+  }
+
+  .trash-style{
+    width: 30px !important;
+    height: 30px !important;
+    background-color: transparent;
+}

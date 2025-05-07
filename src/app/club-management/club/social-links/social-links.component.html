@@ -1,0 +1,143 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{'club_translations.dashboard' | translate }}</li>
+                        <li class="breadcrumb-item "><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'club_translations.club' | translate }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <div class="settings-menu-links">
+            <ul class="nav nav-tabs menu-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.club">{{'club_translations.tabs.general_data' | translate }}</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" [routerLink]="routes.description">{{'club_translations.tabs.description' | translate }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.clubSchedule">{{'club_translations.tabs.schedule' | translate }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.clubCourts">{{'club_translations.tabs.courts' | translate }}</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="routes.clubServices">{{'club_translations.tabs.services' | translate }}</a>
+                </li> 
+                <li class="nav-item active">
+                    <a class="nav-link" [routerLink]="routes.clubSocialLinks">{{'club_translations.tabs.social_links' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="row" *ngIf="isLoaded">
+            <div class="col-md-12">
+                 <div class="card">
+                     <div class="card-header d-flex justify-content-between align-items-center">
+                         <h5 class="card-title">{{'club_translations.social_links.title' | translate }}</h5>
+                     </div>
+                     <div class="card-body pt-0">
+                        <form>
+                            <div class="settings-form" >
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="card">
+                                            
+                                            <div class="card-body pt-0">
+                                                <form>
+                                                    <div class="settings-form">
+                                                        <!-- <div class="links-info" *ngFor="let list of socialLinks;let i = index"> -->
+                                                        <div class="links-info">
+                                                            <div class="row form-row links-cont">
+                                                                <div class="form-group form-placeholder d-flex">
+                                                                    <button class="btn social-icon">
+                                                                        <i [class]="'feather icon-instagram'"></i>
+                                                                    </button>
+                                                                    <input class="form-control" placeholder="{{'club_translations.social_links.placehoder_instagram' | translate }}" [(ngModel)]="instagram_link" name="instagram_link" type="text"  >  
+                                                                </div>
+                                                            </div>
+                                                            <div class="row form-row links-cont">
+                                                                <div class="form-group form-placeholder d-flex">
+                                                                    <button class="btn social-icon">
+                                                                        <i [class]="'feather icon-facebook'"></i>
+                                                                    </button>
+                                                                    <input class="form-control" placeholder="{{'club_translations.social_links.placehoder_facebook' | translate }}" [(ngModel)]="facebook_link" name="facebook_link" type="text"  >  
+                                                                </div>
+                                                            </div>
+                                                            <div class="row form-row links-cont">
+                                                                <div class="form-group form-placeholder d-flex">
+                                                                    <button class="btn social-icon">
+                                                                        <i [class]="'feather icon-twitter'"></i>
+                                                                    </button>
+                                                                    <input class="form-control" placeholder="{{'club_translations.social_links.placehoder_twitter' | translate }}" [(ngModel)]="twiter_link" name="twiter_link" type="text"  >  
+                                                                </div>
+                                                            </div>
+                                                            <div class="row form-row links-cont">
+                                                                <div class="form-group form-placeholder d-flex">
+                                                                    <button class="btn social-icon">
+                                                                        <i [class]="'feather icon-youtube'"></i>
+                                                                    </button>
+                                                                    <input class="form-control" placeholder="{{'club_translations.social_links.placehoder_youtube' | translate }}" [(ngModel)]="youtube_link" name="youtube_link" type="text"  >  
+                                                                </div>
+                                                            </div>
+                                                            <div class="row form-row links-cont">
+                                                                <div class="form-group form-placeholder d-flex">
+                                                                    <button class="btn social-icon">
+                                                                        <i [class]="'feather icon-linkedin'"></i>
+                                                                    </button>
+                                                                    <input class="form-control" placeholder="{{'club_translations.social_links.placehoder_linkedin' | translate }}" [(ngModel)]="linkedin_link" name="linkedin_link" type="text"  >  
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group mb-0 text-end my-4">
+                                                        <div class="settings-btns">
+                                                            <button type="submit" class="border-0 btn btn-primary btn-gradient-primary btn-rounded" *ngIf="can_edit == true" (click)="saveData()">{{'commun_translations.save' | translate }}</button>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                        <strong>{{'commun_translations.error' | translate }}</strong> {{ error_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                        <ul *ngIf="message_errors.length > 0">
+                                            <li *ngFor="let error of message_errors">{{ error }}</li>
+                                        </ul>
+                                      </div>
+                                </div>
+                                <div class="col-md-12 my-4" *ngIf="success_message != ''">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>{{'commun_translations.success' | translate }}</strong> {{ success_message }}
+                                        <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+        </div>    
+    </div>
+</div>

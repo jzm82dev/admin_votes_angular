@@ -1,0 +1,177 @@
+<div >
+    <div class="content" *ngIf="category_selected">
+    
+        <!-- Page Header -->
+        <div class="good-morning-blk">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="morning-user">
+                        <a [routerLink]="['/motril']"><i class="fa fa-long-arrow-left ms-2"></i>&nbsp; VOLVER</a>
+                        <h2 class="my-2">CATEGORIA <span> {{ category_selected.name }}</span></h2>
+                        <p class="subtitle">SÚPER LIGA DE PÁDEL</p>
+                    </div>
+                </div>
+                <div class="col-md-6 position-blk">
+                    <div class="morning-img">
+                        <img src="assets/img/morning-img-03.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="blog-view">
+                    <article class="blog blog-single-post">
+                        <h3 class="blog-title">CLASIFICACIÓN </h3>
+                        <div class="blog-info clearfix">
+                            <div class="post-left date-blks">
+                                <ul>
+                                    <li><a href="javascript:void(0);"> <span>Actualizado:</span></a></li>
+                                    <li><a href="javascript:void(0);"> <span>{{ last_updated }}</span></a></li>
+                                    <li><a href="javascript:void(0);"><i class="feather icon-eye"></i> <span>{{ visualisations }}</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="blog-image">
+                            <div class="table-responsive ">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr  class="table-primary">
+                                            <th></th>
+                                            <th ></th>
+                                            <td colspan="3" class="text-center">Partidos</td>
+                                            <td colspan="2" class="text-center">Sets</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr  class="table-primary">
+                                            <th>Equipo</th>
+                                            <th>Club</th>
+                                            <th>Jugados</th>
+                                            <th>Ganados</th>
+                                            <th>Perdidos</th>
+                                            <th>Ganados</th>
+                                            <th>Perdidos</th>
+                                            <th class="text-center">Puntos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr  class="table-light" *ngFor="let team of ranking_teams">
+                                            <td>{{team.team_name}}</td>
+                                            <td>{{team.club_name}}</td>
+                                            <td class="text-center">{{team.total_matchs}}</td>
+                                            <td class="text-center">{{team.match_won}}</td>
+                                            <td class="text-center">{{team.match_lost}}</td>
+                                            <td class="text-center">{{team.sets_won}}</td>
+                                            <td class="text-center">{{team.sets_lost}}</td>
+                                            <td class="text-center table-success">{{team.total_points}}</td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="blog-content">
+                            <div class="card-box">
+                                <div class="card-block">
+                                    <div id="apexcharts-area">
+                                        <apx-chart
+                                        [series]="chartOptionsOne.series"
+                                        [chart]="chartOptionsOne.chart"
+                                        [xaxis]="chartOptionsOne.xaxis"
+                                        [dataLabels]="chartOptionsOne.dataLabels"
+                                        [grid]="chartOptionsOne.grid"
+                                        [stroke]="chartOptionsOne.stroke"
+                                        [title]="chartOptionsOne.title"
+                                        [markers]="chartOptionsOne.markers"
+                                        [yaxis]="chartOptionsOne.yaxis"
+                                        [fill]="chartOptionsOne.fill"
+                                    ></apx-chart></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="blog-image">
+                            <div class="table-responsive ">
+                                        <ng-container *ngFor="let juorney of journeys;">
+                                            <h4 class="card-title my-3 text-center">{{ juorney.jorney_name }}</h4>
+                                            <table class="table mb-0">
+                                                <thead >
+                                                    <tr class="table-light"> 
+                                                        <th class="text-center">{{ juorney.local_team_name }}</th>
+                                                        <th class="text-center">{{ juorney.visiting_team_name }}</th>
+                                                        <th class="text-center">Set 1</th>
+                                                        <th class="text-center">Set 2</th>
+                                                        <th class="text-center">Set 3</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr [class]="color_table[i]" *ngFor="let match of juorney.match_items; let i = index">
+                                                        <td>
+                                                            {{ juorney.local_players | getPlayer:match.local_player_1}} - {{ juorney.local_players | getPlayer:match.local_player_2}}
+                                                        <!-- {{juorney.local_players[1].name}}/{{juorney.local_players[match.local_player_2].name}}-->
+                                                        </td>
+                                                        <td>
+                                                            {{ juorney.visiting_players | getPlayer:match.visiting_player_1}} - {{ juorney.visiting_players | getPlayer:match.visiting_player_2}}
+                                                            <!-- {{juorney.visiting_players[match.visiting_player_1].name}}/{{juorney.visiting_players[match.visiting_player_2].name}} -->
+                                                        </td>
+                                                        <td>
+                                                            {{ match.result_set_1 }}
+                                                        </td>
+                                                        <td>
+                                                            {{ match.result_set_2 }}
+                                                        </td>
+                                                        <td>
+                                                            {{ match.result_set_3 }}
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            
+                        <div class="blog-share ">
+                            <div class="share-blogs d-flex align-items-center">
+                                <a href="javascript:;"><img alt="" src="assets/img/icons/social-01.svg"></a>
+                                <span class="ms-2">2.8k</span>
+                            </div>
+                            
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <aside class="col-md-4">
+                <div class="widget post-widget">
+                    <div class="relat-head">
+                        <h5>Mejores jugadores</h5>
+                    </div>
+                    <ul class="latest-posts">
+                        <li *ngFor="let player of ranking_players">
+                            <div class="post-thumb">
+                                <img class="avatar" alt="" src="assets/img/profiles/avatar-03.jpg">
+                            </div>
+                            <div class="post-info">
+                                <div class="date-posts">
+                                    <h5>{{ player.player_name }}</h5>
+                                    <span class="ms-2">{{ player.club_name }}</span>
+                                </div>
+                                <div class="text-start">
+                                    <p class="text-primary">Juegos ganadoss: {{ player.wins}} </p>
+                                    <p class="text-danger">Juegos perdidos: {{ player.lost }}</p>
+                                    <p class="text-success">Diferencia: {{ player.dif }}</p>
+                                </div>
+                            </div>
+                        </li>
+                       
+                    </ul>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+    <app-footer></app-footer>
+</div>

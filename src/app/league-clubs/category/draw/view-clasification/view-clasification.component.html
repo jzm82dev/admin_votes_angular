@@ -1,0 +1,189 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="[ '/tournament/data', tournament_id ]">{{'tournaments.tournament' | translate }} </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'leagues.category' | translate }} ({{ name }})</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="settings-menu-links" *ngIf="category_selected">
+            <ul class="nav nav-tabs menu-tabs">
+                <li class="nav-item" >
+                    <a class="nav-link" [routerLink]="[ '/tournament/data', tournament_id, 3 ]">{{'tournaments.tournament' | translate }}</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" onclick="return false;" class="nav-link" [routerLink]="[ '/category/data', category_id, 1 ]">{{'leagues.tabs.general_data' | translate }}</a>
+                </li>
+                <li class="nav-item ">
+                    <a href="#" onclick="return false;" class="nav-link" [routerLink]="[ '/category/data', category_id, 2 ]">{{'leagues.tabs.couples' | translate }} </a>
+                </li>
+                <li class="nav-item active" *ngIf="tournament_id != null && (category_type == '1' || category_type == '2' || category_type == '6')">
+                    <a class="nav-link" [routerLink]="[ '/category/draw/clasification', category_id ]">{{'tournaments.clasification' | translate }}</a>
+                </li>
+                <li class="nav-item " *ngIf="tournament_id != null && (category_type == '1' || category_type == '2' || category_type == '6')">
+                    <a class="nav-link" [routerLink]="[ '/category/draw/simple-league', category_id ]">{{'leagues.tabs.journeys' | translate }}</a>
+                </li>
+                <li class="nav-item" *ngIf="tournament_id != null && category_type == '2'">
+                    <a class="nav-link" [routerLink]="[ '/category/draw/main', category_id ]">Playoffs</a>
+                </li> 
+            </ul>
+        </div>
+
+        <div class="col-sm-12" *ngIf="isLoaded == true">
+            
+            <div class="card" >
+                <div class="col-auto text-start float-end ms-auto download-grp my-1">
+                    <a href="javascript:;" class=" me-2" (click)="generateDrawPdf()"><img src="assets/img/icons/pdf-icon-01.svg" alt=""></a>
+                </div>
+                <div class="card-body">
+                    <!--BEGIN ONLY ONE LEAGUE-->
+                    <div class="table-responsive" *ngIf="category_type == '1' || category_type == '6'" id="clasification">
+                        <table class="table mb-0 table-striped my-4">
+                            <thead>
+                                <tr  class="table-primary">
+                                    <th></th>
+                                    <th></th>
+                                    <th ></th>
+                                    <td colspan="3" class="text-center">{{'leagues.ranking.matchs' | translate }}</td>
+                                    <td colspan="2" class="text-center">{{'leagues.ranking.sets' | translate }}</td>
+                                    <td colspan="1" class="text-center">{{ file_table_name }}</td>
+                                    <td></td>
+                                </tr>
+                                <tr  class="table-primary text-center">
+                                    <th>#</th>
+                                    <th class="text-start">{{'leagues.ranking.couple' | translate }}</th>
+                                    <th>{{'leagues.ranking.points' | translate }}</th>
+                                    <th>{{'leagues.ranking.played' | translate }}</th>
+                                    <th>{{'leagues.ranking.won' | translate }}</th>
+                                    <th>{{'leagues.ranking.lost' | translate }}</th>
+                                    <th>{{'leagues.ranking.won' | translate }}</th>
+                                    <th>{{'leagues.ranking.lost' | translate }}</th>
+                                    <th>AVG</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let couple of category_clasification; let i = index;" class="text-center align-middle">
+                                    <td class="points">{{ i + 1 }}º</td>
+                                    <td class="text-start"><span>{{couple.couple_players_name}}</span></td>
+                                    <td class="points">{{ couple.total_points ? couple.total_points : '0' }}</td>
+                                    <td>{{ couple.matches_played ? couple.matches_played : '0' }}</td>
+                                    <td>{{ couple.matchs_won ? couple.matchs_won : '0' }}</td>
+                                    <td>{{ couple.matchs_lost ? couple.matchs_lost : '0' }}</td>
+                                    <td>{{ couple.sets_won ? couple.sets_won : '0' }}</td>
+                                    <td>{{ couple.sets_lost ? couple.sets_lost : 0 }}</td>
+                                    <td>{{ couple.games_avg ? couple.games_avg : 0 }}</td>
+                                    <td><a class="btn" [routerLink]="[ '/category/draw/simple-league', category_selected.id, couple.couple_id ]" href="#"><img src="assets/img/icons/search-normal.svg" alt=""></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- END ONLY ONE LEAGUE-->
+                    <!-- BEGIN TWO GROUPS-->
+                    
+                    <div class="table-responsive" *ngIf="category_type == '2'">
+                        <table class="table mb-0 my-4">
+                            <thead>
+                                <tr class="color_1">
+                                    <td colspan="12" class="first-tr text-center player color_1 bold ">
+                                        {{'leagues.ranking.group' | translate }} A
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="color_1"></th>
+                                    <th class="color_1"></th>
+                                    <th class="color_1"></th>
+                                    <td colspan="3" class="text-center color_1">{{'leagues.ranking.matchs' | translate }}</td>
+                                    <td colspan="2" class="text-center color_1">{{'leagues.ranking.sets' | translate }}</td>
+                                    <td colspan="1" class="text-center color_1">{{'leagues.ranking.games' | translate }}</td>
+                                    <td class="color_1" ></td>
+                                </tr>
+                                <tr  class="text-center">
+                                    <th class="color_1">#</th>
+                                    <th class="color_1 text-start">{{'leagues.ranking.couple' | translate }}</th>
+                                    <th class="color_1">{{'leagues.ranking.points' | translate }}</th>
+                                    <th class="color_1">{{'leagues.ranking.played' | translate }}</th>
+                                    <th class="color_1">{{'leagues.ranking.won' | translate }}</th>
+                                    <th class="color_1">{{'leagues.ranking.lost' | translate }}</th>
+                                    <th class="color_1">{{'leagues.ranking.won' | translate }}</th>
+                                    <th class="color_1">{{'leagues.ranking.lost' | translate }}</th>
+                                    <th class="color_1">AVG</th>
+                                    <th class="color_1"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let couple of category_clasification_a; let i = index;" class="text-center align-middle">
+                                    <td class="points color_1">{{ i + 1 }}º</td>
+                                    <td class="color_1 text-start"><span>{{couple.couple_players_name}}</span></td>
+                                    <td class="points color_1">{{ couple.total_points ? couple.total_points : '0' }}</td>
+                                    <td class="color_1">{{ couple.matches_played ? couple.matches_played : '0' }}</td>
+                                    <td class="color_1">{{ couple.matchs_won ? couple.matchs_won : '0' }}</td>
+                                    <td class="color_1">{{ couple.matchs_lost ? couple.matchs_lost : '0' }}</td>
+                                    <td class="color_1">{{ couple.sets_won ? couple.sets_won : '0' }}</td>
+                                    <td class="color_1">{{ couple.sets_lost ? couple.sets_lost : 0 }}</td>
+                                    <td class="color_1">{{ couple.games_avg ? couple.games_avg : 0 }}</td>
+                                    <td class="color_1"><a class="btn" [routerLink]="[ '/category/draw/simple-league', category_selected.id, couple.couple_id ]" href="#"><img src="assets/img/icons/search-normal.svg" alt=""></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                       
+                        <table class="table mb-0 my-5">
+                            <thead>
+                                <tr class="color_2">
+                                    <td colspan="12" class="text-center player color_2 bold border">
+                                        {{'leagues.ranking.group' | translate }} B
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="color_2"></th>
+                                    <th class="color_2"></th>
+                                    <th class="color_2"></th>
+                                    <td colspan="3" class="text-center color_2">{{'leagues.ranking.matchs' | translate }}</td>
+                                    <td colspan="2" class="text-center color_2">{{'leagues.ranking.sets' | translate }}</td>
+                                    <td colspan="1" class="text-center color_2">{{'leagues.ranking.games' | translate }}</td>
+                                    <td class="color_2" ></td>
+                                </tr>
+                                <tr  class="text-center">
+                                    <th class="color_2">#</th>
+                                    <th class="color_2 text-start">{{'leagues.ranking.couple' | translate }}</th>
+                                    <th class="color_2">{{'leagues.ranking.points' | translate }}</th>
+                                    <th class="color_2">{{'leagues.ranking.played' | translate }}</th>
+                                    <th class="color_2">{{'leagues.ranking.won' | translate }}</th>
+                                    <th class="color_2">{{'leagues.ranking.lost' | translate }}</th>
+                                    <th class="color_2">{{'leagues.ranking.won' | translate }}</th>
+                                    <th class="color_2">{{'leagues.ranking.lost' | translate }}</th>
+                                    <th class="color_2">AVG</th>
+                                    <th class="color_2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let couple of category_clasification_b; let i = index;" class="text-center align-middle">
+                                    <td class="points color_2">{{ i + 1 }}º</td>
+                                    <td class="color_2 text-start"><span>{{couple.couple_players_name}}</span></td>
+                                    <td class="points color_2">{{ couple.total_points ? couple.total_points : '0' }}</td>
+                                    <td class="color_2">{{ couple.matches_played ? couple.matches_played : '0' }}</td>
+                                    <td class="color_2">{{ couple.matchs_won ? couple.matchs_won : '0' }}</td>
+                                    <td class="color_2">{{ couple.matchs_lost ? couple.matchs_lost : '0' }}</td>
+                                    <td class="color_2">{{ couple.sets_won ? couple.sets_won : '0' }}</td>
+                                    <td class="color_2">{{ couple.sets_lost ? couple.sets_lost : 0 }}</td>
+                                    <td class="color_2">{{ couple.games_avg ? couple.games_avg : 0 }}</td>
+                                    <td class="color_2"><a class="btn" [routerLink]="[ '/category/draw/simple-league', category_selected.id, couple.couple_id ]" href="#"><img src="assets/img/icons/search-normal.svg" alt=""></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- END TWO GROUPS -->
+                </div>
+            </div>	
+        </div>
+
+    </div>
+</div>

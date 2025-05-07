@@ -1,0 +1,79 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+     
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-sm-12">
+            
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-heading">
+                                    <h4>{{'members.clubs_in_wlr' | translate }}</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table matSort  class="table border-0 custom-table comman-table datatable mb-0">
+                                <thead>
+                                    <tr>
+                                        
+                                        <th mat-sort-header="clubName">{{'members.name' | translate }}</th>
+                                        <th mat-sort-header="clubMobile">{{'members.mobile' | translate }}</th>
+                                        <th mat-sort-header="email">{{'members.email' | translate }}</th>
+                                        <th mat-sort-header="city">{{'members.city' | translate }}</th>
+                                        <th mat-sort-header="status">{{'members.status' | translate }}</th>
+                                        
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor="let club of other_clubs">
+                                        <td>{{ club.name }}</td>
+                                        <td>{{ club.mobile }}	</td>
+                                        <td>{{ club.email }}</td>
+                                        <td>{{ club.city }}</td>
+                                        <td *ngIf="club.status == 'NO_STATUS'">
+                                            <a class="btn btn-sm btn-success" (click)="addClub(club.id)">{{'members.add' | translate }} +</a>
+                                        </td>
+                                        <td *ngIf="club.status == 'PENDING'">
+                                            <div class="dropdown action-label">
+                                                <a class="status-orange custom-badge  dropdown-toggle" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    {{'members.pending' | translate }}
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end status-staff">
+                                                    <a class="dropdown-item cursor-pointer" (click)="cancelClub(club.id)">{{'commun_translations.cancel' | translate }}</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td *ngIf="club.status == 'CANCELED'">
+                                            <div class="dropdown action-label">
+                                                <a class="status-red custom-badge  dropdown-toggle" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    {{'members.canceled' | translate }}
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end status-staff">
+                                                    <a class="dropdown-item cursor-pointer" (click)="addClub(club.id)">{{'members.add' | translate }} +</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="other_clubs.length == 0">
+                                        <td colspan="6" class="text-center"> {{'members.no_clubs_currently' | translate }} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                        
+               
+            </div>
+        </div>
+       
+
+    </div>
+</div>

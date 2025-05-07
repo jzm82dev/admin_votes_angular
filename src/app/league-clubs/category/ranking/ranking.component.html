@@ -1,0 +1,101 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="[ '/leagues/list-league/edit/', league_id ]">{{'leagues.league' | translate }} </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">{{'leagues.category' | translate }} ({{ category_name }})</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="settings-menu-links">
+            <ul class="nav nav-tabs menu-tabs">
+                <li class="nav-item" *ngIf="league_id != null">
+                    <a class="nav-link" [routerLink]="[ '/leagues/list-league/edit', league_id ]" >{{'leagues.league' | translate }}</a>
+                  </li>
+                <li class="nav-item ">
+                    <a class="nav-link" [routerLink]="[ '/category/data', category_id, 1 ]">{{'leagues.tabs.general_data' | translate }}</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="[ '/category/data', category_id, 2 ]">{{ match_tab_player }}</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" [routerLink]="[ '/category/journeys', category_id ]">{{'leagues.tabs.journeys' | translate }}</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" [routerLink]="[ '/category/ranking', category_id ]">{{'leagues.tabs.ranking' | translate }}</a>
+                </li> 
+            </ul>
+        </div>
+        <div class="row" *ngIf="isLoaded">
+           
+            <div class="col-lg-12">
+                <div class="card-box">
+                    <div class="card-block">
+                        <div class="page-table-header mb-2">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <div class="doctor-table-blk">
+                                        <h3>{{'leagues.ranking.ranking' | translate }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table mb-0 table-striped my-4">
+                                <thead>
+                                    <tr  class="table-primary">
+                                        <th></th>
+                                        <th></th>
+                                        <th ></th>
+                                        <td colspan="3" class="text-center">{{'leagues.ranking.matchs' | translate }}</td>
+                                        <td colspan="2" class="text-center">{{'leagues.ranking.sets' | translate }}</td>
+                                        <td colspan="3" class="text-center">{{'leagues.ranking.games' | translate }}</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr  class="table-primary text-center">
+                                        <th>#</th>
+                                        <th >{{'leagues.ranking.couple' | translate }}</th>
+                                        <th>{{'leagues.ranking.points' | translate }}</th>
+                                        <th>{{'leagues.ranking.played' | translate }}</th>
+                                        <th>{{'leagues.ranking.won' | translate }}</th>
+                                        <th>{{'leagues.ranking.lost' | translate }}</th>
+                                        <th>{{'leagues.ranking.won' | translate }}</th>
+                                        <th>{{'leagues.ranking.lost' | translate }}</th>
+                                        <th>{{'leagues.ranking.won' | translate }}</th>
+                                        <th>{{'leagues.ranking.lost' | translate }}</th>
+                                        <th>AVG</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let couple of ranking_couples; let i = index;" class="text-center">
+                                        <td class="points">{{ i + 1 }}º</td>
+                                        <td class="text-start"><span *ngFor="let player of couple.players">{{ player.title }}<br></span></td>
+                                        <td class="points">{{ couple.total_points ? couple.total_points : '0' }}</td>
+                                        <td>{{ couple.matches_played ? couple.matches_played : '0' }}</td>
+                                        <td>{{ couple.matchs_won ? couple.matchs_won : '0' }}</td>
+                                        <td>{{ couple.matchs_lost ? couple.matchs_lost : '0' }}</td>
+                                        <td>{{ couple.sets_won ? couple.sets_won : '0' }}</td>
+                                        <td>{{ couple.sets_lost ? couple.sets_lost : 0 }}</td>
+                                        <td>{{ couple.games_won ? couple.games_won : 0 }}</td>
+                                        <td>{{ couple.games_lost ? couple.games_lost : 0 }}</td>
+                                        <td>{{ couple.avg_games ? couple.avg_games : 0 }}</td>
+                                        <td><a class="btn" [routerLink]="[ 'view', couple.couple_id  ]" href="#"><img src="assets/img/icons/search-normal.svg" alt=""></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
