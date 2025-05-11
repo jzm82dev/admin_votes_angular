@@ -52,5 +52,17 @@ export class MeetingService {
       let url = URL_SERVICIOS + "/meetings/remove-question/" + question_id;
       return this.http.get( url, {headers: headers});
     }
+
+    assistOwner(owner_id:string, meeting_id:string){
+      let headers = new HttpHeaders({ 'Authorization': 'Bearer '+ this.authSrv.token});
+      let url = URL_SERVICIOS + "/meetings/add-ssistant-meeting/" + meeting_id + "/" + owner_id;
+      return this.http.post(url, null, { headers: headers });
+    }
+
+    cancelAssistOwner(owner_id:string, meeting_id:string){
+      let headers = new HttpHeaders({ 'Authorization': 'Bearer '+ this.authSrv.token});
+      let url = URL_SERVICIOS + "/meetings/cancel-ssistant-meeting/" + meeting_id + "/" + owner_id;
+      return this.http.post(url, null, { headers: headers });
+    }
   
 }

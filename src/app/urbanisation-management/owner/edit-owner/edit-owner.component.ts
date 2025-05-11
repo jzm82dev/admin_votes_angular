@@ -27,12 +27,14 @@ export class EditOwnerComponent {
   public property_selected: any;
   public new_property: string = '';
   public new_coefficient: string = '';
+  public can_edit:boolean = false;
 
   public isLoaded: boolean = false;
   public user: any;
 
   public error_message: string = '';
   public message_errors: any = [];
+  public success_message: string = '';
   public error_message_popup:string = '';
   public susccess_message_popup:string = '';
 
@@ -77,15 +79,20 @@ export class EditOwnerComponent {
 
   cleanMessage(){
     this.error_message = '';
+    this.success_message = '';
+    this.message_errors = [];
+
   }
 
 
   hasPermission( permision: string){
     if(this.user.role.includes('Super-Admin')){
+      this.can_edit = true;
       return true;
     }
 
     if(this.user.permissions.includes(permision) ){
+      this.can_edit = true;
       return true;
     }
 
@@ -94,6 +101,46 @@ export class EditOwnerComponent {
 
   selectProperty(property: any){
     this.property_selected = property;
+  }
+
+  
+
+  saveData(){
+
+    this.cleanMessage();
+
+    if( !this.name || !this.building || !this.floor || !this.letter ){
+      this.error_message = 'Nombre, edificio, planta y letra son obligatorios';
+      return;
+    }
+
+    if( this.name && this.name.length > 191){
+      this.error_message = 'El nombre no puede superar los 191 caracteres';
+      return;
+    }
+
+    if( this.building && this.building.length > 50){
+      this.error_message = 'El edificio no puede superar los 50 caracteres';
+      return;
+    }
+
+    let formData = new FormData();
+    formData.append('name', this.name);
+    formData.append('building', this.building);
+    formData.append('floor', this.floor);
+    formData.append('letter', this.letter);
+
+    this.ownerSrv.updateOwner(this.owner_id, formData).subscribe( (resp: any) => {
+      if( resp.message == 200){
+        this.success_message = 'Propietario guardado correctamente';
+      }else if(resp.message == 422) {
+        this.error_message = 'Ha habido el siguiente error al guardar el propietario' ;
+        this.message_errors = resp.errors_text
+      } else {
+        this.error_message = 'Error interno del sistema. Inténtalo nuevamente y si el problema persiste contacte con el adminitrador.';
+      }
+    })
+
   }
 
   removeProperty(){

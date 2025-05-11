@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AssistantsComponent } from './assistants/assistants.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MeetingComponent,
     AddMeetingComponent,
     EditMeetingComponent,
-    ListMeetingComponent
+    ListMeetingComponent,
+    AssistantsComponent
   ],
   imports: [
     CommonModule,
