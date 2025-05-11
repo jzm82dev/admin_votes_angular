@@ -6,15 +6,28 @@
             <div class="row">
                 <div class="col-sm-12">
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Urbanizaciones </a></li>
+                        <li class="breadcrumb-item"><a [routerLink]="[ '/meeting/list/edit', this.urbanisation_id ]">Urbanización </a></li>
                         <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                        <li class="breadcrumb-item active">Listado</li>
+                        <li class="breadcrumb-item active">Junta General</li>
+                    
                     </ul>
                 </div>
             </div>
         </div>
         <!-- /Page Header -->
+
         
+        <div class="settings-menu-links">
+            <ul class="nav nav-tabs menu-tabs">
+                <li class="nav-item ">
+                    <a class="nav-link" [routerLink]="[ '/meeting/edit', meeting_id]">{{'club_translations.tabs.general_data' | translate }}</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" [routerLink]="[ '/meeting/assistants' ]">Asistentes</a>
+                </li>
+            </ul>
+        </div>
+
         <div class="row">
             <div class="col-sm-12">
             
@@ -26,25 +39,31 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <div class="doctor-table-blk">
-                                        <h3>Urbanizaciones</h3>
+                                        <h3>Listado propietarios</h3>
                                         <div class="doctor-search-blk">
-                                            <div class="top-nav-search table-search-blk">
+                                             <div class="top-nav-search table-search-blk">
                                                     <input  class="form-control" placeholder="Search here" [(ngModel)]="searchDataValue"
                                                     (ngModelChange)="searchData(searchDataValue)">
                                                     <a class="btn"><img src="assets/img/icons/search-normal.svg" alt=""></a>
                                             </div>
+                                             
+                                            <div class="col">
+                                              <div class="top-nav-search table-search-blk">
+                                                
+                                                    <mat-select [(ngModel)]="building_id" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Edificio" (ngModelChange)="searchData(searchDataValue)">
+                                                        <mat-option *ngFor="let data of building" [value]="data.building">
+                                                        {{data.building}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                              
+                                          </div>
                                             <div class="add-group">
-                                                <a routerLink="/urbanisations/add-urbanisation" routerLinkActive="router-link-active"  class="btn btn-primary add-pluss ms-2"><img src="assets/img/icons/plus.svg" alt=""></a>
                                                 <a href="javascript:;" (click)="refresh()" class="btn btn-primary doctor-refresh ms-2"><img src="assets/img/icons/re-fresh.svg" alt=""></a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-auto text-end float-end ms-auto download-grp">
-                                    <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-01.svg" alt=""></a>
-                                    <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-02.svg" alt=""></a>
-                                    <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-03.svg" alt=""></a>
-                                    <a href="javascript:;" ><img src="assets/img/icons/pdf-icon-04.svg" alt=""></a>
                                 </div>
                             </div>
                         </div>
@@ -55,29 +74,38 @@
                                 <thead>
                                     <tr>
                                         <th mat-sort-header="name">Nombre</th>
-                                        <th mat-sort-header="president">Presidente</th>
-                                        <th mat-sort-header="mobile">Teléfono</th>
-                                        <th mat-sort-header="email">Email</th>
-                                        <th ></th>
+                                        <th mat-sort-header="building">Bloque</th>
+                                        <th mat-sort-header="floor">Piso</th>
+                                        <th mat-sort-header="assist">Asiste</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let data of urbanisationsList">
+                                    <tr *ngFor="let data of ownersList">
                                         <td>{{data.name}}</td>
-                                        <td>{{data.president }}</td>
-                                        <td>{{data.mobile }}</td>
-                                        <td>{{data.email}}</td>
-                                        <td class="text-end" >
-                                            <div class="dropdown dropdown-action">
-                                                <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <a class="dropdown-item" *ngIf="hasPermission('edit_urbanisations')" [routerLink]="[ 'edit', data.id ]" href="#"><i class="fa-solid fa-pen-to-square m-r-5"></i>  {{'commun_translations.edit' | translate }}</a>
-                                                    <a class="dropdown-item" *ngIf="hasPermission('edit_urbanisations')" [routerLink]="[ 'edit', data.id ]" href="#"><i class="fa-solid fa-eye m-r-5"></i> {{'commun_translations.view' | translate }}</a>
-                                                    <a class="dropdown-item" *ngIf="hasPermission('delete_urbanisations')" href="#" onclick="return false;" data-bs-toggle="modal" data-bs-target="#delete_urbanisation_modal" (click)="selectUrbanisation(data)"><i class="fa fa-trash-alt m-r-5"></i>  {{'commun_translations.remove' | translate }}</a>
-                                                    <!-- <a class="dropdown-item" href="#" onclick="return false;" (click)="removeRole(data.user_id)" ><i class="fa fa-trash-alt m-r-5"></i> Delete</a> -->
+                                        <td>{{data.building }}</td>
+                                        <td>{{data.floor }} {{ data.letter }}</td>
+                                        <td *ngIf="data.assistId != null">
+                                            <div class="dropdown action-label">
+                                                <a class="btn btn-sm btn-success custom-badge dropdown-toggle" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">
+                                                  ASISTE
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end status-staff">
+                                                    <a class="dropdown-item cursor-pointer" (click)="notAssistOwner(data.id)">{{'commun_translations.cancel' | translate }}</a>
                                                 </div>
                                             </div>
                                         </td>
+                                        <td *ngIf="data.assistId == null">
+                                            <div class="dropdown action-label">
+                                                <a class="status-red custom-badge  dropdown-toggle" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    NO ASISTE
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end status-staff">
+                                                    <a class="dropdown-item cursor-pointer" (click)="assistOwner(data.id)">Asiste</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                       
                                     </tr>
                                 </tbody>
                             </table>
@@ -175,7 +203,7 @@
                                           disabled:
                                             currentPage ===
                                               pageNumberArray[pageNumberArray.length - 1] ||
-                                              urbanisationsList.length === 0
+                                              ownersList.length === 0
                                         }"
                                       >
                                         <a
@@ -194,22 +222,9 @@
                 </div>							
             </div>					
         </div>
+
+    </div>
+
+
     </div>
 </div>
-
-<div id="delete_urbanisation_modal" class="modal fade delete-modal" role="dialog" >
-  <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-          <div class="modal-body text-center">
-              <img src="assets/img/sent.png" alt="" width="50" height="46">
-              <h3 *ngIf="urbanisation_selected" >Are you sure want to delete this urbanisation&nbsp; {{ urbanisation_selected.name }} {{urbanisation_selected.surname}}?</h3>
-              <div class="m-t-20"> <a href="javascript:void(0);" class="btn btn-white me-1" data-bs-dismiss="modal" #closebutton>Close</a>
-                  <button type="submit" class="btn btn-danger" (click)="removeUrbanisation()">Delete</button>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
-
-
- 

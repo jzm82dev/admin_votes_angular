@@ -4,6 +4,7 @@ import { MeetingComponent } from './meeting.component';
 import { AddMeetingComponent } from './add-meeting/add-meeting.component';
 import { ListMeetingComponent } from './list-meeting/list-meeting.component';
 import { EditMeetingComponent } from './edit-meeting/edit-meeting.component';
+import { AssistantsComponent } from './assistants/assistants.component';
 
 const routes: Routes = [
   { 
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'edit/:id',
         component: EditMeetingComponent
+      },
+      {
+        path: 'assistants/:meeting_id/:urbanisation_id',
+        component: AssistantsComponent
       },
     ]
   }

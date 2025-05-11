@@ -33,7 +33,7 @@
                                 <div class="col-12 col-md-6 col-xl-4">  
                                     <div class="form-group local-forms">
                                         <label >Nombre <span class="login-danger">*</span></label>
-                                        <input class="form-control" [(ngModel)]="name" name="name" type="text" disabled >
+                                        <input class="form-control" [(ngModel)]="name" name="name" type="text"  >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
@@ -45,21 +45,21 @@
                                 <div class="col-12 col-md-4 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >Edificio <span class="login-danger">*</span></label>
-                                        <input class="form-control" [(ngModel)]="building" name="building" type="text"  disabled>
+                                        <input class="form-control" [(ngModel)]="building" name="building" type="text"  >
                                     </div>
                                 </div>
                                
                                 <div class="col-12 col-md-4 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >Piso <span class="login-danger">*</span></label>
-                                        <input class="form-control" [(ngModel)]="floor" name="floor" type="text"  disabled>
+                                        <input class="form-control" [(ngModel)]="floor" name="floor" type="text"  >
                                     </div>
                                 </div>
 
                                 <div class="col-12 col-md-4 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >Letra <span class="login-danger">*</span></label>
-                                        <input class="form-control" [(ngModel)]="letter" name="letter" type="text"  disabled>
+                                        <input class="form-control" [(ngModel)]="letter" name="letter" type="text"  >
                                     </div>
                                 </div>
 
@@ -68,6 +68,32 @@
                                         <label >Total coeficiente <span class="login-danger">*</span></label>
                                         <input class="form-control" [(ngModel)]="total_coefficient" name="total_coefficient" type="text"  disabled>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-0 text-end" *ngIf="can_edit == true">
+                                <div class="settings-btns">
+                                    <button type="submit" class="border-0 btn btn-primary btn-gradient-primary btn-rounded" (click)="saveData()">{{'commun_translations.save' | translate }}</button>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 my-4" *ngIf="error_message != ''">
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert" >
+                                    <strong>{{'commun_translations.error' | translate }} </strong> {{ error_message }}
+                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
+                                    <ul *ngIf="message_errors.length > 0">
+                                        <li *ngFor="let error of message_errors">{{ error }}</li>
+                                    </ul>
+                                  </div>
+                            </div>
+                            <div class="col-md-12 my-4" *ngIf="success_message != ''">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>{{'commun_translations.success' | translate }} </strong> {{ success_message }}
+                                    <button (click)="cleanMessage()" type="button" class="btn-close" aria-label="Close">
+                                        <span aria-hidden="true"> </span>
+                                    </button>
                                 </div>
                             </div>
                             

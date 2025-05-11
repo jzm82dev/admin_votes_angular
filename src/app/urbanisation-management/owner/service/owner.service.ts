@@ -19,9 +19,21 @@ export class OwnerService {
   }
     */
 
+  updateOwner( owner_id: any,data: any){
+    let headers = new HttpHeaders({ 'Authorization': 'Bearer '+ this.authSrv.token});
+    let url = URL_SERVICIOS + "/owners/update/" + owner_id;
+    return this.http.post(url, data, { headers: headers }); 
+  }
+
   listOwners( page:number = 1, search:string = '', urbanisation_id: string, building: string ){
     let headers = new HttpHeaders( {'Authorization' : 'Bearer ' + this.authSrv.token });
     let url = URL_SERVICIOS + '/owners?page=' + page + '&search=' + search + '&urbanisation_id=' + urbanisation_id + '&building=' + building;
+    return this.http.get(url, { headers: headers }); 
+  }
+
+  listAssistants( page:number = 1, search:string = '', urbanisation_id: string, building: string, meeting_id:string ){
+    let headers = new HttpHeaders( {'Authorization' : 'Bearer ' + this.authSrv.token });
+    let url = URL_SERVICIOS + '/owners/assistants?page=' + page + '&search=' + search + '&urbanisation_id=' + urbanisation_id + '&building=' + building + '&meeting_id=' + meeting_id;
     return this.http.get(url, { headers: headers }); 
   }
 

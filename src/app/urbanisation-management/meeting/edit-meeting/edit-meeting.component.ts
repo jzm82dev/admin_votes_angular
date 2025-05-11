@@ -13,6 +13,7 @@ export class EditMeetingComponent {
   
   public routes = routes;
 
+  public tab_selected: number = 1;
   public meeting_id: string = '';
   public meeting_selected: any;
   public name: string = '';

@@ -33,11 +33,15 @@ export class LoginComponent implements OnInit {
   constructor(public auth: AuthService, private router: Router, public translate: TranslateService) {}
 
   ngOnInit(): void {
+    console.log('PASAMOS');
+    
     if (localStorage.getItem('authenticated')) {
       //localStorage.removeItem('authenticated');
       if(this.auth.user.club_id){
-        this.router.navigate([routes.courtCalendar]);
+        console.log('PASAMOS 1');
+        this.router.navigate([routes.adminDashboard]);
       }else{
+        console.log('PASAMOS 2');
         this.router.navigate([routes.adminDashboard])
       }
     }

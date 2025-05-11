@@ -132,10 +132,15 @@
                                 <div class="" *ngIf="image_preview">
                                     <img [src]="image_preview" alt="" width="150px" height="150px">
                                 </div>
-                                
+                                                           
                                 <div class="form-group mb-0 text-end" *ngIf="can_edit == true">
                                     <div class="settings-btns">
                                         <button type="submit" class="border-0 btn btn-primary btn-gradient-primary btn-rounded" (click)="saveData()">{{'commun_translations.save' | translate }}</button>
+                                    </div>
+                                </div>
+                                <div class="col-12 my-4">
+                                    <div class="doctor-submit text-end">
+                                        <button [routerLink]="[ '/urbanisation/list' ]" type="submit" class="btn btn-primary cancel-form">Volver</button>&nbsp;
                                     </div>
                                 </div>
                             </div>
