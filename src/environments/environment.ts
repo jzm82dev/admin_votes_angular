@@ -4,7 +4,7 @@ export const environment = {
     URL_SERVICIOS: 'https://api.padeltools.net/api',
     URL_FRONTEND: 'https://admin.padeltools.net/'
     */
-    URL_BACKEND: 'https://api.yovoto.es.com',
+    URL_BACKEND: 'https://api.yovoto.es',
     URL_SERVICIOS: 'https://api.yovoto.es/api',
     URL_FRONTEND: 'https://admin.yovoto.es/',
     PAYPAL_CLIENT_ID: 'AX9F46pR_5HQs8g4QyVMvT4lmX6YuAsAOW4cz6T6xUD__mrS0-kDPOXU5dSzC2Jnd-PuplXwdwlUzsyV',
