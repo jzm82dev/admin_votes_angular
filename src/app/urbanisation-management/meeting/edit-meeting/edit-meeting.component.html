@@ -99,7 +99,8 @@
                                                         <tr *ngFor="let data of questions; let i = index;">
                                                             <td>{{ i + 1 }} </td>
                                                             <td >
-                                                              {{ data.name }}
+                                                                {{ (data.name.length > 90)? (data.name | slice:0:90)+' ...':(data.name) }}
+                                                             <!--  {{ data.name }} -->
                                                             </td>
                                                             
                                                             <td class="text-end" >

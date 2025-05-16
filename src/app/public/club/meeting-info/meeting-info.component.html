@@ -16,9 +16,9 @@
                                         <div class="row">
                                             <div class="col-md-5">
                                                 <div class="profile-info-left">
-                                                    <h3 class="user-name m-t-0 mb-0">AGUACATE</h3>
-                                                    <small class="text-muted hide-mobile">Urbanizacion</small>
-                                                    <div class="staff-id hide-mobile">Presidente :MAOLOA</div>
+                                                    <small class="text-muted hide-mobile">Urbanización</small>
+                                                    <h3 class="user-name m-t-0 mb-0">AGUACATE BEACH</h3>
+                                                    <div class="staff-id hide-mobile">Presidente: Manuel Gervilla</div>
                                                 </div>
                                             </div>
                                             <div class="col-md-7">
@@ -26,7 +26,7 @@
 
                                                     <li class="hide-mobile">
                                                         <span class="title">{{'club_translations.club_address.title' | translate }}:</span>
-                                                        <span class="text">Blablabla</span>
+                                                        <span class="text">Rector José Vida Soria s/n</span>
                                                     </li>
                                                    
                                                     <li class="hide-mobile">
@@ -87,20 +87,21 @@
                                         
                                         <div class="card-box">
                                             <div class="card-block">
-                                                <h4 class="card-title vote_name">{{detail.name}}</h4>
+                                                <h4 class=" vote_name text-start">{{detail.name}}</h4>
+                                                <span class="vote_name">{{detail.vote}}<br></span>
                                                 <div class="table-responsive">
                                                     <table class="table table-hover mb-0">
                                                         <thead>
                                                             <tr>
                                                                 <th>Piso</th>
-                                                                <th>Propietario</th>
+                                                                <th class="text-start">Propietario</th>
                                                                 <th>Coeficiente</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr *ngFor="let owner of detail.owners">
                                                                 <td>{{ owner.building }}-{{ owner.floor}}{{ owner.letter}}</td>
-                                                                <td>{{ owner.name}}</td>
+                                                                <td class="text-start">{{ owner.name}}</td>
                                                                 <td>{{ owner.total_coefficient }}%</td>
                                                                 </tr>
                                                             
@@ -109,7 +110,7 @@
                                                             <tr>
                                                                 <td></td>
                                                                 <td class="text-end"></td>
-                                                                <td><b> {{ detail.total_coefficient }}%</b></td>
+                                                                <td class="vote_name"> {{ detail.total_coefficient }}%</td>
                                                             </tr>
                                                         </tfoot>
                                                     </table>
