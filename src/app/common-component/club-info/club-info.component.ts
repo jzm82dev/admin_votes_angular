@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ClubDataService } from 'src/app/public/club-data/services/club-data.service';
+import { UrbanisationService } from 'src/app/public/urbanisation/services/urbanisation.service';
 import { routes } from 'src/app/shared/routes/routes';
 
 interface ScheduleDay {
@@ -21,8 +22,9 @@ export class ClubInfoComponent {
 
   public loaded: boolean = true;
   public routes = routes;
-  public club: any;
+  public urbanisation: any;
   public name: string = '';
+  public president: string = '';
   public club_manager: string = '';
   public mobile: string = '';
   public email: string = '';
@@ -44,7 +46,7 @@ export class ClubInfoComponent {
   public basic_service: any;
   public extra_services:any = [];
   public show_sercices: any = [];
-  public monitor_list: any = [];
+  public meets_list: any = [];
   public kind_sport: any = [];
 
   public pool: any;
@@ -53,7 +55,7 @@ export class ClubInfoComponent {
   public cafe: any;
   public restaurant: any;
   public shop: any;
-  public tab_selected: string = 'schedule';
+  public tab_selected: string = 'meets';
   public hash_club: string = '';
   public today: any;
   public major_sport_id: number = 0;
@@ -67,7 +69,7 @@ export class ClubInfoComponent {
   public linkedin_link: string = '';
 
   constructor(public clubDataSrv: ClubDataService,  public translate: TranslateService, private location:Location, 
-              public activateRoute: ActivatedRoute){
+              public activateRoute: ActivatedRoute, public urbanisationSrv: UrbanisationService){
   }
 
   ngOnInit(): void {
@@ -93,44 +95,25 @@ export class ClubInfoComponent {
       this.tab_selected = 'tournaments';
     }
     
-    this.clubDataSrv.getClub(this.hash_club).subscribe( (resp:any )=>{
-      this.club = resp.club;
-      if(this.club){
-        this.name = this.club.name;
-        this.mobile = this.club.mobile;
-        this.email = this.club.email;
-        this.club_manager = this.club.manager;
-        this.address = this.club.additional_info.address;
-        this.additional_address = this.club.additional_info.additional_address;
-        this.description = this.club.additional_info.description;
+    this.urbanisationSrv.getUrbanisation(this.hash_club).subscribe( (resp:any )=>{
+      this.urbanisation = resp.urbanisation;
+      console.log(this.urbanisation);
+      
+      if(this.urbanisation){
+        this.name = this.urbanisation.name;
+        this.president = this.urbanisation.president;
+        this.email = this.urbanisation.email;
+        this.club_manager = this.urbanisation.manager;
+        this.address = this.urbanisation.address;
         this.city = resp.city;
        
-        if(resp.club.rrhh){
-          this.instagram_link = resp.club.rrhh.instagram_link;
-          this.facebook_link = resp.club.rrhh.facebook_link;
-          this.twitter_link = resp.club.rrhh.twiter_link;
-          this.youtube_link = resp.club.rrhh.youtube_link;
-          this.linkedin_link = resp.club.rrhh.linkedin_link;
-        }
-        console.log('link_ig:',this.instagram_link);
         
-        if( this.club.avatar ){
-          this.image_preview = this.club.avatar;
-        }
-        if( this.club.schedule_week_hours.length > 0 ){
-          this.schedule_hour_days = this.club.schedule_week_hours;
-          this.schedule_hour_days.forEach(element => {
-            let day = element.day_id;
-            element.day_name = this.translations['commun_translations'][day];
-          });
-        }
-        this.basic_service = resp.all_services['basic_services'];
-        this.extra_services = resp.all_services['extra_services'];
-        this.formatServices();
-        this.monitor_list = resp.monitors;
-        this.major_sport_id = resp.major_sport_id;
-        this.typeOfSports();
-        this.geMajorSportName();
+        
+    
+       
+        this.meets_list = resp.meets;
+        
+       
       }
       
     })
@@ -141,40 +124,7 @@ export class ClubInfoComponent {
     this.tab_selected = tab;
   }
 
-  formatServices(){
-    
-    if( this.basic_service.pool == 1){
-      this.pool = true;
-    }
-    if( this.basic_service.gym == 1){
-      this.gym = true;
-    }
-    if( this.basic_service.cafe == 1){
-      this.cafe = true;
-    }
-    if( this.basic_service.restaurant == 1){
-      this.restaurant = true;
-    }
-    if( this.basic_service.playroom == 1){
-      this.playroom = true;
-    }
-    if( this.basic_service.shop == 1){
-      this.shop = true;
-    }
-
-    this.extra_services.forEach( (service:any) => {
-      this.show_sercices.push(service.name);
-    });
-  }
-
-  typeOfSports(){
-    this.kind_sport.push( { id: 0, name: '...'});
-    this.kind_sport.push({ id: 1, name: this.translations["club_translations"].sport_1});
-    this.kind_sport.push({ id: 2, name: this.translations["club_translations"].sport_2});
-    this.kind_sport.push({ id: 3, name: this.translations["club_translations"].sport_3});
-    this.kind_sport.push({ id: 4, name: this.translations["club_translations"].sport_4});
-    this.kind_sport.push({ id: 5, name: this.translations["club_translations"].sport_5});
-  }
+  
 
 
   initializeLanguage(){
@@ -197,32 +147,6 @@ export class ClubInfoComponent {
       }); 
   }
 
-  
-  geMajorSportName(){
-    
-    switch (this.major_sport_id) {
-      case 1:
-        this.major_sport_name = 'padel';
-        break;
-      case 2:
-        this.major_sport_name = 'tennis';
-        break;
-      case 3:
-        this.major_sport_name = 'pickleball';
-        break;
-      case 4:
-        this.major_sport_name = 'squash';
-        break;
-      case 5:
-        this.major_sport_name = 'badminton';
-        break;
-    
-      default:
-        this.major_sport_name = 'padel';
-        break;
-    }
-    
-    
-  }
+
 
 }

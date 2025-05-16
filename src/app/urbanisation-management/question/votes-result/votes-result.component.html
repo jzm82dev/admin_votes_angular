@@ -99,6 +99,7 @@
                                                 <tr>
                                                     <th>Piso</th>
                                                     <th>Propietario</th>
+                                                    <th>Representado por</th>
                                                     <th>Coeficiente</th>
                                                 </tr>
                                             </thead>
@@ -106,6 +107,7 @@
                                                 <tr *ngFor="let owner of detail.owners">
                                                     <td>{{ owner.building }}-{{ owner.floor}}{{ owner.letter}}</td>
                                                     <td>{{ owner.name}}</td>
+                                                    <td>{{ owner.represented_by}}</td>
                                                     <td>{{ owner.total_coefficient }}%</td>
                                                     </tr>
                                                 
@@ -113,8 +115,9 @@
                                             <tfoot>
                                                 <tr>
                                                     <td></td>
+                                                    <td></td>
                                                     <td class="text-end"></td>
-                                                    <td class="vote_name"> {{ detail.total }}%</td>
+                                                    <td class="vote_name"> {{ detail.total_coefficient }}%</td>
                                                 </tr>
                                             </tfoot>
                                         </table><br><br>

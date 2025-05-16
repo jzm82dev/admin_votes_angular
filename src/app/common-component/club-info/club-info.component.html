@@ -23,21 +23,13 @@
                                             <div class="col-md-5">
                                                 <div class="profile-info-left">
                                                     <h3 class="user-name m-t-0 mb-0">{{ name }}</h3>
-                                                    <small class="text-muted hide-mobile">Padel club</small>
-                                                    <div class="staff-id hide-mobile">Manager : {{ club_manager }}</div>
-                                                    <div class="staff-msg hide-mobile"><a href="mailto:{{email}}" class="btn btn-primary">{{'leagues.tabs.send_message' | translate }}</a></div>
+                                                    <small class="text-muted hide-mobile">Urbanizacion</small>
+                                                    <div class="staff-id hide-mobile">Presidente : {{ president }}</div>
                                                 </div>
                                             </div>
                                             <div class="col-md-7">
                                                 <ul class="personal-info">
-                                                    <li>
-                                                        <span class="title">{{'club_translations.club_information.form_mobile' | translate }}:</span>
-                                                        <span class="text link-profile"><a href="" class="link-profile">{{ mobile }}</a></span>
-                                                    </li>
-                                                    <li class="hide-mobile">
-                                                        <span class="title">{{'club_translations.club_information.form_email' | translate }}:</span>
-                                                        <span class="text"><a class="link-profile" href="">{{ email }}</a></span>
-                                                    </li>
+
                                                     <li class="hide-mobile">
                                                         <span class="title">{{'club_translations.club_address.title' | translate }}:</span>
                                                         <span class="text">{{ address }} ({{ additional_address }})</span>
@@ -45,7 +37,7 @@
                                                    
                                                     <li class="hide-mobile">
                                                         <span class="title">{{'club_translations.club_address.form_city' | translate }}</span>
-                                                        <span class="text">{{ city }} </span>
+                                                        <span class="text">Motril, Granada </span>
                                                     </li>
                                                     
                                                 </ul>
@@ -66,18 +58,16 @@
                     </div>
                     <div class="profile-tabs my-3">
                         <ul class="nav nav-tabs nav-tabs-bottom" *ngIf="tab_selected != 'booking' && tab_selected != 'leagues' && tab_selected != 'tournaments'">
-                            <li class="nav-item"><a class="nav-link" href="#schedule" [ngClass]="{'active': tab_selected == 'schedule'}" (click)="openTab('schedule')" data-bs-toggle="tab">{{'club_translations.tabs.schedule' | translate }}</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#rrhh" [ngClass]="{'active': tab_selected == 'rrhh'}" (click)="openTab('rrhh')" data-bs-toggle="tab">{{'club_translations.tabs.social_links' | translate }}</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#services" [ngClass]="{'active': tab_selected == 'services'}"  (click)="openTab('services')" data-bs-toggle="tab">{{'club_translations.tabs.services' | translate }} </a></li>
-                            <li class="nav-item"><a class="nav-link" href="#monitors" [ngClass]="{'active': tab_selected == 'monitors'}" data-bs-toggle="tab" (click)="openTab('monitors')">{{'monitors.monitors' | translate }}</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#booking" [ngClass]="{'active': tab_selected == 'booking'}"  [routerLink]="[ '/club/booking', major_sport_name, hash_club, today ]">{{'menu.books' | translate }}</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#leagues" [ngClass]="{'active': tab_selected == 'leagues'}"  [routerLink]="[ '/club/leagues/all', hash_club ]">{{'leagues.leagues' | translate }}</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#tournaments" [ngClass]="{'active': tab_selected == 'tournaments'}"  [routerLink]="[ '/club/tournaments/all', hash_club ]">{{'tournaments.tournaments' | translate }}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#meets" [ngClass]="{'active': tab_selected == 'meets'}" (click)="openTab('meets')" data-bs-toggle="tab">Juntas</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#rrhh" [ngClass]="{'active': tab_selected == 'rrhh'}" (click)="openTab('rrhh')" data-bs-toggle="tab">Propietarios</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#services" [ngClass]="{'active': tab_selected == 'services'}"  (click)="openTab('services')" data-bs-toggle="tab">Vocales </a></li>
+                            <li class="nav-item"><a class="nav-link" href="#monitors" [ngClass]="{'active': tab_selected == 'monitors'}" data-bs-toggle="tab" (click)="openTab('monitors')">Actas de vocales</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#monitors" [ngClass]="{'active': tab_selected == 'monitors'}" data-bs-toggle="tab" (click)="openTab('monitors')">Gastos</a></li>
                         </ul>
 
                         <ul class="nav nav-tabs nav-tabs-bottom" *ngIf="tab_selected == 'booking' || tab_selected == 'leagues' || tab_selected == 'tournaments'">
-                            <li class="nav-item"><a class="nav-link" href="#schedule" [routerLink]="[ '/club', hash_club, 'schedule' ]" data-bs-toggle="tab">{{'club_translations.tabs.schedule' | translate }}</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#rrhh" [routerLink]="[ '/club', hash_club, 'rrhh' ]" data-bs-toggle="tab">{{'club_translations.tabs.social_links' | translate }}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#schedule" [routerLink]="[ '/club', hash_club, 'schedule' ]" data-bs-toggle="tab">Juntas</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#rrhh" [routerLink]="[ '/club', hash_club, 'rrhh' ]" data-bs-toggle="tab">Propietarios</a></li>
                             <li class="nav-item"><a class="nav-link" href="#services" [routerLink]="[ '/club', hash_club, 'services' ]" data-bs-toggle="tab">{{'club_translations.tabs.services' | translate }} </a></li>
                             <li class="nav-item"><a class="nav-link" href="#monitors" data-bs-toggle="tab" [routerLink]="[ '/club', hash_club, 'monitors' ]">{{'monitors.monitors' | translate }}</a></li>
                             <li class="nav-item"><a class="nav-link" [ngClass]="{'active': tab_selected == 'booking'}" href="#booking" [routerLink]="[ '/club/booking', major_sport_name, hash_club, today ]">{{'menu.books' | translate }}</a></li>
@@ -86,7 +76,7 @@
                         </ul>
             
                         <div class="tab-content">
-                            <div class="tab-pane show active" id="schedule" *ngIf="tab_selected == 'schedule'">
+                            <div class="tab-pane show active" id="schedule" *ngIf="tab_selected == 'owners'">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card-box">
@@ -140,144 +130,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane show active" id="rrhh" *ngIf="tab_selected == 'rrhh'">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card-box">
-                                            <div class="experience-box">
-                                                <div class="settings-form">
-                                                    <div class="links-info">
-                                                        <div class="row form-row links-cont" *ngIf="instagram_link != null">
-                                                            <div class="form-group form-placeholder d-flex align-element">
-                                                                <button class="btn social-icon">
-                                                                    <i [class]="'feather icon-instagram'"></i>
-                                                                </button>
-                                                                <a href="{{ instagram_link }}" target="_blank">{{ instagram_link }}</a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row form-row links-cont" *ngIf="facebook_link !=  null ">
-                                                            <div class="form-group form-placeholder d-flex align-element">
-                                                                <button class="btn social-icon">
-                                                                    <i [class]="'feather icon-facebook'"></i>
-                                                                </button>
-                                                                <a href="{{ facebook_link }}" target="_blank">{{ facebook_link }}</a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row form-row links-cont"  *ngIf="twitter_link !=  null ">
-                                                            <div class="form-group form-placeholder d-flex align-element">
-                                                                <button class="btn social-icon">
-                                                                    <i [class]="'feather icon-twitter'"></i>
-                                                                </button>
-                                                                <a href="{{ twitter_link }}" target="_blank">{{ twitter_link }}</a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row form-row links-cont"  *ngIf="youtube_link !=  null ">
-                                                            <div class="form-group form-placeholder d-flex align-element">
-                                                                <button class="btn social-icon">
-                                                                    <i [class]="'feather icon-youtube'"></i>
-                                                                </button>
-                                                                <a href="{{ youtube_link }}" target="_blank">{{  youtube_link }}</a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row form-row links-cont"  *ngIf="linkedin_link !=  null ">
-                                                            <div class="form-group form-placeholder d-flex align-element">
-                                                                <button class="btn social-icon">
-                                                                    <i [class]="'feather icon-linkedin'"></i>
-                                                                </button>
-                                                                <a href="{{ linkedin_link }}" target="_blank">{{ linkedin_link }}</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                     </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane show active" id="services"  *ngIf="tab_selected == 'services'">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card-box">                                        
-                                            <form>
-                                                <div class="settings-form" >
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="card-header d-flex justify-content-between align-items-center">
-                                                                <h5 class="card-title">{{'club_translations.services.pool' | translate }}</h5>
-                                                                <div class="status-toggle d-flex justify-content-between align-items-center">
-                                                                    <input type="checkbox" id="pool" class="check" [(ngModel)]="pool" name="pool">
-                                                                    <label for="pool" class="checktoggle">checkbox</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">   
-                                                            <div class="card-header d-flex justify-content-between align-items-center">
-                                                                <h5 class="card-title">{{'club_translations.services.gym' | translate }}</h5>
-                                                                <div class="status-toggle d-flex justify-content-between align-items-center">
-                                                                    <input type="checkbox" id="gym" class="check" [(ngModel)]="gym" name="gym">
-                                                                    <label for="gym" class="checktoggle">checkbox</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="card-header d-flex justify-content-between align-items-center">
-                                                                <h5 class="card-title">{{'club_translations.services.playroon' | translate }}</h5>
-                                                                <div class="status-toggle d-flex justify-content-between align-items-center">
-                                                                    <input type="checkbox" id="playroom" class="check" [(ngModel)]="playroom" name="playroom">
-                                                                    <label for="playroom" class="checktoggle">checkbox</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="card-header d-flex justify-content-between align-items-center">
-                                                                <h5 class="card-title">{{'club_translations.services.cafe' | translate }}</h5>
-                                                                <div class="status-toggle d-flex justify-content-between align-items-center">
-                                                                    <input type="checkbox" id="cafe" class="check" [(ngModel)]="cafe" name="cafe">
-                                                                    <label for="cafe" class="checktoggle">checkbox</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="card-header d-flex justify-content-between align-items-center">
-                                                                <h5 class="card-title">{{'club_translations.services.restaurant' | translate }}</h5>
-                                                                <div class="status-toggle d-flex justify-content-between align-items-center">
-                                                                    <input type="checkbox" id="restaurant" class="check" [(ngModel)]="restaurant" name="restaurant">
-                                                                    <label for="restaurant" class="checktoggle">checkbox</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="card-header d-flex justify-content-between align-items-center">
-                                                                <h5 class="card-title">{{'club_translations.services.shop' | translate }}</h5>
-                                                                <div class="status-toggle d-flex justify-content-between align-items-center">
-                                                                    <input type="checkbox" id="shop" class="check" [(ngModel)]="shop" name="shop">
-                                                                    <label for="shop" class="checktoggle">checkbox</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6" *ngFor="let service of show_sercices">
-                                                            <div class="card-header d-flex justify-content-between align-items-center" 
-                                                                >
-                                                                <h5 class="card-title">{{ service }}</h5>
-                                                                <div class="status-toggle d-flex justify-content-between align-items-center">
-                                                                    <input type="checkbox" class="check" checked>
-                                                                    <label  class="checktoggle">checkbox</label>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>
-                               
-                    
-                                                </div>
-                                            </form>
-    
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            <div class="tab-pane  show active" id="monitors" *ngIf="tab_selected == 'monitors'">
+                         
+                          
+                            
+                        
+                            <div class="tab-pane  show active" id="meets" *ngIf="tab_selected == 'meets'">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="card-box">
@@ -287,22 +144,18 @@
                                                         <thead>
                                                             <tr>
                                                                 <th class="text-start">{{'monitors.name' | translate }}</th>
-                                                                <th class="text-start hide-mobile">{{'monitors.email' | translate }}</th>
-                                                                <th class="text-start">{{'monitors.mobile' | translate }}</th>
-                                                                <th class="text-start">{{'monitors.sport' | translate }}</th>
-                                                                <th class="text-start hide-mobile">{{'monitors.created' | translate }}</th>
+                                                                <th class="text-start hide-mobile">Fecha</th>
+                                                                <th >Ver</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let data of monitor_list">
-                                                                <td class="text-start">{{data.name}} {{data.surname}}</td>
-                                                                <td class="text-start hide-mobile">{{data.email }}</td>
-                                                                <td class="text-start">{{data.mobile }}</td>
-                                                                <td class="text-start">{{ kind_sport[data.sport_type].name }}</td>
-                                                                <td class="text-start hide-mobile">{{data.created_at | date: 'dd/MM/yyyy'}}</td>
+                                                            <tr *ngFor="let data of meets_list">
+                                                                <td class="text-start">{{data.name}} </td>
+                                                                <td class="text-start hide-mobile">{{data.date | date: 'dd/MM/yyyy'}}</td>
+                                                                    <td><a class="btn" [routerLink]="[ '/urbanisation/meeting-info', data.id ]" href="#"><img src="assets/img/icons/search-normal.svg" alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
                                                             </tr>
-                                                            <tr *ngIf="monitor_list.length == 0">
-                                                                <td colspan="5">{{'monitors.no_monitors' | translate }}</td>
+                                                            <tr *ngIf="meets_list.length == 0">
+                                                                <td colspan="5">No hay juntas generales para la urbanización</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -313,6 +166,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                        
                         </div>
                     </div>
                     <!-- End Prfo-->

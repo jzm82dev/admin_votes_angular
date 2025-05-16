@@ -92,6 +92,8 @@ export class EditUrbanisationComponent {
         this.mobile = this.urbanisation_selected.mobile;
         this.email = this.urbanisation_selected.email;
         this.image_preview = this.urbanisation_selected.avatar;
+        console.log(this.image_preview);
+        
         this.address = this.urbanisation_selected.address;
         this.additional_address = this.urbanisation_selected.additional_address;
         this.country_id = this.urbanisation_selected.country_id;
@@ -105,22 +107,24 @@ export class EditUrbanisationComponent {
 
     }
 
+
+
     loadFile( $event: any ){
-      if( $event.target.files[0].type.indexOf('image') < 0){
-       alert(this.translations['commun_translations'].only_type_img);
-       this.image_preview = this.image_preview ? this.image_preview : 'assets/img/user-06.jpg';
-       return;
-     }
-     if($event.target.files[0].size > 2000000){
-       alert(this.translations['commun_translations'].max_size_img);
-       this.fileAvatar = '';
-       return;
-     }
-     this.fileAvatar = $event.target.files[0];
-     let reader = new FileReader();
-     reader.readAsDataURL(this.fileAvatar);
-     reader.onloadend = () => this.image_preview = reader.result;
-   }
+    if( $event.target.files[0].type.indexOf('image') < 0){
+      alert(this.translations['commun_translations'].only_type_img);
+      this.image_preview = this.image_preview ? this.image_preview : 'assets/img/user-06.jpg';
+      return;
+    }
+    if($event.target.files[0].size > 2000000){
+      alert(this.translations['commun_translations'].max_size_img);
+      this.fileAvatar = '';
+      return;
+    }
+    this.fileAvatar = $event.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(this.fileAvatar);
+    reader.onloadend = () => this.image_preview = reader.result;
+  }
 
    cleanMessage(){
     this.error_message = '';

@@ -1,0 +1,177 @@
+<div class="main-wrapper" id="home">
+
+     <app-home-header></app-home-header> 
+    
+        <!-- Start Banner -->
+        <div class="hero-section auto-height text-center">
+            <div class="container">
+                <div class="hero-wrap">
+                    <!-- Profile -->
+                    <div class="card-box profile-header">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="profile-view">
+                                   
+                                    <div class="profile-basic">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="profile-info-left">
+                                                    <h3 class="user-name m-t-0 mb-0">AGUACATE</h3>
+                                                    <small class="text-muted hide-mobile">Urbanizacion</small>
+                                                    <div class="staff-id hide-mobile">Presidente :MAOLOA</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <ul class="personal-info">
+
+                                                    <li class="hide-mobile">
+                                                        <span class="title">{{'club_translations.club_address.title' | translate }}:</span>
+                                                        <span class="text">Blablabla</span>
+                                                    </li>
+                                                   
+                                                    <li class="hide-mobile">
+                                                        <span class="title">{{'club_translations.club_address.form_city' | translate }}</span>
+                                                        <span class="text">Motril, Granada </span>
+                                                    </li>
+                                                    
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-tabs my-3">
+                        <ul class="nav nav-tabs nav-tabs-bottom" *ngIf="tab_selected != 'booking' && tab_selected != 'leagues' && tab_selected != 'tournaments'">
+                            <li class="nav-item"><a class="nav-link" href="#meets" [ngClass]="{'active': tab_selected == 'meets'}" [routerLink]="[ '/public/urbanisation/', hash ]" data-bs-toggle="tab">Juntas</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#rrhh" [ngClass]="{'active': tab_selected == 'rrhh'}" (click)="openTab('rrhh')" data-bs-toggle="tab">Propietarios</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#services" [ngClass]="{'active': tab_selected == 'services'}"  (click)="openTab('services')" data-bs-toggle="tab">Vocales </a></li>
+                            <li class="nav-item"><a class="nav-link" href="#monitors" [ngClass]="{'active': tab_selected == 'monitors'}" data-bs-toggle="tab" (click)="openTab('monitors')">Actas de vocales</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#monitors" [ngClass]="{'active': tab_selected == 'monitors'}" data-bs-toggle="tab" (click)="openTab('monitors')">Gastos</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content">
+
+                         <div class="tab-pane show active" id="schedule" >
+                              <div class="col-sm-12">
+                
+                    <div class="card">
+                        <div class="card-body">
+                            
+                            <div class="row mt-4" *ngFor="let question of final_result; let i = index;">
+                                <div class="col-12">
+                                    <div class="form-heading">
+                                        <h3 class=" text-start"><strong>{{ i + 1 }}. &nbsp;{{ question.question }}</strong></h3>
+                                    </div>
+                                </div>
+                                <div  class="row">
+                                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3 " *ngFor="let item of question.result">
+                                        <div class="card-box ">
+                                            <div class="card-block votes">
+                                            
+                                            <div class="dash-content dash-count text-center">
+                                                <span class="vote_name">{{ item.name }}</span>
+                                                <h2><span class="counter-up" [countUp]="item.percent" [options]="{duration: 10}">{{item.percent}}</span><span class="percent">%</span></h2>
+                                                <h3 class="smaller">{{ item.total_coefficient }}%</h3>
+                                                <p>Votos: <span class="passive-view">{{item.votes}}</span>  </p>
+                                        </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div  class="row">
+                                    <div class="col-md-12" *ngFor="let detail of question.result;">
+                                        
+                                        <div class="card-box">
+                                            <div class="card-block">
+                                                <h4 class="card-title vote_name">{{detail.name}}</h4>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Piso</th>
+                                                                <th>Propietario</th>
+                                                                <th>Coeficiente</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let owner of detail.owners">
+                                                                <td>{{ owner.building }}-{{ owner.floor}}{{ owner.letter}}</td>
+                                                                <td>{{ owner.name}}</td>
+                                                                <td>{{ owner.total_coefficient }}%</td>
+                                                                </tr>
+                                                            
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td class="text-end"></td>
+                                                                <td><b> {{ detail.total_coefficient }}%</b></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>  
+                                            </div>
+                                        </div>  
+                                        <br><br>
+                                    </div>
+                                </div>
+                                <hr> 
+                        </div>
+                        <div class="col-12 my-4" id="back_button">
+                            <div class="doctor-submit text-end">
+                                <button [routerLink]="[ '/public/urbanisation/', hash ]" type="submit" class="btn btn-primary cancel-form">Volver</button>&nbsp;
+                            </div>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+                                 <!--<div class="col-12 my-4 text-center">
+                                    <div class="doctor-submit text-center">
+                                        <button *ngIf="meeting_id != ''" type="button" class="btn btn-success submit-form me-2" 
+                                            [routerLink]="[ '/question/report', meeting_id ]" ><i class="fa-solid fa-square-poll-vertical m-r-5"></i>VER ACTA &nbsp;<i class="fa-solid fa-square-poll-vertical m-r-5"></i>
+                                        </button>
+                                        
+                                    </div>
+                                </div>-->
+                                <div class="table-responsive">
+                                    
+                                                <!--<table  class="table border-0 custom-table comman-table datatable mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th class="text-start">Pregunta</th>
+                                                            <th >Resultados</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let data of questions; let i = index;">
+                                                            <td>{{ i + 1 }} </td>
+                                                            <td class="text-start">
+                                                              {{ data.name }}
+                                                            </td>
+                                                            <td><a class="btn" [routerLink]="[ '/urbanisation/meeting-info', data.id ]" href="#"><img src="assets/img/icons/search-normal.svg" alt="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+                                                           
+                                                        </tr>
+                                                    </tbody>
+                                                    
+                                                </table>-->
+                                                <br><br><br>
+
+                                                <div class="row " id="meet_result">
+              
+            </div>
+                                        </div>
+
+                                       
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+</div>
