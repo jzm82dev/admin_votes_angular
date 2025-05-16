@@ -75,6 +75,7 @@
                                                             <tr>
                                                                 <th>Piso</th>
                                                                 <th>Propietario</th>
+                                                                <th>Representado por</th>
                                                                 <th>Coeficiente</th>
                                                             </tr>
                                                         </thead>
@@ -82,6 +83,7 @@
                                                             <tr *ngFor="let owner of detail.owners">
                                                                 <td>{{ owner.building }}-{{ owner.floor}}{{ owner.letter}}</td>
                                                                 <td>{{ owner.name}}</td>
+                                                                <td>{{ owner.represented_by}}</td>
                                                                 <td>{{ owner.total_coefficient }}%</td>
                                                                 </tr>
                                                             
@@ -89,8 +91,9 @@
                                                         <tfoot>
                                                             <tr>
                                                                 <td></td>
+                                                                <td></td>
                                                                 <td class="text-end"></td>
-                                                                <td><b> {{ detail.total_coefficient }}%</b></td>
+                                                                <td class="vote_name"><b> {{ detail.total_coefficient }}%</b></td>
                                                             </tr>
                                                         </tfoot>
                                                     </table>
@@ -103,7 +106,6 @@
                                 <hr> 
                         </div>
                         
-
                         </div>
                     </div>
                 </div>

@@ -6,6 +6,7 @@ import { blogs } from 'src/app/shared/models/models';
 import { DataService } from 'src/app/shared/data/data.service';
 import { routes } from 'src/app/shared/routes/routes';
 import { TranslateService } from '@ngx-translate/core';
+import { UrbanisationService } from '../urbanisation/services/urbanisation.service';
 
 
 @Component({
@@ -49,7 +50,7 @@ export class HomeComponent {
   public carousel1: any = [];
   public slideIndex: number = 1;
   public loaded: boolean = false;
-  public clubs: any = [];
+  public urbanisations: any = [];
   public translations:any = [];
 
   public client_name: string = '';
@@ -62,11 +63,13 @@ export class HomeComponent {
   public sent_ok:boolean = false;
   public show_error_fields: boolean = false;
 
-  constructor( private viewportScroller: ViewportScroller, public clubDataSrv: ClubDataService, 
+  constructor( private viewportScroller: ViewportScroller, public clubDataSrv: ClubDataService, public urbanizationSrv: UrbanisationService,
     public data : DataService, public translate: TranslateService){
   }
 
   ngOnInit(): void {
+    console.log('pasamos');
+    
     this.blogs = this.data.blogs
     window.addEventListener('scroll', this.scroll, true)
     AOS.init();
@@ -95,8 +98,10 @@ export class HomeComponent {
     let formData = new FormData();
     formData.append('search', value);
 
-    this.clubDataSrv.findClubs(formData).subscribe( (resp:any) => {
-      this.clubs = resp.clubs.data;
+    this.urbanizationSrv.getUrbanizations(formData).subscribe( (resp:any) => {
+      this.urbanisations = resp.urbanisations.data;
+      console.log(this.urbanisations);
+      
     })
   }
 

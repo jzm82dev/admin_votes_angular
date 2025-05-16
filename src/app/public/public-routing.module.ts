@@ -37,7 +37,16 @@ const routes: Routes = [
         loadChildren: () =>
           import('./club/club.module').then((m) => m.ClubModule),
       },
-
+      {
+        path: 'public/urbanisation/:hash',
+        loadChildren: () =>
+          import('./club/club.module').then((m) => m.ClubModule),
+      },
+       {
+        path: 'urbanisation/meeting-info/:id',
+        loadChildren: () =>
+          import('./club/meeting-info/meeting-info.module').then((m) => m.MeetingInfoModule),
+      },
       {
         path: 'club/:hash/:tab',
         loadChildren: () =>

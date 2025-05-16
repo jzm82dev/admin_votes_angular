@@ -53,10 +53,10 @@ export class MeetingService {
       return this.http.get( url, {headers: headers});
     }
 
-    assistOwner(owner_id:string, meeting_id:string){
+    assistOwner(data: any){
       let headers = new HttpHeaders({ 'Authorization': 'Bearer '+ this.authSrv.token});
-      let url = URL_SERVICIOS + "/meetings/add-ssistant-meeting/" + meeting_id + "/" + owner_id;
-      return this.http.post(url, null, { headers: headers });
+      let url = URL_SERVICIOS + "/meetings/add-ssistant-meeting";
+      return this.http.post(url, data, { headers: headers });
     }
 
     cancelAssistOwner(owner_id:string, meeting_id:string){

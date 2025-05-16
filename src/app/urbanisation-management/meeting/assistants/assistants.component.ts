@@ -44,7 +44,13 @@ export class AssistantsComponent {
      public building_id: string = '';
      public building: any = [];
      public ownersList: Array<any> = [];
+     public represented_by: string = '';
      dataSource!: MatTableDataSource<any>;
+
+    public error_message_popup:string = '';
+    public susccess_message_popup:string = '';
+    public message_errors: any = [];
+    public owner_id:string = '';
 
   constructor( public meetingSrv: MeetingService, public activateRoute: ActivatedRoute, 
     public translate: TranslateService, public ownerSrv: OwnerService  ){}
@@ -214,11 +220,35 @@ export class AssistantsComponent {
      }
 
      assistOwner(owner_id:string){
-      this.meetingSrv.assistOwner(owner_id, this.meeting_id).subscribe( (resp:any) => {
+      
+       /*  if( !this.new_question ){
+      this.error_message = 'La pregunta es obligatoria';
+      return;
+    }
+
+    if( this.new_question && this.new_question.length > 300){
+      this.error_message = 'La pregunta no puede superar los 300 caracteres';
+      return;
+    } */
+
+    let formData = new FormData();
+    formData.append('owner_id', owner_id);
+    formData.append('meeting_id', this.meeting_id);
+
+    if(this.represented_by.length > 0 ){
+      formData.append('represented_by', this.represented_by);
+    }
+
+      this.meetingSrv.assistOwner(formData).subscribe( (resp:any) => {
+
         if( resp.message == '200'){
+          this.susccess_message_popup = 'Datos guardados correctamente';
           let index = this.ownersList.findIndex((item:any) => item.id == owner_id);
           if(index != -1){
             this.ownersList[index].assistId = 'null';
+            if(this.represented_by.length > 0 ){
+              this.ownersList[index].represented_by = this.represented_by;
+            }
           }
         }
       })
@@ -235,5 +265,22 @@ export class AssistantsComponent {
       })
      }
    
+
+     closePopup(){
+
+     }
+
+
+     saveRepresentedBy(){
+        this.assistOwner(this.owner_id);
+     }
+
+      openPopup(owner_id: string){
+        this.owner_id = owner_id;
+        this.represented_by = '';
+        this.error_message_popup = '';
+        this.susccess_message_popup = '';
+        this.message_errors = [];
+   }
      
 }
