@@ -230,7 +230,7 @@ export class AssistantsComponent {
       this.error_message = 'La pregunta no puede superar los 300 caracteres';
       return;
     } */
-
+ 
     let formData = new FormData();
     formData.append('owner_id', owner_id);
     formData.append('meeting_id', this.meeting_id);
@@ -248,6 +248,7 @@ export class AssistantsComponent {
             this.ownersList[index].assistId = 'null';
             if(this.represented_by.length > 0 ){
               this.ownersList[index].represented_by = this.represented_by;
+              this.represented_by = '';
             }
           }
         }
