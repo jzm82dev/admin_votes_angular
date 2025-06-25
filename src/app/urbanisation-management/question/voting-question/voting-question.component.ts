@@ -63,7 +63,7 @@ export class VotingQuestionComponent {
 
 
   getOwners(){
-    this.ownerSrv.listOwnerByBuilding( this.urbanisation_id, this.building_id).subscribe((resp: any) => {
+    this.ownerSrv.listOwnerByBuilding( this.urbanisation_id, this.building_id, this.meeting_id).subscribe((resp: any) => {
            this.totalData = resp.total;
            this.ownersList = resp.owners;
           // this.lookForVote();
