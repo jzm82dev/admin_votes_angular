@@ -37,9 +37,9 @@ export class OwnerService {
     return this.http.get(url, { headers: headers }); 
   }
 
-  listOwnerByBuilding(urbanisation_id: string, building: string ){
+  listOwnerByBuilding(urbanisation_id: string, building: string, meeting_id: string ){
     let headers = new HttpHeaders( {'Authorization' : 'Bearer ' + this.authSrv.token });
-    let url = URL_SERVICIOS + '/owners/owner-by-building?urbanisation_id=' + urbanisation_id + '&building=' + building;
+    let url = URL_SERVICIOS + '/owners/owner-by-building?urbanisation_id=' + urbanisation_id + '&building=' + building + '&meeting_id=' + meeting_id;
     return this.http.get(url, { headers: headers }); 
   }
 
